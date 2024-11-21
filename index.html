@@ -2008,17 +2008,64 @@
                     ],
             };
 
-            let reviewsData = JSON.parse(localStorage.getItem('reviewsData')) || {};
+            // Initialize reviewsData by fetching from review.txt
+            let reviewsData = {};
 
-            function saveReviews() {
-                localStorage.setItem('reviewsData', JSON.stringify(reviewsData));
+            async function fetchReviews() {
+                try {
+                    const response = await fetch('review.txt');
+                    const text = await response.text();
+                    reviewsData = JSON.parse(text);
+                } catch (error) {
+                    console.error("Erreur lors du chargement des avis:", error);
+                    reviewsData = {};
+                }
+                updateComponentList();
+            }
+
+            async function saveReviewsToGitHub() {
+                const username = 'Aalltra';
+                const repo = 'sponsor1';
+                const path = 'review.txt';
+                const token = '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';
+
+                try {
+                    const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3.raw'
+                        }
+                    });
+
+                    const getData = await getResponse.json();
+                    const sha = getData.sha;
+
+                    const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Mise à jour des avis',
+                            content: btoa(JSON.stringify(reviewsData, null, 2)),
+                            sha: sha
+                        })
+                    });
+
+                    if (!updateResponse.ok) {
+                        throw new Error('Échec de la mise à jour du fichier');
+                    }
+                } catch (error) {
+                    console.error("Erreur lors de la sauvegarde des avis sur GitHub:", error);
+                }
             }
 
             function getAverageRating(componentId) {
                 const reviews = reviewsData[componentId] || [];
                 if (reviews.length === 0) return 0;
-                const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-                return total / reviews.length;
+                const total = reviews.reduce((sum, review) => sum + review.note, 0);
+                return (total / reviews.length).toFixed(1);
             }
 
             function updateBrandFilter() {
@@ -2682,7 +2729,7 @@
                 modal.style.display = 'none';
             }
 
-            function submitReview(event) {
+            async function submitReview(event) {
                 event.preventDefault();
                 const form = event.target;
                 const componentId = form.dataset.componentId;
@@ -2705,18 +2752,21 @@
 
                 const reviewNumber = reviewsData[componentId].length + 1;
                 reviewsData[componentId].push({
-                    id: `avis ${reviewNumber}`,
-                    rating: rating,
-                    text: reviewText
+                    name: `Avis ${reviewNumber}`,
+                    note: rating.toString(),
+                    review: reviewText
                 });
 
-                saveReviews();
+                await saveReviewsToGitHub();
+
+                await fetchReviews();
+
                 updateComponentList();
                 closeReviewModal();
                 alert("Votre avis a été soumis avec succès!");
             }
 
-            function viewReviews(componentId) {
+            async function viewReviews(componentId) {
                 const reviews = reviewsData[componentId] || [];
                 const reviewsSection = document.getElementById('reviews');
                 reviewsSection.innerHTML = `<h2>Avis pour ${getComponentName(componentId)}</h2>`;
@@ -2727,9 +2777,9 @@
                     reviews.forEach(review => {
                         reviewsSection.innerHTML += `
                             <div class="review">
-                                <div class="review-id"><strong>${review.id}</strong></div>
-                                <div class="review-stars">${renderReviewStars(review.rating)}</div>
-                                <div class="review-text">${review.text}</div>
+                                <div class="review-name"><strong>${review.name}</strong></div>
+                                <div class="review-stars">${renderReviewStars(parseInt(review.note))}</div>
+                                <div class="review-text">${review.review}</div>
                             </div>
                         `;
                     });
@@ -2744,17 +2794,8 @@
             function renderReviewStars(rating) {
                 let starsHTML = '';
                 for (let i = 1; i <= 5; i++) {
-                    if (i <= Math.floor(rating)) {
+                    if (i <= rating) {
                         starsHTML += `<svg class="filled" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36"></polygon></svg>`;
-                    } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.5) {
-                        starsHTML += `<svg viewBox="0 0 20 20"><defs>
-                                        <linearGradient id="halfGradReview${rating}-${i}">
-                                            <stop offset="50%" stop-color="#FFD700"/>
-                                            <stop offset="50%" stop-color="#ccc"/>
-                                        </linearGradient>
-                                     </defs>
-                                     <polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36" fill="url(#halfGradReview${rating}-${i})"></polygon>
-                                   </svg>`;
                     } else {
                         starsHTML += `<svg viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36" fill="#ccc"></polygon></svg>`;
                     }
@@ -2776,6 +2817,8 @@
                 console.log("Opening AR view...");
             }
 
+            window.viewReviews = viewReviews;
+
             updateComponentList();
             updateBrandFilter();
             initThemeSelector();
@@ -2784,6 +2827,7 @@
             initFilters();
             initNewButtons();
             loadConfigurationFromURL();
+            fetchReviews();
 
             document.querySelectorAll('.nav-tabs a').forEach(tab => {
                 tab.addEventListener('click', (e) => {
@@ -2814,15 +2858,11 @@
                 console.log("Generating PDF...");
             }
 
-            function initReviewModal() {
-            }
-
             const reviewModal = document.getElementById('reviewModal');
             reviewModal.querySelector('.close-modal').addEventListener('click', closeReviewModal);
             reviewModal.querySelector('.review-form').addEventListener('submit', submitReview);
 
             window.openReviewModal = openReviewModal;
-            window.viewReviews = viewReviews;
         });
     </script>
     <style>
@@ -2990,9 +3030,9 @@
   </div>
 </div>
 
-<div id="reviewModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
+<div id="reviewModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1001;">
+    <div class="modal-content" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:2rem; border-radius:1rem; width:90%; max-width:500px;">
+        <span class="close-modal" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
         <h2>Mettre une note</h2>
         <form class="review-form">
             <label for="rating">Note (1-5):</label>
