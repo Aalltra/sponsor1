@@ -1772,6 +1772,132 @@
                 padding: 0.8rem;
             }
         }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .stars svg {
+            width: 20px;
+            height: 20px;
+            fill: #ccc;
+            transition: fill 0.2s;
+        }
+
+        .stars .filled {
+            fill: #FFD700;
+        }
+
+        .review-button, .view-reviews {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .review-button:hover, .view-reviews:hover {
+            background-color: darken(var(--secondary-color), 10%);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0,0,0,0.5);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: var(--primary-color);
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid var(--accent-color);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            color: var(--text-color);
+        }
+
+        .close-modal {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            resize: vertical;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .review-form input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            margin-right: 10px;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .reviews-section {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .review {
+            border-bottom: 1px solid var(--accent-color);
+            padding: 10px 0;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+        }
+
+        .review-stars svg {
+            width: 16px;
+            height: 16px;
+            fill: #FFD700;
+        }
+
+        .review-text {
+            margin-top: 5px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1783,262 +1909,40 @@
                     name: "AMD Ryzen 9 5900X Boxed", specs: ['Socket AM4', '12 cores', '24 threads', 'Base Clock 3.7 GHz', 'Max Boost Clock 4.8 GHz', 'Total L3 Cache 64MB', 'TDP 105W', 'PCIe 4.0 support'], price: [409.90, 448.66, 519], image: "", brand: "AMD", url: ["https://www.amazon.nl/dp/B0BTZB7F88?_encoding=UTF8&ref_=as_li_ss_tl&psc=1", "https://www.amazon.se/dp/B0BTZB7F88?_encoding=UTF8&ref_=as_li_ss_tl&psc=1", "https://www.amazon.fr/AMD-Ryzen-7800X3D-Technologie-Architecture/dp/B0BTZB7F88/ref=pd_ci_mcx_mh_mcx_views_0_title?pd_rd_w=RjTRC&content-id=amzn1.sym.cbacdd79-a2a7-4dad-8c44-4a36464a6b2a%3Aamzn1.symc.ca948091-a64d-450e-86d7-c161ca33337b&pf_rd_p=cbacdd79-a2a7-4dad-8c44-4a36464a6b2a&pf_rd_r=D2R8NR03NTQDFMH26PYM&pd_rd_wg=i7dsF&pd_rd_r=7dc90c1e-a500-4d64-95aa-15290a6f0c67&pd_rd_i=B0BTZB7F88"]
                 },
                 { name: "Inter-Tech C-703 Vision", specs: [], price: [85.61], image: "", brand: "", url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] },
-                    {
-                        name: "AMD Ryzen 7 5700X3D Boxed WOF", specs: ['Socket AM4', '8 cores', '16 threads', 'Base Clock 3.0 GHz', 'Max Boost Clock 4.1 GHz', 'Total L3 Cache 96MB', 'TDP 105W'], price: 196.5, image: "", brand: "AMD", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=dfe1d74326281aea404d78725dff0a3d&offerListId=203712677-E285404676EED5FFB7CA8AB369EA43BD&pos=2&price=196.50&productid=203712677&sid=25482&type=offer"
-                    },
-                    {
-                        name: "Intel Core i5-12400F Boxed", specs: ['Socket LGA 1700', '6 cores', '12 threads', 'Base Clock 2.5 GHz', 'Max Turbo Frequency 4.4 GHz', 'Intel Smart Cache 18MB', 'TDP 65W'], price: 114.63, image: "", brand: "Intel", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=1fecfe08de27434a81d5f35d052a060d&offerListId=201785814-A15A0822971857E089EB87EBBD5985DB&pos=2&price=114.63&productid=201785814&sid=25482&type=offer"
-                    },
-                    {
-                        name: "AMD Ryzen 7 8700G", specs: ['Socket AM5', '8 cores', '16 threads', 'Base Clock 4.2 GHz', 'Max Boost Clock 5.1 GHz', 'Total L3 Cache 16MB', 'TDP 65W', 'Radeon 780M Integrated Graphics'], price: 268.9, image: "", brand: "AMD", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=2b6e75dfd12dbd9323da66e7c41484e2&offerListId=203819259-50EF0ED5265B48E91A721FCE74799A51&pos=3&price=268.90&productid=203819442&sid=330578&type=offer"
-                    },
-                    {
-                        name: "Intel Core i9-14900KF", specs: ['Socket LGA 1700', '24 cores', '32 threads', 'Base Clock 3.2 GHz', 'Max Turbo Frequency 6.0 GHz', 'Intel Smart Cache 36MB', 'TDP 125W'], price: 507.9, image: "", brand: "Intel", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=16ac16f6b1449c01a646a2ac5c101dd8&offerListId=203356275-7AFFCF9290D6FC7AB9DD925C785D681E&pos=1&price=507.90&productid=203357235&sid=29139&type=offer"
-                    },
-                    {
-                        name: "AMD Ryzen 7 7700 Tray", specs: ['Socket AM5', '8 cores', '16 threads', 'Base Clock 3.8 GHz', 'Max Boost Clock 5.3 GHz', 'Total L3 Cache 32MB', 'TDP 65W', 'Radeon Integrated Graphics'], price: 224.13, image: "", brand: "AMD", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=2ade4c864c51e8e6912998b337c7d755&offerListId=202275748-6CEEAFF7FB54859C7C2D76BE95856CD2&pos=1&price=224.13&productid=202275748&sid=313582&type=offer"
-                    },
-                    {
-                        name: "Intel Core i7-13700K", specs: ['Socket LGA 1700', '16 cores', '24 threads', 'Base Clock 3.4 GHz', 'Max Turbo Frequency 5.4 GHz', 'Intel Smart Cache 30MB', 'TDP 125W', 'Intel UHD Graphics 770'], price: 361.52, image: "", brand: "Intel", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=d39b025e85f7037a178a7bdc03331338&offerListId=202122830-2F1CED11C8DA92467747B386C1574E3A&pos=3&price=361.52&productid=202122942&sid=25725&type=offer"
-                    },
-                    {
-                        name: "AMD Ryzen 9 5950X Boxed", specs: ['Socket AM4', '16 cores', '32 threads', 'Base Clock 3.4 GHz', 'Max Boost Clock 4.9 GHz', 'Total L3 Cache 64MB', 'TDP 105W'], price: 286.89, image: "", brand: "AMD", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=2df65724b051c437d2a94a19c89a1e64&offerListId=200732962-9037B47B68104AF8ED415FE16E959689&pos=1&price=286.89&productid=200732962&sid=313582&type=offer"
-                    },
-                    {
-                        name: "Intel Core i5-14500", specs: ['Socket LGA 1700', '14 cores', '20 threads', 'Base Clock 2.6 GHz', 'Max Turbo Frequency 5.0 GHz', 'Intel Smart Cache 24MB', 'TDP 65W', 'Intel UHD Graphics 770'], price: 259.99, image: "", brand: "Intel", url: "https://www.idealo.fr/relocator/relocate?categoryId=3019&offerKey=18bd82c6668126118d158d5066822311&offerListId=203712559-FBBBE4982DFB6A82E4DF580A33CE65FF&pos=2&price=259.99&productid=203712575&sid=12003&type=offer"
-                    },
                 ],
-                motherboard: [{
-                    name: "ASRock B450M-HDV R4.0", specs: ['Support du processeur\xa0AMD Ryzen', "Format\xa0Micro ATX", 'Ports USB\xa06 x USB 3.2', 'Sortie vidéo\xa0HDMI, DVI, VGA', 'Audio\xa07.1 Surround'], price: [59.89], image: "", brand: "ASRock", url: ["https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=81729a086096fca11d77046a61228439&offerListId=6566784-B1F9EE86D091F98C7FF13B03DAF4E7D4&pos=6&price=59.89&productid=6566784&sid=330578&type=offer"]
-                },
-                {
-                    name: "MSI Pro B760-P WiFi DDR4", specs: ['Processeur supporté\xa0Intel Core 12e Gen', "Format\xa0ATX", 'Connectivité\xa0WiFi 6, Bluetooth 5.2', 'Expansion\xa05 x PCIe x16', 'Audio\xa07.1 Surround'], price: 129.99, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=5dfb6d34784f356da413c1c277cec0e1&offerListId=202274064-762326E77E4C21BB65A6F4E59B48E976&pos=1&price=129.99&productid=202274064&sid=24572&type=offer"
-                },
-                {
-                    name: "GigaByte B650M Aorus Elite AX", specs: ['Support du processeur\xa0AMD Ryzen 7000', "Mémoire\xa0DDR5 jusqu'à 128 Go", 'Slots M.2\xa02 x PCIe 5.0', 'Format\xa0Micro ATX', 'Connectivité\xa0WiFi 6E, Bluetooth 5.3'], price: 176.37, image: "", brand: "GigaByte", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=f9bdcb5c449b4d4923afa85c75271f1c&offerListId=202140094-C1194BA454237D016BBDC794BD371B0B&pos=1&price=176.37&productid=202140094&sid=313582&type=offer"
-                },
-                {
-                    name: "Asus ROG Strix B650E-I Gaming WiFi", specs: ['Support du processeur\xa0AMD Ryzen 7000', "Format\xa0Mini-ITX", 'Stockage\xa02 x M.2 PCIe 4.0', 'Connectivité\xa0WiFi 6E, Bluetooth 5.2', 'Audio\xa07.1 Surround'], price: 274.9, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=2cf97533855c73c72a33c68504869823&offerListId=202140254-A5D22D24DD6D5018A1D4FA44CA6D1D39&pos=1&price=274.90&productid=202140254&sid=318774&type=offer"
-                },
-                {
-                    name: "ASRock B550M-ITX/ac", specs: ['Support du processeur\xa0AMD Ryzen 3000/5000', "Format\xa0Mini-ITX", 'Connectivité\xa0WiFi 5, Bluetooth 4.2', 'Stockage\xa01 x M.2 PCIe 3.0', 'Audio\xa07.1 Surround'], price: 123.98, image: "", brand: "ASRock", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=b967896a55587ede583d2031a421bc5e&offerListId=200411500-4EBDF0A3292ED4323F4DCFDA23CFB45B&pos=1&price=123.98&productid=200411500&sid=313582&type=offer"
-                },
-                {
-                    name: "MSI B450M Pro-VDH Max", specs: ['Support du processeur\xa0AMD Ryzen 2000/3000', "Format\xa0Micro ATX", 'Stockage\xa04 x SATA 6Gb/s', 'Connectivité\xa04 x USB 3.2', 'Audio\xa07.1 Surround'], price: 74.86, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=97768f267bfdd4b180ecd4e69b7b1803&offerListId=6768036-B7511330D48D3D34E1E117BC0FA21115&pos=3&price=74.86&productid=6768036&sid=330962&type=offer"
-                },
-                {
-                    name: "GigaByte B550 Gaming X V2", specs: ['Support du processeur\xa0AMD Ryzen 5000', "Format\xa0ATX", 'Stockage\xa02 x M.2 PCIe 4.0', 'Expansion\xa02 x PCIe x16', 'Audio\xa07.1 Surround'], price: 99.73, image: "", brand: "GigaByte", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=0c0bf9e785ae56990d5dd933cf61ff16&offerListId=200838572-59999D4DBC8A5A5D74C20B614702BF39&pos=1&price=99.73&productid=200838572&sid=313582&type=offer"
-                },
-                {
-                    name: "Asus ROG Strix X670E-E Gaming WiFi", specs: ['Support du processeur\xa0AMD Ryzen 7000', "Mémoire\xa0DDR5 jusqu'à 128 Go", 'Stockage\xa04 x M.2 PCIe 5.0', 'Connectivité\xa0WiFi 6E, Bluetooth 5.3', 'Audio\xa07.1 Surround'], price: 464.9, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=6d97fccc97a1a13bdc1377769668119b&offerListId=202119071-CA77B9FC8F87264D41C2DB2B4B99659F&pos=1&price=464.90&productid=202119071&sid=24573&type=offer"
-                },
-                {
-                    name: "ASRock A620I Lightning WiFi", specs: ['Support du processeur\xa0AMD Ryzen 7000', "Format\xa0Mini-ITX", 'Connectivité\xa0WiFi 6E, Bluetooth 5.2', 'Stockage\xa01 x M.2 PCIe 4.0', 'Audio\xa07.1 Surround'], price: 142.13, image: "", brand: "ASRock", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=310e18e468e65a4709642c3183c55a98&offerListId=203373945-8021E18B982432622BA0234F32C113D8&pos=1&price=142.13&productid=203373945&sid=313582&type=offer"
-                },
-                {
-                    name: "MSI MAG B550 Tomahawk", specs: ['Support du processeur\xa0AMD Ryzen 3000/5000', "Format\xa0ATX", 'Stockage\xa06 x SATA 6Gb/s', 'Expansion\xa02 x PCIe x16', 'Audio\xa07.1 Surround'], price: 139.89, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=3018&offerKey=c2cf144cf1074e91addb61ddc1f93023&offerListId=200408769-9F984BA2BA9F6561E3F3C8808314F3EA&pos=2&price=139.89&productid=200408769&sid=330578&type=offer"
-                },
+                motherboard: [
+                { name: "Inter-Tech C-703 Vision", specs: [], price: [85.61], image: "", brand: "", url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] },
             ],
     
-                ram: [{
-                        name: "Kingston FURY Beast 32 Go Kit DDR5-5200 CL36", specs: ['32 Go DDR5', '5200 MHz', 'CL36', 'Tension 1,25V', 'Hauteur 34,9 mm', 'Type: DIMM', 'Kit 2x16 Go'], price: 98.72, image: "", brand: "Kingston", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=94114ea8f2f81e63415192d20c0172e4&offerListId=202125430-40479ABA000E757D9DB3ECB256481F03&pos=1&price=98.72&productid=202577628&sid=313582&type=offer"
-                    },
-                        {
-                            name: "Corsair Vengeance RGB 32GB Kit DDR5-6000 CL36 (CMH32GX5M2E6000C36W)", specs: ['32 Go DDR5', '6000 MHz', 'CL36', 'Tension 1,4V', 'RGB Lighting', 'Kit 2x16 Go'], price: 116.9, image: "", brand: "Corsair", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=a46cb3c719e4e12e9d42027a4697f1af&offerListId=203196596-C302E011153A2137001948ECD7F36110&pos=1&price=116.90&productid=203196596&sid=291809&type=offer"
-                        },
-                        {
-                            name: "G.Skill Trident Z5 RGB Kit 32 Go DDR5-6000 CL36", specs: ['32 Go DDR5', '6000 MHz', 'CL36', 'Tension 1,35V', 'RGB Lighting', 'Kit 2x16 Go'], price: 124.78, image: "", brand: "G.Skill", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=a9b87baaecb444a5b49411fcd2d3f7e2&offerListId=201814610-86DEFD83F3F200326D76622E16769722&pos=4&price=124.78&productid=201768462&sid=324323&type=offer"
-                        },
-                        {
-                            name: "Crucial 8 Go SODIMM DDR4-3200 CL22 (CT8G4SFRA32A)", specs: ['8 Go DDR4', '3200 MHz', 'CL22', 'Tension 1,2V', 'Type: SO-DIMM'], price: 20.79, image: "", brand: "Crucial", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=b2c196ae922ed34fdb65760133b24469&offerListId=200610271-F1E42233B4A9E5159705EC5D55CF5DBE&pos=7&price=20.79&productid=200610271&sid=307622&type=offer"
-                        },
-                        {
-                            name: "Team T-Force Vulcan Z 16 Go DDR4-3200 CL16", specs: ['16 Go DDR4', '3200 MHz', 'CL16', 'Tension 1,35V', 'Hauteur 32 mm', 'Type: DIMM'], price: 42.22, image: "", brand: "Team T-Force", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=910b366fc7ff417378adfc37f12a6365&offerListId=201165498-3CF71E54C71058296B1B967C2DC3A298&pos=5&price=42.22&productid=201495673&sid=318774&type=offer"
-                        },
-                        {
-                            name: "Kingston FURY Beast 16 Go Kit DDR5-6000 CL36 (KF560C36BBEK2-16)", specs: ['16 Go DDR5', '6000 MHz', 'CL36', 'Tension 1,35V', 'Hauteur 34,9 mm', 'Kit 2x8 Go', 'Type: DIMM'], price: 71.4, image: "", brand: "Kingston", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=07ef469dc6aceb3cda7cec30ea621175&offerListId=202287163-66FBE46FE59DE6F975BB55F7E76CF1CB&pos=3&price=71.40&productid=202287163&sid=330962&type=offer"
-                        },
-                        {
-                            name: "Corsair Vengeance LPX 16 Go DDR4-3000", specs: ['16 Go DDR4', '3000 MHz', 'CL15', 'Hauteur 40 mm', 'Type: DIMM'], price: 41.99, image: "", brand: "Corsair", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=ebec46d10bff4cdee54a2b6b2d0c4d41&offerListId=6084438-7D3E92D6096E90EE99926186C546BFC6&pos=5&price=41.99&productid=6351515&sid=312067&type=offer"
-                        },
-                        {
-                            name: "G.Skill Trident Z5 RGB 32 Go DDR5-6400 CL32 (F5-6400J3239G16GX2-TZ5RK)", specs: ['32 Go DDR5', '6400 MHz', 'CL32', 'Tension 1,4V', 'RGB Lighting', 'Kit 2x16 Go'], price: 119.0, image: "", brand: "G.Skill", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=d6a3519f77dd8dd09a91db709b9b1fa9&offerListId=201816033-B878B08909E96FA304DF61544A99C2CC&pos=1&price=119.00&productid=201816033&sid=24573&type=offer"
-                        },
-                        {
-                            name: "Crucial 16 Go DDR5-4800 CL40 (CT16G48C40S5)", specs: ['16 Go DDR5', '4800 MHz', 'CL40', 'Tension 1,1V', 'Type: SO-DIMM'], price: 45.92, image: "", brand: "Crucial", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=4bc840fe14a1c9b76ecf853facc555a8&offerListId=201942266-E7B57E76D8ECE3E6A97B6015851B5B64&pos=2&price=45.92&productid=201942266&sid=25725&type=offer"
-                        },
-                        {
-                            name: "Team T-Force DELTA R Go 32 Go Kit DDR5-6000 CL38", specs: ['32 Go DDR5', '6000 MHz', 'CL38', 'Tension 1,25V', 'Hauteur 46 mm', 'Kit 2x16 Go', 'Type: DIMM'], price: 116.4, image: "", brand: "Team T-Force", url: "https://www.idealo.fr/relocator/relocate?categoryId=4552&offerKey=47b983b5d941e6a6a6e5e717d8df9353&offerListId=202197933-64494E68E015C0874F103DE4E9A81AC1&pos=1&price=116.40&productid=202197932&sid=330962&type=offer"
-                        },
+                ram: [
                     ],
     
     
-                gpu: [{
-                    name: "Asus GeForce RTX 4060", specs: ['CUDA Cores: 3072', 'Boost Clock: 2460 MHz', 'Memory Size: 8 GB GDDR6', 'Memory Interface: 128-bit', 'Maximum Resolution: 7680x4320', 'Power Consumption: 115W', 'DLSS 3.0 Support', 'Ray Tracing Cores: 3rd Gen', 'PCI Express 4.0', 'Cooling: Dual Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 314.99, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=29cd5ea01ef61425179fcba4a83694d0&offerListId=203946008-E12ADA271198C6505BAA5B00D5B54B33&pos=2&price=314.99&productid=202922581&sid=312067&type=offer"
-                 },
-                    {
-                        name: "XFX Radeon RX 6650 XT", specs: ['Stream Processors: 2048', 'Boost Clock: 2694 MHz', 'Memory Size: 8 GB GDDR6', 'Memory Interface: 128-bit', 'Power Consumption: 176W', 'DirectX 12 Ultimate', 'FSR 2.0 Support', 'PCI Express 4.0', 'Cooling: Triple Fan', 'HDMI 2.1', 'DisplayPort 1.4a'], price: 239.0, image: "", brand: "XFX", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=79e8d512470d2f9e90dde4163f860995&offerListId=201981040-AA17F2DFA9E6FC5B63324B3E822D85CB&pos=1&price=239.00&productid=201948852&sid=25482&type=offer"
-                    },
-                    {
-                        name: "PNY GeForce RTX 4080 Super VERTO OC", specs: ['CUDA Cores: 9728', 'Boost Clock: 2505 MHz', 'Memory Size: 16 GB GDDR6X', 'Memory Interface: 256-bit', 'Maximum Resolution: 7680x4320', 'Power Consumption: 320W', 'DLSS 3.0 Support', 'Ray Tracing Cores: 3rd Gen', 'PCI Express 4.0', 'Cooling: Triple Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 1031.9, image: "", brand: "PNY", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=ba7036ca2141790f5b061a385e41a7a4&offerListId=203821199-65814C34398D109D803BCAC322D79016&pos=1&price=1031.90&productid=203821199&sid=330578&type=offer"
-                    },
-                    {
-                        name: "MSI GeForce RTX 4080 Super GAMING X SLIM", specs: ['CUDA Cores: 9728', 'Boost Clock: 2550 MHz', 'Memory Size: 16 GB GDDR6X', 'Memory Interface: 256-bit', 'Power Consumption: 320W', 'DLSS 3.0 Support', 'Ray Tracing Cores: 3rd Gen', 'PCI Express 4.0', 'Cooling: Dual Fan', 'HDMI 2.1', '2x DisplayPort 1.4a'], price: 1128.4, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=f23ac7271d953c388b3d77a88c822eda&offerListId=203811540-650BD343BB99FC4770BC4202ED3C57B6&pos=1&price=1128.40&productid=203811540&sid=313582&type=offer"
-                    },
-                    {
-                        name: "Asus RTX3060", specs: ['CUDA Cores: 3584', 'Boost Clock: 1777 MHz', 'Memory Size: 12 GB GDDR6', 'Memory Interface: 192-bit', 'Maximum Resolution: 7680x4320', 'Power Consumption: 170W', 'DLSS 3.0 Support', 'Ray Tracing Cores: 2nd Gen', 'PCI Express 4.0', 'Cooling: Dual Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 284.99, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=465dce623c90cc8bf2e53f5b6033f22d&offerListId=201450237-32652B11A8ADDD875B259046FF0666A0&pos=2&price=284.99&productid=201146263&sid=12003&type=offer"
-                    },
-                    {
-                        name: "XFX Radeon RX 7700 XT", specs: ['Stream Processors: 3456', 'Boost Clock: 2544 MHz', 'Memory Size: 12 GB GDDR6', 'Memory Interface: 192-bit', 'Power Consumption: 245W', 'DirectX 12 Ultimate', 'FSR 2.0 Support', 'PCI Express 4.0', 'Cooling: Triple Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 419.0, image: "", brand: "XFX", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=7a00863daff7d50b8ea33edb9a172e2e&offerListId=204734765-14793C1C7609F8E3D09E5907B6F0C894&pos=1&price=419.00&productid=203230621&sid=25482&type=offer"
-                    },
-                    {
-                        name: "Asus DUAL-RTX3060-O12G LHR (12 Go)", specs: ['CUDA Cores: 3584', 'Boost Clock: 1807 MHz', 'Memory Size: 12 GB GDDR6', 'Memory Interface: 192-bit', 'Power Consumption: 170W', 'DLSS 3.0 Support', 'Ray Tracing Cores: 2nd Gen', 'PCI Express 4.0', 'Cooling: Dual Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 284.99, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=465dce623c90cc8bf2e53f5b6033f22d&offerListId=201450237-32652B11A8ADDD875B259046FF0666A0&pos=2&price=284.99&productid=201450237&sid=12003&type=offer"
-                    },
-                    {
-                        name: "XFX Radeon RX 7900 XT", specs: ['Stream Processors: 5376', 'Boost Clock: 2450 MHz', 'Memory Size: 20 GB GDDR6', 'Memory Interface: 320-bit', 'Power Consumption: 315W', 'DirectX 12 Ultimate', 'FSR 2.0 Support', 'PCI Express 4.0', 'Cooling: Triple Fan', 'HDMI 2.1', '4x DisplayPort 1.4a'], price: 699.0, image: "", brand: "XFX", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=21c520dc39e948fc897bc14f65503a5c&offerListId=202245901-EF89E2FCA57320F9314D1BE1AB55D704&pos=1&price=699.00&productid=202246637&sid=25482&type=offer"
-                    },
-                    {
-                        name: "XFX Radeon RX 6800", specs: ['Stream Processors: 3840', 'Boost Clock: 2105 MHz', 'Memory Size: 16 GB GDDR6', 'Memory Interface: 256-bit', 'Power Consumption: 250W', 'DirectX 12 Ultimate', 'FSR 2.0 Support', 'PCI Express 4.0', 'Cooling: Dual Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 389.0, image: "", brand: "XFX", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=7af2edbfa95b9ad4c1d77574d0c8e0ef&offerListId=202651688-1AD5C8E72D9F8911094061D65AB1E225&pos=1&price=389.00&productid=202246637&sid=25482&type=offer"
-                    },
-                    {
-                        name: "MSI Radeon RX 6750 XT", specs: ['Stream Processors: 2560', 'Boost Clock: 2618 MHz', 'Memory Size: 12 GB GDDR6', 'Memory Interface: 192-bit', 'Power Consumption: 230W', 'DirectX 12 Ultimate', 'FSR 2.0 Support', 'PCI Express 4.0', 'Cooling: Triple Fan', 'HDMI 2.1', '3x DisplayPort 1.4a'], price: 359.0, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=16073&offerKey=5e2be3eb524d0c3e9a7bdb506f309b72&offerListId=202042792-85883DB42C2C6227050AC1A2DC7BC67A&pos=1&price=359.00&productid=202046859&sid=331992&type=offer"
-                    }],
+                gpu: [
+
+                ],
     
-                storage: [{
-                    name: "Verbatim Vi550 S3", specs: ['NAND Flash 3D TLC', 'Interface\xa0SATA III', 'Format\xa02,5 pouces'], price: 13.22, image: "", brand: "Verbatim", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=d20137d62a0f48a1b9e7e99a727fdda0&offerListId=6468220-0BD0162DAB5070BB6CAFDB6FCF5F8E59&pos=2&price=13.22&productid=202129865&sid=25725&type=offer"
-                },
-                    {
-                        name: "Seagate Firecuda 530 avec dissipateur", specs: ['NAND Flash 3D TLC', 'Interface\xa0PCIe 4.0 x4', 'Format\xa0M.2 2280'], price: 64.99, image: "", brand: "Seagate", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=033a415ff6db6684336741e1db4a3669&offerListId=201453710-0CE0448CFE13196399E1DC978EE1A712&pos=1&price=64.99&productid=201453726&sid=26899&type=offer"
-                    },
-                    {
-                        name: "Crucial P3 Plus 4 To", specs: ['Lecture\xa04\u202f800\xa0Mo/s', 'Écriture\xa04\u202f100\xa0Mo/s', 'Capacité\xa04 To', 'NAND Flash QLC 3D', 'Interface\xa0PCIe 4.0 x4', 'Format\xa0M.2 2280'], price: 230.0, image: "", brand: "Crucial", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=2370428776b237bf7c62cfac58e8bd54&offerListId=202023801-DD6E3111873CD58ABE408C75B07A89E5&pos=2&price=230.00&productid=202023801&sid=318774&type=offer"
-                    },
-                    {
-                        name: "Kingston XS2000", specs: ['Lecture\xa02\u202f000\xa0Mo/s', 'Écriture\xa02\u202f000\xa0Mo/s', 'Interface\xa0USB 3.2 Gen 2x2'], price: 68.17, image: "", brand: "Kingston", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=86f461e425c78c5b97d49c3c306d6bea&offerListId=201605472-5E91B22EBCC60BE4D976AA66C17F8CD7&pos=1&price=68.17&productid=201605475&sid=25725&type=offer"
-                    },
-                    {
-                        name: "Samsung 980 Pro M.2", specs: ['NAND Flash V-NAND TLC', 'Interface\xa0PCIe 4.0 x4', 'Format\xa0M.2 2280'], price: 101.91, image: "", brand: "Samsung", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=b4e1ab2b4a20de055bc2f633aac5ef83&offerListId=200682640-AF6B2397CA4830AA8D552A2BAFD5F308&pos=2&price=101.91&productid=200682752&sid=318774&type=offer"
-                    },
-                    {
-                        name: "Western Digital Black SN850X 2 To", specs: ['Lecture\xa07\u202f300\xa0Mo/s', 'Écriture\xa06\u202f600\xa0Mo/s', 'Capacité\xa02 To', 'NAND Flash 3D TLC', 'Interface\xa0PCIe 4.0 x4', 'Format\xa0M.2 2280'], price: 150.07, image: "", brand: "Western Digital", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=12d248948e032069fc1025496ebc8a03&offerListId=202070647-FEB62CD6371A7C2765A397624FD7F679&pos=2&price=150.07&productid=202070647&sid=330962&type=offer"
-                    },
-                    {
-                        name: "Crucial P3 Plus 1 To", specs: ['Lecture\xa05\u202f000\xa0Mo/s', 'Écriture\xa03\u202f600\xa0Mo/s', 'Capacité\xa01 To', 'NAND Flash QLC 3D', 'Interface\xa0PCIe 4.0 x4', 'Format\xa0M.2 2280'], price: 62.02, image: "", brand: "Crucial", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=a4e3433df04f8ab5413ced01e37d5381&offerListId=202052938-F6E19ADA88D188F033E52D130D40F092&pos=1&price=62.02&productid=202052938&sid=313582&type=offer"
-                    },
-                    {
-                        name: "Samsung Portable SSD T7 2 To gris", specs: ['Lecture\xa01\u202f050\xa0Mo/s', 'Écriture\xa01\u202f000\xa0Mo/s', 'Capacité\xa02 To', 'NAND Flash 3D V-NAND', 'Interface\xa0USB 3.2 Gen 2'], price: 154.99, image: "", brand: "Samsung", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=dcdf04f54ed67e5a5d53b2118e51c109&offerListId=200268991-52A31F76B23AABE16ED535B3DD9E0C31&pos=1&price=154.99&productid=200268991&sid=12003&type=offer"
-                    },
-                    {
-                        name: "Crucial BX500 2.5 1 To", specs: ['Lecture\xa0540\xa0Mo/s', 'Écriture\xa0500\xa0Mo/s', 'Capacité\xa01 To', 'Interface\xa0SATA III', 'Format\xa02,5 pouces'], price: 59.68, image: "", brand: "Crucial", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=d1cf829a4c2932a1a9bc4d61772efc8d&offerListId=6938224-37DC70EC505AF9954E302292FDDE8FEB&pos=4&price=59.68&productid=6938224&sid=330962&type=offer"
-                    },
-                    {
-                        name: "Samsung Portable SSD T5 Evo", specs: ['Interface\xa0SATA III'], price: 146.81, image: "", brand: "Samsung", url: "https://www.idealo.fr/relocator/relocate?categoryId=14613&offerKey=671975900e9596708fb4369c3236bedf&offerListId=203518050-609CCD51AF3DC95172F61816D26ED7BD&pos=1&price=146.81&productid=203518049&sid=25725&type=offer"
-                    },
+                storage: [
                 ],
-                psu: [{
-                    name: "Seasonic PRIME PX", specs: ['ATX12V 2.0', 'Full bridge topology', 'Fluid dynamic bearing fan', "80 Plus Platinum Certified"], price: 129.99, image: "", brand: "Seasonic", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=87fb1fcd4beb5e5dfae7883b7638788d&offerListId=6807377-E5A77FC85D517207B696897DCAF53A1A&pos=1&price=129.99&productid=6807637&sid=312067&type=offer"
-                },
-                    {
-                        name: "be quiet! Dark Power Pro 13", specs: ['ATX12V 3.0', 'Overclocking key support', '135mm Silent Wings 3 fan', '80 Plus Titanium Certified'], price: 383.14, image: "", brand: "be quiet!", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=99a11b99835de87ca079ffa663ad19e7&offerListId=202767454-58DCFC999F6BB39164B0DE8151D1A429&pos=1&price=383.14&productid=202767462&sid=313582&type=offer"
-                    },
-                    {
-                        name: "Asus ROG STRIX Gold Aura", specs: ['ATX12V 3.0', 'RGB lighting', 'Axial-tech fan design', '80 Plus Gold Certified'], price: 166.08, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=eb0d31c362b7b46133caa9da9cacf300&offerListId=202292188-CB9E2D0EB1857D750C85F7963EF2E3CE&pos=1&price=166.08&productid=202292190&sid=12003&type=offer"
-                    },
-                    {
-                        name: "Corsair RM850x (2021) 850W", specs: ['ATX12V 2.4', 'Magnetic levitation bearing fan', 'Zero RPM fan mode', '80 Plus Gold Certified'], price: 136.48, image: "", brand: "Corsair", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=ddfc26a222c7ad8d7ec6bc12ffc6f736&offerListId=201251609-4A791C246E350538A7017DCA26F2D9F5&pos=1&price=136.48&productid=201251609&sid=318774&type=offer"
-                    },
-                    {
-                        name: "Seasonic B12 BC", specs: ['ATX12V', '120mm sleeve bearing fan', 'Single rail design', '80 Plus Bronze Certified'], price: 62.47, image: "", brand: "Seasonic", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=32cc0ff142347543942150f6e755283d&offerListId=201511976-F6C6FFAB7A7F76E5D73F017275C3BE78&pos=4&price=62.47&productid=201512020&sid=330962&type=offer"
-                    },
-                    {
-                        name: "GigaByte Aorus P850W 850W", specs: ['ATX12V 2.31', 'Japanese capacitors', 'Smart semi-passive fan control', '80 Plus Gold Certified'], price: 107.16, image: "", brand: "GigaByte", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=28a99b1cde5a5329ef890de3fb2e0d9d&offerListId=6528944-4991D5E733B1FAF7043F1F554F0C969D&pos=1&price=107.16&productid=6528944&sid=330962&type=offer"
-                    },
-                    {
-                        name: "Cooler Master GX II Gold", specs: ['ATX12V 3.0', 'Active PFC', '120mm HDB fan', '80 Plus Gold Certified'], price: 102.49, image: "", brand: "Cooler Master", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=e24725626b61312912738db350378a7a&offerListId=203701467-F28C14A3DE665ED41E94D53855A2C279&pos=2&price=102.49&productid=203701470&sid=330578&type=offer"
-                    },
-                    {
-                        name: "FSP Dagger Pro", specs: ['SFX12V 3.3', 'Fully modular cables', '80 Plus Gold Certified', 'Dual ball bearing fan'], price: 107.85, image: "", brand: "FSP", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=5d685e6c04a0a9757e7be4a99db5a109&offerListId=202192145-AC1381421008F9A8AB817B25E106E911&pos=1&price=107.85&productid=202192160&sid=313582&type=offer"
-                    },
-                    {
-                        name: "NZXT C750 Gold 750W", specs: ['ATX12V 2.52', '120mm fluid dynamic bearing fan', 'Zero RPM fan mode', '80 Plus Gold Certified'], price: 94.9, image: "", brand: "NZXT", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=23e91e52c2d95ddcb2fec9ef90eec3a1&offerListId=202191112-A7D404659505ACD5540990CB76CBE0ED&pos=1&price=94.90&productid=202191112&sid=12003&type=offer"
-                    },
-                    {
-                        name: "be quiet! Pure Power 12M 750W", specs: ['ATX12V 3.0', 'LLC + SR + DC-DC design', '120mm fan', '80 Plus Gold Certified'], price: 120.79, image: "", brand: "be quiet!", url: "https://www.idealo.fr/relocator/relocate?categoryId=5432&offerKey=b0a4c2fd7b8dfa90fbf5f647d8d11594&offerListId=202292305-BD8A9AC38C5D0213DDB9B4621277F0B7&pos=3&price=120.79&productid=202292305&sid=330578&type=offer"
-                    },
+                psu: [
                 ],
-                case: [{
-                    name: "Corsair 3000D Airflow", specs: ['2\xa0Ventilateurs ARGB', 'Supporte radiateurs jusqu’à\xa0360mm', '7\xa0Slots PCI-E', 'Filtre à poussière amovible', 'Compatibilité watercooling\xa0120/140mm', 'Verre trempé sur le côté'], price: 79.24, image: "", brand: "Corsair", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=1f7295b9a41802db8f7265ef7b710e09&offerListId=203099337-6DA346837F8DE8D49FECD146F6521A43&pos=2&price=79.24&productid=203099344&sid=330962&type=offer"
-                },
-                    {
-                        name: "Thermaltake The Tower 300", specs: ['3\xa0Panneaux en verre trempé', 'Emplacement pour\xa06 ventilateurs', 'Châssis en acier renforcé', 'Gestion des câbles optimisée', 'Compatibilité watercooling\xa0240mm', 'Support pour GPU vertical'], price: 138.9, image: "", brand: "Thermaltake", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=7765da952c59cf51b5195707f52a50b8&offerListId=203859604-B52CBD4DE0695D9AAACDB1C46B5EC75B&pos=1&price=138.90&productid=203859632&sid=291809&type=offer"
-                    },
-                    {
-                        name: "be quiet! Silent Base 802", specs: ['Panneaux interchangeables pour airflow ou silence', 'Support E-ATX', 'Panneau latéral en verre trempé', '3\xa0Ventilateurs Pure Wings 2 préinstallés', 'Filtre à poussière magnétique', 'Système anti-vibration intégré'], price: 159.78, image: "", brand: "be quiet!", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=e4f60198be8b1e5245757a1b1428da64&offerListId=200869684-E4BE20F772AF12F1B3DF9878D5F40714&pos=2&price=159.78&productid=200870452&sid=324323&type=offer"
-                    },
-                    {
-                        name: "Lian Li LANCOOL 216 RGB Black", specs: ['2\xa0Ventilateurs ARGB\xa0165mm', 'Support radiateur\xa0360mm', 'Support GPU vertical\xa0', 'Verre trempé 4mm', 'Gestion des câbles améliorée', 'Filtres à poussière amovibles'], price: 104.49, image: "", brand: "Lian Li", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=03c1b1a1bd0a9c2f532b64215ffe24ce&offerListId=202221139-F7025FAF544DC2979F57EB588C906E04&pos=1&price=104.49&productid=202221139&sid=12003&type=offer"
-                    },
-                    {
-                        name: "Mars Gaming MC-3TCORE White", specs: ['2\xa0Ventilateurs ARGB\xa0120mm', 'Panneau latéral en verre trempé', 'Support watercooling\xa0360mm', 'Gestion des câbles efficace', 'Filtres à poussière amovibles', 'Châssis compact'], price: 86.26, image: "", brand: "Mars Gaming", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=8729b463885c85b36ebe347d924412b3&offerListId=204628055-3465B42AC757FD95E082968AE1D771A3&pos=1&price=86.26&productid=204628055&sid=330962&type=offer"
-                    },
-                    {
-                        name: "Antec C5 ARGB Black", specs: ['7\xa0Ventilateurs ARGB', 'Support radiateur\xa0360mm', 'Châssis ATX', 'Filtres anti-poussière amovibles', 'Système de gestion des câbles', 'Compatible watercooling\xa0240mm'], price: 109.79, image: "", brand: "Antec", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=e90a3534feaeb374da9c769957b9057e&offerListId=204372798-8103231D96ED173DD1EFEF0193A45858&pos=1&price=109.79&productid=204372798&sid=330578&type=offer"
-                    },
-                    {
-                        name: "NZXT H6 Flow RGB", specs: ['3\xa0Ventilateurs ARGB\xa0120mm', 'Support radiateur\xa0280mm', 'Panneau latéral en verre trempé', 'Gestion des câbles intégrée', 'Châssis en acier robuste', 'Filtres anti-poussière'], price: 132.99, image: "", brand: "NZXT", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=0884f4b1f89bbb725cbf083c7b0fd215&offerListId=203462112-7AE56EB93F4DDD5873BE5AFCB1EF422B&pos=1&price=132.99&productid=203462325&sid=12003&type=offer"
-                    },
-                    {
-                        name: "Fractal Design Torrent Compact", specs: ['2\xa0Ventilateurs\xa0180mm', 'Support radiateur\xa0280mm', 'Gestion des câbles\xa0optimisée', 'Verre trempé\xa04mm', 'Support E-ATX', 'Filtres à poussière\xa0amovibles'], price: 140.98, image: "", brand: "Fractal Design", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=7ddb8d54bf83cfa888e136016d190e0c&offerListId=201852363-3ACF9A0AF00072960FFA4B0296A699F1&pos=5&price=140.98&productid=201852395&sid=318774&type=offer"
-                    },
-                    {
-                        name: "Deepcool CH560 Digital", specs: ['4\xa0Ventilateurs ARGB', 'Support radiateur\xa0360mm', 'Écran digital\xa0LED', 'Verre trempé\xa04mm', 'Gestion des câbles', 'Filtres anti-poussière'], price: 109.99, image: "", brand: "Deepcool", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=f2ba9b76ccc278d6f6737c78bf0f7e12&offerListId=203194777-435C2D484BFAB85A0E7EC8B656A2608A&pos=1&price=109.99&productid=203194776&sid=312067&type=offer"
-                    },
-                    {
-                        name: "MSI MAG Forge 120A Airflow", specs: ['6\xa0Ventilateurs ARGB', 'Support radiateur\xa0240mm', 'Châssis ATX', 'Gestion des câbles intégrée', 'Filtres anti-poussière amovibles', 'Verre trempé sur le côté'], price: 62.9, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=3090&offerKey=a97cd131168257ce73edfd07c015c299&offerListId=203695552-286B3B8D11BDC5F62DC9C43D70CFBFB4&pos=1&price=62.90&productid=203695552&sid=24573&type=offer"
-                    },
+                case: [
                 ],
-                cooling: [{
-                        name: "MSI MAG CoreLiquid E360", specs: ['MSI MAG CORELIQUID', 'Taille du radiateur\xa0360\xa0mm', 'Débit d’eau\xa0150\xa0L/h', 'RGB intégré', 'Longueur du tuyau\xa0400\xa0mm', 'Niveau sonore\xa035\xa0dB', 'Matière du tuyau\xa0PVC', 'Compatibilité\xa0Intel/AMD'], price: 109.99, image: "", brand: "MSI", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=ed5866e9e0f9e2419e627d98049017ad&offerListId=203398396-4FB73193C4338DA38F1C232867C1D215&pos=1&price=109.99&productid=203398395&sid=12003&type=offer"
-                    },
-                        {
-                            name: "Thermaltake Pacific C360 DDC Soft Tube", specs: ['Thermaltake Pacific', 'Taille du radiateur\xa0360\xa0mm', 'Puissance de la pompe\xa012W', 'Capacité du réservoir\xa0200\xa0ml', 'Niveau sonore\xa030\xa0dB', 'Compatibilité\xa0Intel/AMD', 'Débit max\xa0500\xa0L/h', 'RGB intégré'], price: 436.18, image: "", brand: "Thermaltake", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=b9804f3faf7b5f760b030de37eaf5e59&offerListId=6927953-5D7A035F91AA1EF11D08B120C0B9650F&pos=1&price=436.18&productid=6927953&sid=25482&type=offer"
-                        },
-                        {
-                            name: "be quiet! Silent Loop 2 360mm", specs: ['be quiet! Silent Loop 2', 'Taille du radiateur\xa0360\xa0mm', 'Flux d’air\xa0150\xa0m³/h', 'Niveau sonore\xa039,8\xa0dB', 'RGB intégré', 'Pompe silencieuse', 'Compatibilité\xa0Intel/AMD'], price: 152.68, image: "", brand: "be quiet!", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=f0b9e00433580068640ac32112ab9498&offerListId=201192992-A4668249C517086A5F911A52B9027E2A&pos=1&price=152.68&productid=201192992&sid=330578&type=offer"
-                        },
-                        {
-                            name: "GigaByte AORUS Waterforce X II 360", specs: ['GigaByte AORUS Waterforce', 'Taille du radiateur\xa0120\xa0mm', 'Débit d’eau\xa0130\xa0L/h', 'Niveau sonore\xa037,5\xa0dB', 'Écran LCD\xa01,8\xa0pouces', 'Compatibilité\xa0Intel/AMD', 'RGB intégré'], price: 229.9, image: "", brand: "GigaByte", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=14e6ea2116c705af890703911d316771&offerListId=204047586-650EB3E00F5E07FF4302E9A9FC563702&pos=1&price=229.90&productid=204047585&sid=291809&type=offer"
-                        },
-                        {
-                            name: "Deepcool LT720 360mm", specs: ['Taille du ventilateur\xa0120', 'Puissance\xa03W', 'Niveau sonore\xa032\xa0dB', 'Compatibilité\xa0Intel/AMD', 'RGB intégré', 'Longueur du tuyau\xa0410\xa0mm'], price: 119.99, image: "", brand: "Deepcool", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=e0210862c1158ab3983b9f791b6fb431&offerListId=202872806-C1040EB12A5641EB58EF76C81923C8CA&pos=3&price=119.99&productid=202260524&sid=29061&type=offer"
-                        },
-                        {
-                            name: "ARCTIC Liquid Freezer III 240", specs: ['Arctic Liquid Freezer', 'Taille du radiateur\xa0240\xa0mm', 'Débit d’eau\xa0100\xa0L/h', 'Niveau sonore\xa035\xa0dB', 'RGB intégré', 'Compatibilité\xa0Intel/AMD', 'Pompe silencieuse'], price: 63.09, image: "", brand: "ARCTIC", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=4703da1bc70f20557e0f34353419fa0a&offerListId=203899440-664C6F1BFE2387B9CBC9CC32E1982BC6&pos=2&price=63.09&productid=203899440&sid=330578&type=offer"
-                        },
-                        {
-                            name: "NZXT Kraken 280", specs: ['NZXT Kraken', 'Taille du radiateur\xa0280\xa0mm', 'Flux d’air\xa0154\xa0m³/h', 'Niveau sonore\xa034,48\xa0dB', 'Compatibilité\xa0Intel/AMD', 'RGB intégré', 'Écran LCD\xa01,54\xa0pouces'], price: 139.0, image: "", brand: "NZXT", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=2ec29be9216c741a9d6b15616e68d47e&offerListId=202787330-128A4E492539945392D91BC5EDD858FB&pos=1&price=139.00&productid=202787330&sid=24573&type=offer"
-                        },
-                        {
-                            name: "Lian Li Galahad II LCD 360 SL-INF", specs: ['Lian Li GALAHAD', 'Taille du radiateur\xa0360\xa0mm', 'Flux d’air\xa0135\xa0m³/h', 'Écran LCD\xa02,88\xa0pouces', 'Compatibilité\xa0Intel/AMD', 'RGB intégré', 'Longueur du tuyau\xa0385\xa0mm'], price: 288.9, image: "", brand: "Lian Li", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=ba48e1bf39115956aa8ce7c361e02f17&offerListId=203423170-26C275503F79B0AF3181E73622A8D15B&pos=1&price=288.90&productid=203423444&sid=330578&type=offer"
-                        },
-                        {
-                            name: "Asus ROG Strix LC II 360 ARGB", specs: ['Asus ROG Strix LC', 'Taille du radiateur\xa0360\xa0mm', 'Débit d’eau\xa0140\xa0L/h', 'Compatibilité\xa0Intel/AMD', 'RGB\xa0ARGB intégré', 'Longueur du tuyau\xa0380\xa0mm'], price: 187.9, image: "", brand: "Asus", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=0d4b2c0dd48271df3b292d986c2e4f8a&offerListId=201810361-0D9539FB6525ACF5C0B6F6B33AE76DB0&pos=1&price=187.90&productid=202315962&sid=330578&type=offer"
-                        },
-                        {
-                            name: "Corsair iCUE H100x RGB ELITE", specs: ['Corsair iCUE ELITE', 'Taille du ventilateur\xa0120', 'Puissance\xa03W', 'Compatibilité\xa0Intel/AMD', 'RGB\xa0ARGB intégré', 'Longueur du tuyau\xa0390\xa0mm'], price: 104.89, image: "", brand: "Corsair", url: "https://www.idealo.fr/relocator/relocate?categoryId=5153&offerKey=e7116d523756919be3660db4f752f27b&offerListId=202314068-0F89BD52F9B802014911DDDC16B9663E&pos=1&price=104.89&productid=202314068&sid=24573&type=offer"
-                        },
+                cooling: [
                     ],
             };
-    
-            for (const category in components) {
-                components[category].forEach(component => {
-                    if (!Array.isArray(component.price)) {
-                        component.price = [component.price];
-                    }
-                    if (!Array.isArray(component.url)) {
-                        component.url = [component.url];
-                    }
-                });
+
+            let reviewsData = JSON.parse(localStorage.getItem('reviewsData')) || {};
+
+            function saveReviews() {
+                localStorage.setItem('reviewsData', JSON.stringify(reviewsData));
+            }
+
+            function getAverageRating(componentId) {
+                const reviews = reviewsData[componentId] || [];
+                if (reviews.length === 0) return 0;
+                const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+                return total / reviews.length;
             }
 
             function updateBrandFilter() {
@@ -2054,90 +1958,128 @@
                     brandFilter.appendChild(option);
                 });
             }
-    
+
             const selectedComponents = {};
-            const selectedMerchants = {};
             let totalPrice = 0;
             let currentCategory = 'cpu';
             let filteredComponents = [...components[currentCategory]];
-    
+
             function updateComponentList() {
                 const componentList = document.querySelector('.components-grid');
                 componentList.innerHTML = '';
-    
+
                 filteredComponents.forEach((component, index) => {
+                    const componentId = `${currentCategory}-${index}`;
+                    const avgRating = getAverageRating(componentId);
+                    const fullStars = Math.floor(avgRating);
+                    const halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
+
                     const card = document.createElement('div');
                     card.className = 'component-card';
                     card.innerHTML = `
-                        <img src="${component.image}" alt="${component.name}" width="200" height="200">
+                        <img src="${component.image}" alt="${component.name}" width="600" height="400">
                         <h3>${component.name}</h3>
                         <ul>
-                            ${component.specs.map(spec => `<li><i class="fas fa-check"></i> ${spec}</li>`).join('')}
+                            ${component.specs.map(spec => `<li><i class="fas fa-check"></i>${spec}</li>`).join('')}
                         </ul>
-                        <p class="price">${component.price[0].toFixed(2)}€</p>
+                        <p class="price">${component.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</p>
                         <div class="buttons">
-                            <button onclick="window.addToConfiguration('${currentCategory}', ${index})">Add</button>
-                            <button onclick="window.compareComponent('${currentCategory}', ${index})">Compare</button>
+                            <button onclick="window.addToConfiguration('${currentCategory}', ${index})">Ajouter</button>
+                            <button onclick="window.compareComponent('${currentCategory}', ${index})">Comparer</button>
                         </div>
+                        <div class="rating">
+                            <div class="stars" data-rating="${avgRating}" data-component-id="${componentId}">
+                                ${renderStars(avgRating)}
+                            </div>
+                            <button class="review-button" onclick="openReviewModal('${componentId}')">Mettre une note</button>
+                        </div>
+                        <a href="#reviews" class="view-reviews" onclick="viewReviews('${componentId}')">Voir les avis</a>
                     `;
                     componentList.appendChild(card);
                 });
             }
-    
+
+            function renderStars(rating) {
+                let starsHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= Math.floor(rating)) {
+                        starsHTML += `<svg class="filled" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36"></polygon></svg>`;
+                    } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.5) {
+                        starsHTML += `<svg viewBox="0 0 20 20"><defs>
+                                        <linearGradient id="halfGrad">
+                                            <stop offset="50%" stop-color="#FFD700"/>
+                                            <stop offset="50%" stop-color="#ccc"/>
+                                        </linearGradient>
+                                     </defs>
+                                     <polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36" fill="url(#halfGrad)"></polygon>
+                                   </svg>`;
+                    } else {
+                        starsHTML += `<svg viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.63 14,12.14 15.82,19.02 10,15.27 4.18,19.02 6,12.14 0.49,7.63 7.41,7.36" fill="#ccc"></polygon></svg>`;
+                    }
+                }
+                return starsHTML;
+            }
+
             window.addToConfiguration = function(category, index) {
                 const component = filteredComponents[index];
-                selectedComponents[category] = component;
-                // Initialize selected merchant to the first one
-                selectedMerchants[category] = 0;
+                if (!selectedComponents[category]) {
+                    selectedComponents[category] = {
+                        component: component,
+                        merchantIndex: 0
+                    };
+                } else {
+                    selectedComponents[category].component = component;
+                    selectedComponents[category].merchantIndex = 0;
+                }
                 updateSummary();
                 updateProgressBar();
             };
-    
+
             window.compareComponent = function(category, index) {
                 const modal = document.getElementById('comparisonModal');
                 const modalContent = modal.querySelector('.modal-content');
                 const component = filteredComponents[index];
-    
+
                 let comparisonHTML = `
-                    <h2>Component Comparison</h2>
+                    <h2>Comparaison de Composant</h2>
                     <table class="comparison-table">
                         <tr>
-                            <th>Feature</th>
+                            <th>Caractéristique</th>
                             <th>${component.name}</th>
                             ${components[category].map(comp => comp !== component ? `<th>${comp.name}</th>` : '').join('')}
                         </tr>
                 `;
-    
+
                 component.specs.forEach((spec, i) => {
                     comparisonHTML += `
                         <tr>
                             <td>Spec ${i + 1}</td>
                             <td>${spec}</td>
-                            ${components[category].map(comp => comp !== component ? `<td>${comp.specs[i] || 'N/A'}</td>` : '').join('')}
+                            ${components[category].map(comp => comp !== component ? `<td>${comp.specs[i]}</td>` : '').join('')}
                         </tr>
                     `;
                 });
-    
+
                 comparisonHTML += `
                     <tr>
-                        <td>Price</td>
-                        <td>${component.price[0].toFixed(2)}€</td>
-                        ${components[category].map(comp => comp !== component ? `<td>${comp.price[0].toFixed(2)}€</td>` : '').join('')}
+                        <td>Prix</td>
+                        <td>${component.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>
+                        ${components[category].map(comp => comp !== component ? `<td>${comp.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>` : '').join('')}
                     </tr>
                 </table>
                 <div class="performance-chart">
                     <canvas id="performanceChart"></canvas>
                 </div>
                 `;
-    
+
                 modalContent.innerHTML = comparisonHTML;
                 modal.style.display = 'block';
-    
+
                 const ctx = document.getElementById('performanceChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Performance', 'Price', 'Value'],
+                        labels: ['Performance', 'Prix', 'Valeur'],
                         datasets: components[category].map(comp => ({
                             label: comp.name,
                             data: [
@@ -2145,7 +2087,7 @@
                                 comp.price[0],
                                 (Math.random() * 100) / comp.price[0] * 1000
                             ],
-                            backgroundColor: `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.6)`
+                            backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`
                         }))
                     },
                     options: {
@@ -2157,129 +2099,138 @@
                     }
                 });
             };
-    
+
             function updateSummary() {
                 const summaryList = document.querySelector('.selected-components');
                 summaryList.innerHTML = '';
                 totalPrice = 0;
-    
-                for (const [category, component] of Object.entries(selectedComponents)) {
+
+                for (const [category, data] of Object.entries(selectedComponents)) {
+                    const component = data.component;
+                    const merchantIndex = data.merchantIndex;
+                    const price = component.price[merchantIndex];
+                    const merchantName = extractMerchantName(component.url[merchantIndex]);
+
                     const li = document.createElement('li');
-                    const merchantIndex = selectedMerchants[category] || 0;
                     li.innerHTML = `
-                        <span><i class="fas fa-${getCategoryIcon(category)}"></i> ${component.name}</span>
-                        <span>${component.price[merchantIndex].toFixed(2)}€</span>
-                        <a href="${component.url[merchantIndex]}" target="_blank" style=" display: none;">URL</a>
+                        <span><i class="fas fa-${getCategoryIcon(category)}"></i>${component.name}</span>
+                        <span>${price.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</span>
                     `;
                     summaryList.appendChild(li);
-                    totalPrice += component.price[merchantIndex];
-                    li.querySelector('a').href = component.url[merchantIndex];
+                    totalPrice += price;
                 }
-    
-                document.querySelector('.total-price').textContent = `Total: ${totalPrice.toFixed(2)}€`;
+
+                document.querySelector('.total-price').textContent = `Total: ${totalPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 updatePerformanceWidget();
                 updateBudgetChart();
-            };
-    
+            }
+
             document.querySelector('.summary-buttons button:last-child').remove();
-    
+
             document.getElementById('order-button').addEventListener('click', () => {
-                const componentsArray = Object.values(selectedComponents);
-    
+                const componentsToOrder = Object.entries(selectedComponents);
+
+                if (componentsToOrder.length === 0) {
+                    alert("Aucun composant sélectionné pour la commande.");
+                    return;
+                }
+
                 const modal = document.createElement('div');
                 modal.className = 'custom-modal';
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.width = '100%';
-                modal.style.height = '100%';
-                modal.style.background = 'rgba(0,0,0,0.5)';
-                modal.style.zIndex = '1000';
-    
+
                 const modalContent = document.createElement('div');
                 modalContent.className = 'custom-modal-content';
-                modalContent.style.position = 'absolute';
-                modalContent.style.top = '50%';
-                modalContent.style.left = '50%';
-                modalContent.style.transform = 'translate(-50%, -50%)';
-                modalContent.style.background = '#fff';
-                modalContent.style.padding = '2rem';
-                modalContent.style.borderRadius = '1rem';
-                modalContent.style.width = '90%';
-                modalContent.style.maxWidth = '800px';
-    
+
                 const title = document.createElement('h3');
                 title.innerText = 'Marchands';
                 modalContent.appendChild(title);
-    
-                componentsArray.forEach(component => {
+
+                componentsToOrder.forEach(([category, data], index) => {
+                    const component = data.component;
+                    const currentMerchantIndex = data.merchantIndex;
+
                     const linkContainer = document.createElement('div');
                     linkContainer.className = 'link-container';
                     linkContainer.style.marginBottom = '1rem';
-    
+
                     const label = document.createElement('span');
                     label.innerText = component.name;
                     linkContainer.appendChild(label);
-    
-                    const merchantSelect = document.createElement('select');
-                    merchantSelect.className = 'merchant-select';
-                    merchantSelect.style.margin = '0 1rem';
-    
+
+                    const select = document.createElement('select');
+                    select.className = 'merchant-select';
+                    select.dataset.category = category;
                     component.url.forEach((url, idx) => {
-                        const merchantName = extractMerchantName(url);
                         const option = document.createElement('option');
+                        const merchant = extractMerchantName(url);
                         option.value = idx;
-                        option.textContent = `${merchantName} - ${component.price[idx].toFixed(2)}€`;
-                        merchantSelect.appendChild(option);
+                        option.textContent = `${merchant} - ${component.price[idx].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
+                        if (idx === currentMerchantIndex) {
+                            option.selected = true;
+                        }
+                        select.appendChild(option);
                     });
-    
-                    merchantSelect.addEventListener('change', (e) => {
-                        selectedMerchants[component.brand ? component.brand : component.name] = parseInt(e.target.value);
-                        updateSummary();
-                    });
-    
-                    linkContainer.appendChild(merchantSelect);
-    
+                    linkContainer.appendChild(select);
+
                     const openButton = document.createElement('button');
                     openButton.innerText = 'Ouvrir';
                     openButton.className = 'open-button';
-                    
+                    openButton.style.marginLeft = '10px';
                     openButton.addEventListener('click', () => {
-                        const selectedIndex = merchantSelect.value;
-                        window.open(component.url[selectedIndex], '_blank');
+                        window.open(component.url[select.value], '_blank');
                     });
-    
                     linkContainer.appendChild(openButton);
+
                     modalContent.appendChild(linkContainer);
+
+                    select.addEventListener('change', (e) => {
+                        const selectedIdx = parseInt(e.target.value);
+                        selectedComponents[e.target.dataset.category].merchantIndex = selectedIdx;
+                        updateSummary();
+                    });
                 });
-    
+
                 const totalPriceDiv = document.createElement('div');
-                totalPriceDiv.className = 'new-total-price';
+                totalPriceDiv.className = 'total-price';
                 totalPriceDiv.style.marginTop = '1rem';
-                totalPriceDiv.style.fontWeight = 'bold';
-                totalPriceDiv.textContent = `Total: ${totalPrice.toFixed(2)}€`;
+                totalPriceDiv.style.textAlign = 'right';
+                totalPriceDiv.textContent = `Total: ${totalPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 modalContent.appendChild(totalPriceDiv);
-    
+
                 const closeButton = document.createElement('button');
                 closeButton.innerText = '✖';
                 closeButton.className = 'close-button';
-                closeButton.style.marginTop = '1rem';
                 modalContent.appendChild(closeButton);
-    
+
                 modal.appendChild(modalContent);
                 document.body.appendChild(modal);
-    
+
                 closeButton.addEventListener('click', () => {
                     document.body.removeChild(modal);
                 });
-    
+
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         document.body.removeChild(modal);
                     }
                 });
             });
-    
+
+            function extractMerchantName(url) {
+                try {
+                    const hostname = new URL(url).hostname;
+                    let name = hostname.replace('www.', '').split('.')[0];
+                    name = name.replace(/-/g, ' ');
+                    return capitalizeFirstLetter(name);
+                } catch (e) {
+                    return 'Marchand';
+                }
+            }
+
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
             function getCategoryIcon(category) {
                 const icons = {
                     cpu: 'microchip',
@@ -2293,7 +2244,7 @@
                 };
                 return icons[category] || 'computer';
             }
-    
+
             function updateProgressBar() {
                 const progress = document.querySelector('.progress');
                 const progressSteps = document.querySelectorAll('.progress-step');
@@ -2301,7 +2252,7 @@
                 const totalSteps = Object.keys(components).length;
                 
                 progress.style.width = `${(completedSteps / totalSteps) * 100}%`;
-    
+
                 progressSteps.forEach((step, index) => {
                     if (index < completedSteps) {
                         step.classList.add('completed');
@@ -2310,48 +2261,44 @@
                     }
                 });
             }
-    
+
             function updatePerformanceWidget() {
                 const performanceScore = document.querySelector('.performance-score');
                 const gameFps = document.querySelector('.game-fps');
                 
                 let score = 0;
-                if (selectedComponents.cpu) score += selectedComponents.cpu.price[0] / 10;
-                if (selectedComponents.gpu) score += selectedComponents.gpu.price[0] / 5;
-                if (selectedComponents.ram) score += selectedComponents.ram.price[0] / 20;
+                if (selectedComponents.cpu) score += selectedComponents.cpu.component.price[selectedComponents.cpu.merchantIndex] / 10;
+                if (selectedComponents.gpu) score += selectedComponents.gpu.component.price[selectedComponents.gpu.merchantIndex] / 5;
+                if (selectedComponents.ram) score += selectedComponents.ram.component.price[selectedComponents.ram.merchantIndex] / 20;
                 
                 performanceScore.textContent = Math.round(score);
-    
+
                 const games = [
                     { name: 'Cyberpunk 2077', fps: Math.round(score / 2) },
                     { name: 'Fortnite', fps: Math.round(score * 1.5) },
                     { name: 'Minecraft RTX', fps: Math.round(score * 1.2) }
                 ];
-    
+
                 gameFps.innerHTML = games.map(game => `
                     <div>
-                        <img src="game-${game.name.toLowerCase().replace(/\s/g, '')}.svg" alt="${game.name}" width="50" height="50">
+                        <img src="game-${game.name.toLowerCase().replace(/\s/g, '')}.svg" alt="${game.name}" width="32" height="32">
                         <span>${game.fps} FPS</span>
                     </div>
                 `).join('');
             }
-    
+
             function updateBudgetChart() {
                 const ctx = document.getElementById('budget-chart').getContext('2d');
-                const labels = Object.keys(selectedComponents);
-                const dataValues = Object.values(selectedComponents).map(component => component.price[0]);
-                const backgroundColors = [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB'
-                ];
-    
                 const data = {
-                    labels: labels,
+                    labels: Object.keys(selectedComponents),
                     datasets: [{
-                        data: dataValues,
-                        backgroundColor: backgroundColors.slice(0, labels.length)
+                        data: Object.entries(selectedComponents).map(([category, data]) => data.component.price[data.merchantIndex]),
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB'
+                        ]
                     }]
                 };
-    
+
                 new Chart(ctx, {
                     type: 'doughnut',
                     data: data,
@@ -2359,32 +2306,35 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
                             title: {
                                 display: true,
-                                text: 'Budget Allocation'
+                                text: 'Répartition du Budget'
                             }
                         }
                     }
                 });
             }
-    
+
             function initThemeSelector() {
                 const themeSelector = document.querySelector('.theme-selector');
                 const themeOptions = document.querySelector('.theme-options');
                 const themeOptionButtons = document.querySelectorAll('.theme-option');
                 const customThemeInputs = document.querySelectorAll('.custom-theme-inputs input');
-    
+
                 themeSelector.addEventListener('click', () => {
                     themeOptions.classList.toggle('show');
                 });
-    
+
                 themeOptionButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         const theme = button.dataset.theme;
                         applyTheme(theme);
                     });
                 });
-    
+
                 customThemeInputs.forEach(input => {
                     input.addEventListener('change', () => {
                         const customTheme = {
@@ -2396,10 +2346,17 @@
                     });
                 });
             }
-    
+
             function applyTheme(theme) {
                 const root = document.documentElement;
                 switch (theme) {
+                    case 'default':
+                        root.style.setProperty('--primary-color', '#0a1929');
+                        root.style.setProperty('--secondary-color', '#1e88e5');
+                        root.style.setProperty('--accent-color', '#00e5ff');
+                        root.style.setProperty('--background-color', '#0d1117');
+                        root.style.setProperty('--text-color', '#e0e0e0');
+                        break;
                     case 'dark':
                         root.style.setProperty('--primary-color', '#1a1a1a');
                         root.style.setProperty('--secondary-color', '#2c2c2c');
@@ -2423,106 +2380,108 @@
                         break;
                 }
             }
-    
+
             function applyCustomTheme(theme) {
                 const root = document.documentElement;
                 root.style.setProperty('--primary-color', theme.primary);
                 root.style.setProperty('--secondary-color', theme.secondary);
                 root.style.setProperty('--accent-color', theme.accent);
             }
-    
+
             function init3DView() {
                 const container = document.querySelector('.summary-3d-view');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer();
-    
+
                 renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(renderer.domElement);
-    
+
                 const geometry = new THREE.BoxGeometry();
                 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
                 const cube = new THREE.Mesh(geometry, material);
                 scene.add(cube);
-    
+
                 camera.position.z = 5;
-    
+
                 function animate() {
                     requestAnimationFrame(animate);
                     cube.rotation.x += 0.01;
                     cube.rotation.y += 0.01;
                     renderer.render(scene, camera);
                 }
-    
+
                 animate();
             }
-    
+
             function initFinancingCalculator() {
                 const calculateButton = document.querySelector('.financing-calculator button');
                 const monthlyPayment = document.querySelector('.monthly-payment');
-    
+
                 calculateButton.addEventListener('click', () => {
                     const loanAmount = totalPrice;
                     const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
                     const loanTerm = parseInt(document.getElementById('loan-term').value) * 12;
-    
+
                     if (isNaN(interestRate) || isNaN(loanTerm) || loanTerm <= 0) {
-                        alert("Veuillez entrer un taux d'intérêt valide et une durée de prêt positive.");
+                        alert("Veuillez entrer des valeurs valides pour le taux d'intérêt et la durée du prêt.");
                         return;
                     }
-    
+
                     const monthlyPaymentAmount = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
-                    monthlyPayment.textContent = `Mensualité: ${monthlyPaymentAmount.toFixed(2)}€`;
+                    monthlyPayment.textContent = `Mensualité: ${monthlyPaymentAmount.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 });
             }
-    
+
             function initFilters() {
                 const searchBar = document.querySelector('.search-bar');
-                const brandFilter = document.getElementById('brandFilter');
+                const brandFilter = document.querySelector('select[name="brand"]');
                 const priceFilter = document.querySelector('select[name="price"]');
                 const sortOption = document.querySelector('select[name="sort"]');
-    
-                searchBar.addEventListener('input', applyFilters);
-                brandFilter.addEventListener('change', applyFilters);
-                priceFilter.addEventListener('change', applyFilters);
-                sortOption.addEventListener('change', applyFilters);
-    
+
+                if (searchBar && brandFilter && priceFilter && sortOption) {
+                    searchBar.addEventListener('input', applyFilters);
+                    brandFilter.addEventListener('change', applyFilters);
+                    priceFilter.addEventListener('change', applyFilters);
+                    sortOption.addEventListener('change', applyFilters);
+                }
+
                 function applyFilters() {
                     const searchTerm = searchBar.value.toLowerCase();
                     const selectedBrand = brandFilter.value;
                     const selectedPriceRange = priceFilter.value;
                     const selectedSortOption = sortOption.value;
-    
+
                     filteredComponents = components[currentCategory].filter(component => {
                         const matchesSearch = component.name.toLowerCase().includes(searchTerm);
                         const matchesBrand = selectedBrand === "Filtrer par marque" || component.brand === selectedBrand;
                         const matchesPrice = selectedPriceRange === "Filtrer par prix" || 
-                            (selectedPriceRange === "Moins de 100€" && component.price[0] < 100) ||
-                            (selectedPriceRange === "100€ - 500€" && component.price[0] >= 100 && component.price[0] <= 500) ||
-                            (selectedPriceRange === "Plus de 500€" && component.price[0] > 500);
-    
+                            (selectedPriceRange === "Moins de 100€" && component.price.some(p => p < 100)) ||
+                            (selectedPriceRange === "100€ - 500€" && component.price.some(p => p >= 100 && p <= 500)) ||
+                            (selectedPriceRange === "Plus de 500€" && component.price.some(p => p > 500));
+            
                         return matchesSearch && matchesBrand && matchesPrice;
                     });
-    
+
                     switch(selectedSortOption) {
                         case "Prix croissant":
-                            filteredComponents.sort((a, b) => a.price[0] - b.price[0]);
+                            filteredComponents.sort((a, b) => Math.min(...a.price) - Math.min(...b.price));
                             break;
                         case "Prix décroissant":
-                            filteredComponents.sort((a, b) => b.price[0] - a.price[0]);
+                            filteredComponents.sort((a, b) => Math.max(...b.price) - Math.max(...a.price));
                             break;
                         case "Popularité":
                             break;
                     }
-    
+
                     updateComponentList();
                 }
             }
-    
+
             function saveConfiguration() {
                 const configName = prompt("Entrez un nom pour votre configuration:");
                 if (!configName) return;
-    
+
                 let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations')) || [];
                 const existingConfig = savedConfigs.find(cfg => cfg.name === configName);
                 if (existingConfig) {
@@ -2531,62 +2490,62 @@
                     }
                     savedConfigs = savedConfigs.filter(cfg => cfg.name !== configName);
                 }
-    
-                savedConfigs.push({
+
+                const configToSave = {
                     name: configName,
-                    components: selectedComponents,
+                    components: JSON.parse(JSON.stringify(selectedComponents)),
                     totalPrice: totalPrice
-                });
-    
+                };
+
+                savedConfigs.push(configToSave);
+
                 localStorage.setItem('savedConfigurations', JSON.stringify(savedConfigs));
                 alert("Configuration enregistrée avec succès!");
             }
-    
+
             function importConfiguration() {
                 let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations')) || [];
                 if (savedConfigs.length === 0) {
                     alert("Aucune configuration enregistrée disponible.");
                     return;
                 }
-    
+
                 let configList = "Sélectionnez une configuration à importer:\n";
                 savedConfigs.forEach((cfg, index) => {
                     configList += `${index + 1}. ${cfg.name}\n`;
                 });
-    
+
                 const choice = parseInt(prompt(configList)) - 1;
                 if (isNaN(choice) || choice < 0 || choice >= savedConfigs.length) {
                     alert("Choix invalide.");
                     return;
                 }
-    
+
                 const selectedConfig = savedConfigs[choice];
                 Object.keys(components).forEach(category => {
                     if (selectedConfig.components[category]) {
                         selectedComponents[category] = selectedConfig.components[category];
-                        // Update selectedMerchants if necessary
-                        selectedMerchants[category] = 0;
                     }
                 });
-    
+
                 updateSummary();
                 updateProgressBar();
                 alert(`Configuration "${selectedConfig.name}" importée avec succès!`);
             }
-    
+
             function shareConfiguration() {
                 if (Object.keys(selectedComponents).length === 0) {
                     alert("Aucune configuration sélectionnée à partager.");
                     return;
                 }
-    
+
                 const configData = JSON.stringify(selectedComponents);
                 const encodedData = encodeURIComponent(btoa(configData));
                 const shareURL = `${window.location.origin}${window.location.pathname}?config=${encodedData}`;
-    
+
                 prompt("Voici votre lien de partage:", shareURL);
             }
-    
+
             function loadConfigurationFromURL() {
                 const params = new URLSearchParams(window.location.search);
                 if (params.has('config')) {
@@ -2595,7 +2554,6 @@
                         const config = JSON.parse(decodedData);
                         Object.keys(config).forEach(category => {
                             selectedComponents[category] = config[category];
-                            selectedMerchants[category] = 0;
                         });
                         updateSummary();
                         updateProgressBar();
@@ -2605,59 +2563,117 @@
                     }
                 }
             }
-    
+
             function initNewButtons() {
                 const summaryButtons = document.querySelector('.summary-buttons');
-    
+
                 const saveButton = document.createElement('button');
                 saveButton.id = 'save-button';
                 saveButton.innerHTML = '<i class="fas fa-save"></i> Enregistrer';
                 summaryButtons.appendChild(saveButton);
-    
+
                 const importButton = document.createElement('button');
                 importButton.id = 'import-button';
                 importButton.innerHTML = '<i class="fas fa-file-import"></i> Importer';
                 summaryButtons.appendChild(importButton);
-    
+
                 const shareButton = document.createElement('button');
                 shareButton.id = 'share-button';
                 shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Partager';
                 summaryButtons.appendChild(shareButton);
-    
+
                 saveButton.addEventListener('click', saveConfiguration);
                 importButton.addEventListener('click', importConfiguration);
                 shareButton.addEventListener('click', shareConfiguration);
             }
-    
-            function extractMerchantName(url) {
-                try {
-                    const hostname = new URL(url).hostname;
-                    let name = hostname.replace('www.', '').split('.')[0];
-                    name = name.replace(/-/g, ' ');
-                    return name.charAt(0).toUpperCase() + name.slice(1);
-                } catch (e) {
-                    return 'Unknown';
+
+            function openReviewModal(componentId) {
+                const modal = document.getElementById('reviewModal');
+                const form = modal.querySelector('.review-form');
+                form.dataset.componentId = componentId;
+                form.querySelector('input[name="rating"]').value = '';
+                form.querySelector('textarea[name="review"]').value = '';
+                modal.style.display = 'block';
+            }
+
+            function closeReviewModal() {
+                const modal = document.getElementById('reviewModal');
+                modal.style.display = 'none';
+            }
+
+            function submitReview(event) {
+                event.preventDefault();
+                const form = event.target;
+                const componentId = form.dataset.componentId;
+                const rating = parseInt(form.querySelector('input[name="rating"]').value);
+                const reviewText = form.querySelector('textarea[name="review"]').value.trim();
+
+                if (isNaN(rating) || rating < 1 || rating > 5) {
+                    alert("Veuillez donner une note entre 1 et 5.");
+                    return;
                 }
+
+                if (reviewText === "") {
+                    alert("Veuillez rédiger un avis.");
+                    return;
+                }
+
+                if (!reviewsData[componentId]) {
+                    reviewsData[componentId] = [];
+                }
+
+                const reviewNumber = reviewsData[componentId].length + 1;
+                reviewsData[componentId].push({
+                    id: `avis ${reviewNumber}`,
+                    rating: rating,
+                    text: reviewText
+                });
+
+                saveReviews();
+                updateComponentList();
+                closeReviewModal();
+                alert("Votre avis a été soumis avec succès!");
             }
-    
-            function initComparisonModal() {
-                const modal = document.getElementById('comparisonModal');
-                modal.addEventListener('click', (event) => {
-                    if (event.target === modal) {
-                        modal.style.display = 'none';
-                    }
+
+            function viewReviews(componentId) {
+                const reviews = reviewsData[componentId] || [];
+                const reviewsSection = document.getElementById('reviews');
+                reviewsSection.innerHTML = `<h2>Avis pour ${getComponentName(componentId)}</h2>`;
+
+                if (reviews.length === 0) {
+                    reviewsSection.innerHTML += `<p>Aucun avis pour ce composant.</p>`;
+                } else {
+                    reviews.forEach(review => {
+                        reviewsSection.innerHTML += `
+                            <div class="review">
+                                <div class="review-id"><strong>${review.id}</strong></div>
+                                <div class="review-stars">${renderStars(review.rating)}</div>
+                                <div class="review-text">${review.text}</div>
+                            </div>
+                        `;
+                    });
+                }
+
+                window.scrollTo({
+                    top: reviewsSection.offsetTop,
+                    behavior: 'smooth'
                 });
             }
-    
-            function initThemeToggle() {
-                const themeSelector = document.querySelector('.theme-selector');
-                const themeOptions = document.querySelector('.theme-options');
-    
-                themeSelector.addEventListener('click', () => {
-                    themeOptions.classList.toggle('show');
-                });
+
+            function getComponentName(componentId) {
+                const [category, index] = componentId.split('-');
+                const component = components[category][index];
+                return component ? component.name : 'Composant';
             }
-    
+
+            window.shareSocial = function() {
+                console.log("Sharing on social media...");
+            }
+
+            window.viewInAR = function() {
+                console.log("Opening AR view...");
+            }
+
             updateComponentList();
             updateBrandFilter();
             initThemeSelector();
@@ -2666,14 +2682,70 @@
             initFilters();
             initNewButtons();
             loadConfigurationFromURL();
-            initComparisonModal();
-            initThemeToggle();
+
+            document.querySelectorAll('.nav-tabs a').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = e.target.getAttribute('href');
+                    if (!href) return;
+
+                    currentCategory = href.substring(1);
+                    filteredComponents = [...components[currentCategory]];
+                    updateBrandFilter();
+                    updateComponentList();
+                });
+            });
+
+            window.onclick = function(event) {
+                const modal = document.getElementById('comparisonModal');
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+
+                const reviewModal = document.getElementById('reviewModal');
+                if (event.target == reviewModal) {
+                    reviewModal.style.display = "none";
+                }
+            }
+
+            window.generatePDF = function() {
+                console.log("Generating PDF...");
+            }
+
+            function initReviewModal() {
+                const modal = document.createElement('div');
+                modal.id = 'reviewModal';
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <h2>Mettre une note</h2>
+                        <form class="review-form">
+                            <label for="rating">Note (1-5):</label>
+                            <input type="number" name="rating" min="1" max="5" required>
+                            <label for="review">Avis:</label>
+                            <textarea name="review" required></textarea>
+                            <button type="submit">Soumettre</button>
+                        </form>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.querySelector('.close-modal').addEventListener('click', closeReviewModal);
+                modal.querySelector('.review-form').addEventListener('submit', submitReview);
+            }
+
+            initReviewModal();
+
+            window.openReviewModal = openReviewModal;
+            window.viewReviews = viewReviews;
         });
-    
-        window.addEventListener('load', () => {
-        });
+
+        window.generatePDF = function() {
+            console.log("Generating PDF...");
+        }
     </script>
-<style>
+    <style>
         .comparison-table th, .comparison-table td {
             padding: 10px;
             border: 1px solid var(--accent-color);
@@ -2749,7 +2821,7 @@
             gap: 1.5rem;
         }
     }
-</style>
+    </style>
 </head>
 <body>
   <header>
@@ -2842,15 +2914,15 @@
                 </div>
                 <div class="game-fps">
                     <div>
-                        <img src="game-cyberpunk2077.svg" alt="Cyberpunk 2077">
+                        <img src="game-cyberpunk2077.svg" alt="Cyberpunk 2077" width="32" height="32">
                         <span>0 FPS</span>
                     </div>
                     <div>
-                        <img src="game-fortnite.svg" alt="Fortnite">
+                        <img src="game-fortnite.svg" alt="Fortnite" width="32" height="32">
                         <span>0 FPS</span>
                     </div>
                     <div>
-                        <img src="game-minecraftrtx.svg" alt="Minecraft RTX">
+                        <img src="game-minecraftrtx.svg" alt="Minecraft RTX" width="32" height="32">
                         <span>0 FPS</span>
                     </div>
                 </div>
@@ -2871,6 +2943,9 @@
                 <div class="monthly-payment">Mensualité: $0.00</div>
             </div>
         </div>
+    </div>
+
+    <div class="reviews-section" id="reviews">
     </div>
 </main>
 
@@ -2901,6 +2976,20 @@
 <div id="comparisonModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
   <div class="modal-content" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:2rem; border-radius:1rem; width:90%; max-width:800px;">
   </div>
+</div>
+
+<div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Mettre une note</h2>
+        <form class="review-form">
+            <label for="rating">Note (1-5):</label>
+            <input type="number" name="rating" min="1" max="5" required>
+            <label for="review">Avis:</label>
+            <textarea name="review" required></textarea>
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
