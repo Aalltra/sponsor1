@@ -2009,7 +2009,7 @@
             };
 
             let reviewsData = {};
-    
+
             async function fetchReviews() {
                 try {
                     const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/review.txt');
@@ -2021,7 +2021,7 @@
                 }
                 updateComponentList();
             }
-    
+
             function encodeToken(token) {
                 const encodedChars = token.split('').map(char => {
                     const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
@@ -2029,7 +2029,7 @@
                 });
                 return encodedChars.join('');
             }
-    
+
             function decodeToken(encodedToken) {
                 return encodedToken
                     .split('2$')
@@ -2037,30 +2037,30 @@
                     .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
                     .join('');
             }
-    
+
             const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
-    
+
             async function saveReviewsToGitHub() {
                 const username = 'Aalltra';
                 const repo = 'sponsor1';
                 const path = 'review.txt';
                 const token = decodeToken(encodedGithubToken);
-    
+
                 try {
                     const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
                         headers: {
                             'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3.raw'
+                            'Accept': 'application/vnd.github.v3+json' // Modifié pour obtenir le SHA
                         }
                     });
-    
+
                     if (!getResponse.ok) {
                         throw new Error('Échec de la récupération des informations du fichier');
                     }
-    
+
                     const getData = await getResponse.json();
                     const sha = getData.sha;
-    
+
                     const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
                         method: 'PUT',
                         headers: {
@@ -2073,22 +2073,24 @@
                             sha: sha
                         })
                     });
-    
+
                     if (!updateResponse.ok) {
-                        throw new Error('Échec de la mise à jour du fichier');
+                        const errorData = await updateResponse.json();
+                        throw new Error(`Échec de la mise à jour du fichier: ${errorData.message}`);
                     }
                 } catch (error) {
                     console.error("Erreur lors de la sauvegarde des avis sur GitHub:", error);
+                    alert(`Erreur lors de la sauvegarde des avis: ${error.message}`);
                 }
             }
-    
+
             function getAverageRating(componentId) {
                 const reviews = reviewsData[componentId] || [];
                 if (reviews.length === 0) return 0;
                 const total = reviews.reduce((sum, review) => sum + parseInt(review.note), 0);
                 return (total / reviews.length).toFixed(1);
             }
-    
+
             function updateBrandFilter() {
                 const brandFilter = document.getElementById('brandFilter');
                 brandFilter.innerHTML = '<option>Filtrer par marque</option>';
@@ -2102,22 +2104,22 @@
                     brandFilter.appendChild(option);
                 });
             }
-    
+
             const selectedComponents = {};
             let totalPrice = 0;
             let currentCategory = 'cpu';
             let filteredComponents = [...components[currentCategory]];
-    
+
             function updateComponentList() {
                 const componentList = document.querySelector('.components-grid');
                 componentList.innerHTML = '';
-    
+
                 filteredComponents.forEach((component, index) => {
                     const componentId = `${currentCategory}-${index}`;
                     const avgRating = getAverageRating(componentId);
                     const fullStars = Math.floor(avgRating);
                     const halfStar = avgRating % 1 >= 0.5 ? 1 : 0;
-    
+
                     const card = document.createElement('div');
                     card.className = 'component-card';
                     card.innerHTML = `
@@ -2142,7 +2144,7 @@
                     componentList.appendChild(card);
                 });
             }
-    
+
             function renderStars(rating) {
                 let starsHTML = '';
                 for (let i = 1; i <= 5; i++) {
@@ -2163,7 +2165,7 @@
                 }
                 return starsHTML;
             }
-    
+
             window.addToConfiguration = function(category, index) {
                 const component = filteredComponents[index];
                 if (!selectedComponents[category]) {
@@ -2178,12 +2180,12 @@
                 updateSummary();
                 updateProgressBar();
             };
-    
+
             window.compareComponent = function(category, index) {
                 const modal = document.getElementById('comparisonModal');
                 const modalContent = modal.querySelector('.modal-content');
                 const component = filteredComponents[index];
-    
+
                 let comparisonHTML = `
                     <h2>Comparaison de Composant</h2>
                     <table class="comparison-table">
@@ -2193,7 +2195,7 @@
                             ${components[category].map(comp => comp !== component ? `<th>${comp.name}</th>` : '').join('')}
                         </tr>
                 `;
-    
+
                 component.specs.forEach((spec, i) => {
                     comparisonHTML += `
                         <tr>
@@ -2203,7 +2205,7 @@
                         </tr>
                     `;
                 });
-    
+
                 comparisonHTML += `
                     <tr>
                         <td>Prix</td>
@@ -2215,10 +2217,10 @@
                     <canvas id="performanceChart"></canvas>
                 </div>
                 `;
-    
+
                 modalContent.innerHTML = comparisonHTML;
                 modal.style.display = 'block';
-    
+
                 const ctx = document.getElementById('performanceChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
@@ -2243,18 +2245,18 @@
                     }
                 });
             };
-    
+
             function updateSummary() {
                 const summaryList = document.querySelector('.selected-components');
                 summaryList.innerHTML = '';
                 totalPrice = 0;
-    
+
                 for (const [category, data] of Object.entries(selectedComponents)) {
                     const component = data.component;
                     const merchantIndex = data.merchantIndex;
                     const price = component.price[merchantIndex];
                     const merchantName = extractMerchantName(component.url[merchantIndex]);
-    
+
                     const li = document.createElement('li');
                     li.innerHTML = `
                         <span><i class="fas fa-${getCategoryIcon(category)}"></i> ${component.name}</span>
@@ -2263,44 +2265,44 @@
                     summaryList.appendChild(li);
                     totalPrice += price;
                 }
-    
+
                 document.querySelector('.total-price').textContent = `Total: ${totalPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 updatePerformanceWidget();
                 updateBudgetChart();
             }
-    
+
             document.querySelector('.summary-buttons').removeChild(document.querySelector('.summary-buttons').lastElementChild);
-    
+
             document.getElementById('order-button').addEventListener('click', () => {
                 const componentsToOrder = Object.entries(selectedComponents);
-    
+
                 if (componentsToOrder.length === 0) {
                     alert("Aucun composant sélectionné pour la commande.");
                     return;
                 }
-    
+
                 const modal = document.createElement('div');
                 modal.className = 'custom-modal';
-    
+
                 const modalContent = document.createElement('div');
                 modalContent.className = 'custom-modal-content';
-    
+
                 const title = document.createElement('h3');
                 title.innerText = 'Marchands';
                 modalContent.appendChild(title);
-    
+
                 componentsToOrder.forEach(([category, data], index) => {
                     const component = data.component;
                     const currentMerchantIndex = data.merchantIndex;
-    
+
                     const linkContainer = document.createElement('div');
                     linkContainer.className = 'link-container';
                     linkContainer.style.marginBottom = '1rem';
-    
+
                     const label = document.createElement('span');
                     label.innerText = component.name;
                     linkContainer.appendChild(label);
-    
+
                     const select = document.createElement('select');
                     select.className = 'merchant-select';
                     select.dataset.category = category;
@@ -2315,7 +2317,7 @@
                         select.appendChild(option);
                     });
                     linkContainer.appendChild(select);
-    
+
                     const openButton = document.createElement('button');
                     openButton.innerText = 'Ouvrir';
                     openButton.className = 'open-button';
@@ -2324,42 +2326,42 @@
                         window.open(component.url[select.value], '_blank');
                     });
                     linkContainer.appendChild(openButton);
-    
+
                     modalContent.appendChild(linkContainer);
-    
+
                     select.addEventListener('change', (e) => {
                         const selectedIdx = parseInt(e.target.value);
                         selectedComponents[e.target.dataset.category].merchantIndex = selectedIdx;
                         updateSummary();
                     });
                 });
-    
+
                 const totalPriceDiv = document.createElement('div');
                 totalPriceDiv.className = 'total-price';
                 totalPriceDiv.style.marginTop = '1rem';
                 totalPriceDiv.style.textAlign = 'right';
                 totalPriceDiv.textContent = `Total: ${totalPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 modalContent.appendChild(totalPriceDiv);
-    
+
                 const closeButton = document.createElement('button');
                 closeButton.innerText = '✖';
                 closeButton.className = 'close-button';
                 modalContent.appendChild(closeButton);
-    
+
                 modal.appendChild(modalContent);
                 document.body.appendChild(modal);
-    
+
                 closeButton.addEventListener('click', () => {
                     document.body.removeChild(modal);
                 });
-    
+
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         document.body.removeChild(modal);
                     }
                 });
             });
-    
+
             function extractMerchantName(url) {
                 try {
                     const hostname = new URL(url).hostname;
@@ -2370,11 +2372,11 @@
                     return 'Marchand';
                 }
             }
-    
+
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-    
+
             function getCategoryIcon(category) {
                 const icons = {
                     cpu: 'microchip',
@@ -2388,7 +2390,7 @@
                 };
                 return icons[category] || 'computer';
             }
-    
+
             function updateProgressBar() {
                 const progress = document.querySelector('.progress');
                 const progressSteps = document.querySelectorAll('.progress-step');
@@ -2396,7 +2398,7 @@
                 const totalSteps = Object.keys(components).length;
                 
                 progress.style.width = `${(completedSteps / totalSteps) * 100}%`;
-    
+
                 progressSteps.forEach((step, index) => {
                     if (index < completedSteps) {
                         step.classList.add('completed');
@@ -2405,7 +2407,7 @@
                     }
                 });
             }
-    
+
             function updatePerformanceWidget() {
                 const performanceScore = document.querySelector('.performance-score');
                 const gameFps = document.querySelector('.game-fps');
@@ -2416,13 +2418,13 @@
                 if (selectedComponents.ram) score += selectedComponents.ram.component.price[selectedComponents.ram.merchantIndex] / 20;
                 
                 performanceScore.textContent = Math.round(score);
-    
+
                 const games = [
                     { name: 'Cyberpunk 2077', fps: Math.round(score / 2) },
                     { name: 'Fortnite', fps: Math.round(score * 1.5) },
                     { name: 'Minecraft RTX', fps: Math.round(score * 1.2) }
                 ];
-    
+
                 gameFps.innerHTML = games.map(game => `
                     <div>
                         <img src="game-${game.name.toLowerCase().replace(/\s/g, '')}.svg" alt="${game.name}" width="32" height="32">
@@ -2430,7 +2432,7 @@
                     </div>
                 `).join('');
             }
-    
+
             function updateBudgetChart() {
                 const ctx = document.getElementById('budget-chart').getContext('2d');
                 const data = {
@@ -2442,7 +2444,7 @@
                         ]
                     }]
                 };
-    
+
                 new Chart(ctx, {
                     type: 'doughnut',
                     data: data,
@@ -2461,24 +2463,24 @@
                     }
                 });
             }
-    
+
             function initThemeSelector() {
                 const themeSelector = document.querySelector('.theme-selector');
                 const themeOptions = document.querySelector('.theme-options');
                 const themeOptionButtons = document.querySelectorAll('.theme-option');
                 const customThemeInputs = document.querySelectorAll('.custom-theme-inputs input');
-    
+
                 themeSelector.addEventListener('click', () => {
                     themeOptions.classList.toggle('show');
                 });
-    
+
                 themeOptionButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         const theme = button.dataset.theme;
                         applyTheme(theme);
                     });
                 });
-    
+
                 customThemeInputs.forEach(input => {
                     input.addEventListener('change', () => {
                         const customTheme = {
@@ -2490,7 +2492,7 @@
                     });
                 });
             }
-    
+
             function applyTheme(theme) {
                 const root = document.documentElement;
                 switch (theme) {
@@ -2524,83 +2526,83 @@
                         break;
                 }
             }
-    
+
             function applyCustomTheme(theme) {
                 const root = document.documentElement;
                 root.style.setProperty('--primary-color', theme.primary);
                 root.style.setProperty('--secondary-color', theme.secondary);
                 root.style.setProperty('--accent-color', theme.accent);
             }
-    
+
             function init3DView() {
                 const container = document.querySelector('.summary-3d-view');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
                 const renderer = new THREE.WebGLRenderer();
-    
+
                 renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(renderer.domElement);
-    
+
                 const geometry = new THREE.BoxGeometry();
                 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
                 const cube = new THREE.Mesh(geometry, material);
                 scene.add(cube);
-    
+
                 camera.position.z = 5;
-    
+
                 function animate() {
                     requestAnimationFrame(animate);
                     cube.rotation.x += 0.01;
                     cube.rotation.y += 0.01;
                     renderer.render(scene, camera);
                 }
-    
+
                 animate();
             }
-    
+
             function initFinancingCalculator() {
                 const calculateButton = document.querySelector('.financing-calculator button');
                 const monthlyPayment = document.querySelector('.monthly-payment');
-    
+
                 if (!calculateButton || !monthlyPayment) {
                     console.error("Financing calculator elements not found.");
                     return;
                 }
-    
+
                 calculateButton.addEventListener('click', () => {
                     const loanAmount = totalPrice;
                     const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
                     const loanTerm = parseInt(document.getElementById('loan-term').value) * 12;
-    
+
                     if (isNaN(interestRate) || isNaN(loanTerm) || loanTerm <= 0) {
                         alert("Veuillez entrer des valeurs valides pour le taux d'intérêt et la durée du prêt.");
                         return;
                     }
-    
+
                     const monthlyPaymentAmount = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
                     monthlyPayment.textContent = `Mensualité: ${monthlyPaymentAmount.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
                 });
             }
-    
+
             function initFilters() {
                 const searchBar = document.querySelector('.search-bar');
                 const brandFilter = document.querySelector('select[name="brand"]');
                 const priceFilter = document.querySelector('select[name="price"]');
                 const sortOption = document.querySelector('select[name="sort"]');
-    
+
                 if (searchBar && brandFilter && priceFilter && sortOption) {
                     searchBar.addEventListener('input', applyFilters);
                     brandFilter.addEventListener('change', applyFilters);
                     priceFilter.addEventListener('change', applyFilters);
                     sortOption.addEventListener('change', applyFilters);
                 }
-    
+
                 function applyFilters() {
                     const searchTerm = searchBar.value.toLowerCase();
                     const selectedBrand = brandFilter.value;
                     const selectedPriceRange = priceFilter.value;
                     const selectedSortOption = sortOption.value;
-    
+
                     filteredComponents = components[currentCategory].filter(component => {
                         const matchesSearch = component.name.toLowerCase().includes(searchTerm);
                         const matchesBrand = selectedBrand === "Filtrer par marque" || component.brand === selectedBrand;
@@ -2611,7 +2613,7 @@
             
                         return matchesSearch && matchesBrand && matchesPrice;
                     });
-    
+
                     switch(selectedSortOption) {
                         case "Prix croissant":
                             filteredComponents.sort((a, b) => Math.min(...a.price) - Math.min(...b.price));
@@ -2622,15 +2624,15 @@
                         case "Popularité":
                             break;
                     }
-    
+
                     updateComponentList();
                 }
             }
-    
+
             function saveConfiguration() {
                 const configName = prompt("Entrez un nom pour votre configuration:");
                 if (!configName) return;
-    
+
                 let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations')) || [];
                 const existingConfig = savedConfigs.find(cfg => cfg.name === configName);
                 if (existingConfig) {
@@ -2639,62 +2641,62 @@
                     }
                     savedConfigs = savedConfigs.filter(cfg => cfg.name !== configName);
                 }
-    
+
                 const configToSave = {
                     name: configName,
                     components: JSON.parse(JSON.stringify(selectedComponents)),
                     totalPrice: totalPrice
                 };
-    
+
                 savedConfigs.push(configToSave);
-    
+
                 localStorage.setItem('savedConfigurations', JSON.stringify(savedConfigs));
                 alert("Configuration enregistrée avec succès!");
             }
-    
+
             function importConfiguration() {
                 let savedConfigs = JSON.parse(localStorage.getItem('savedConfigurations')) || [];
                 if (savedConfigs.length === 0) {
                     alert("Aucune configuration enregistrée disponible.");
                     return;
                 }
-    
+
                 let configList = "Sélectionnez une configuration à importer:\n";
                 savedConfigs.forEach((cfg, index) => {
                     configList += `${index + 1}. ${cfg.name}\n`;
                 });
-    
+
                 const choice = parseInt(prompt(configList)) - 1;
                 if (isNaN(choice) || choice < 0 || choice >= savedConfigs.length) {
                     alert("Choix invalide.");
                     return;
                 }
-    
+
                 const selectedConfig = savedConfigs[choice];
                 Object.keys(components).forEach(category => {
                     if (selectedConfig.components[category]) {
                         selectedComponents[category] = selectedConfig.components[category];
                     }
                 });
-    
+
                 updateSummary();
                 updateProgressBar();
                 alert(`Configuration "${selectedConfig.name}" importée avec succès!`);
             }
-    
+
             function shareConfiguration() {
                 if (Object.keys(selectedComponents).length === 0) {
                     alert("Aucune configuration sélectionnée à partager.");
                     return;
                 }
-    
+
                 const configData = JSON.stringify(selectedComponents);
                 const encodedData = encodeURIComponent(btoa(configData));
                 const shareURL = `${window.location.origin}${window.location.pathname}?config=${encodedData}`;
-    
+
                 prompt("Voici votre lien de partage:", shareURL);
             }
-    
+
             function loadConfigurationFromURL() {
                 const params = new URLSearchParams(window.location.search);
                 if (params.has('config')) {
@@ -2712,30 +2714,30 @@
                     }
                 }
             }
-    
+
             function initNewButtons() {
                 const summaryButtons = document.querySelector('.summary-buttons');
-    
+
                 const saveButton = document.createElement('button');
                 saveButton.id = 'save-button';
                 saveButton.innerHTML = '<i class="fas fa-save"></i> Enregistrer';
                 summaryButtons.appendChild(saveButton);
-    
+
                 const importButton = document.createElement('button');
                 importButton.id = 'import-button';
                 importButton.innerHTML = '<i class="fas fa-file-import"></i> Importer';
                 summaryButtons.appendChild(importButton);
-    
+
                 const shareButton = document.createElement('button');
                 shareButton.id = 'share-button';
                 shareButton.innerHTML = '<i class="fas fa-share-alt"></i> Partager';
                 summaryButtons.appendChild(shareButton);
-    
+
                 saveButton.addEventListener('click', saveConfiguration);
                 importButton.addEventListener('click', importConfiguration);
                 shareButton.addEventListener('click', shareConfiguration);
             }
-    
+
             function openReviewModal(componentId) {
                 const modal = document.getElementById('reviewModal');
                 const form = modal.querySelector('.review-form');
@@ -2744,54 +2746,54 @@
                 form.querySelector('textarea[name="review"]').value = '';
                 modal.style.display = 'block';
             }
-    
+
             function closeReviewModal() {
                 const modal = document.getElementById('reviewModal');
                 modal.style.display = 'none';
             }
-    
+
             async function submitReview(event) {
                 event.preventDefault();
                 const form = event.target;
                 const componentId = form.dataset.componentId;
                 const rating = parseInt(form.querySelector('input[name="rating"]').value);
                 const reviewText = form.querySelector('textarea[name="review"]').value.trim();
-    
+
                 if (isNaN(rating) || rating < 1 || rating > 5) {
                     alert("Veuillez donner une note entre 1 et 5.");
                     return;
                 }
-    
+
                 if (reviewText === "") {
                     alert("Veuillez rédiger un avis.");
                     return;
                 }
-    
+
                 if (!reviewsData[componentId]) {
                     reviewsData[componentId] = [];
                 }
-    
+
                 const reviewNumber = reviewsData[componentId].length + 1;
                 reviewsData[componentId].push({
                     name: `Avis ${reviewNumber}`,
                     note: rating,
                     review: reviewText
                 });
-    
+
                 await saveReviewsToGitHub();
-    
+
                 await fetchReviews();
-    
+
                 updateComponentList();
                 closeReviewModal();
                 alert("Votre avis a été soumis avec succès!");
             }
-    
+
             async function viewReviews(componentId) {
                 const reviews = reviewsData[componentId] || [];
                 const reviewsSection = document.getElementById('reviews');
                 reviewsSection.innerHTML = `<h2>Avis pour ${getComponentName(componentId)}</h2>`;
-    
+
                 if (reviews.length === 0) {
                     reviewsSection.innerHTML += `<p>Aucun avis pour ce composant.</p>`;
                 } else {
@@ -2805,13 +2807,13 @@
                         `;
                     });
                 }
-    
+
                 window.scrollTo({
                     top: reviewsSection.offsetTop,
                     behavior: 'smooth'
                 });
             }
-    
+
             function renderReviewStars(rating) {
                 let starsHTML = '';
                 for (let i = 1; i <= 5; i++) {
@@ -2823,23 +2825,23 @@
                 }
                 return starsHTML;
             }
-    
+
             function getComponentName(componentId) {
                 const [category, index] = componentId.split('-');
                 const component = components[category] && components[category][index];
                 return component ? component.name : 'Composant';
             }
-    
+
             window.shareSocial = function() {
                 console.log("Sharing on social media...");
             }
-    
+
             window.viewInAR = function() {
                 console.log("Opening AR view...");
             }
-    
+
             window.viewReviews = viewReviews;
-    
+
             updateComponentList();
             updateBrandFilter();
             initThemeSelector();
@@ -2849,40 +2851,42 @@
             initNewButtons();
             loadConfigurationFromURL();
             fetchReviews();
-    
+
             document.querySelectorAll('.nav-tabs a').forEach(tab => {
                 tab.addEventListener('click', (e) => {
                     e.preventDefault();
                     const href = e.target.getAttribute('href');
                     if (!href) return;
-    
+
                     currentCategory = href.substring(1);
                     filteredComponents = [...components[currentCategory]];
                     updateBrandFilter();
                     updateComponentList();
                 });
             });
-    
+
             window.onclick = function(event) {
                 const modal = document.getElementById('comparisonModal');
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
-    
+
                 const reviewModal = document.getElementById('reviewModal');
                 if (event.target == reviewModal) {
                     reviewModal.style.display = "none";
                 }
             }
-    
+
             window.generatePDF = function() {
                 console.log("Generating PDF...");
             }
-    
+
             const reviewModal = document.getElementById('reviewModal');
-            reviewModal.querySelector('.close-modal').addEventListener('click', closeReviewModal);
-            reviewModal.querySelector('.review-form').addEventListener('submit', submitReview);
-    
+            if (reviewModal) {
+                reviewModal.querySelector('.close-modal').addEventListener('click', closeReviewModal);
+                reviewModal.querySelector('.review-form').addEventListener('submit', submitReview);
+            }
+
             window.openReviewModal = openReviewModal;
         });
     </script>
@@ -2894,7 +2898,7 @@
         .financing-calculator {
           display: none;
         }
-      </style>
+    </style>
 </head>
 <body>
   <header>
