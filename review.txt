@@ -1,1 +1,24 @@
-
+{
+  "cpu-0": [
+    {
+      "name": "Avis 1",
+      "note": 4,
+      "review": "Bon composant"
+    },
+    {
+      "name": "Avis 2",
+      "note": 5,
+      "review": "Excellent Composant"
+    },
+    {
+      "name": "Avis 3",
+      "note": 2,
+      "review": "Bof pas ouf"
+    },
+    {
+      "name": "Avis 4",
+      "note": 1,
+      "review": "Ceci est un test"
+    }
+  ]
+}
