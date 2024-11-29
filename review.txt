@@ -10,11 +10,4 @@
     "Excellent Composant",
     "Bof pas ouf"
   ],
-  "cpu-1": [
-    {
-      "name": "Avis 1",
-      "note": 2,
-      "review": "Second test"
-    }
-  ]
 }
