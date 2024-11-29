@@ -9,5 +9,5 @@
     "Bon composant",
     "Excellent Composant",
     "Bof pas ouf"
-  ],
+  ]
 }
