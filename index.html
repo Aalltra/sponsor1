@@ -2024,21 +2024,37 @@ async function fetchReviews() {
             return;
         }
         
-        // Parcourir toutes les catégories et composants pour associer les avis
+        // Exemple de nouvel avis à ajouter
+        const newReview = {
+            name: "AMD Ryzen 9 5900X Boxed",
+            note: "3",
+            review: "Pas mal"
+        };
+
+        // Vérifiez si le composant existe déjà
+        let componentExists = false;
         for (const [category, componentList] of Object.entries(components)) {
             componentList.forEach((component, index) => {
                 const componentId = `${category}-${index}`;
-                // Vérifier si le nom du composant correspond
                 if (data.name === component.name) {
-                    // Associer les notes et avis
-                    reviewsData[componentId] = data.note.map((note, i) => ({
-                        name: `Avis ${i + 1}`,
-                        note: parseInt(note),
-                        review: data.review[i]
-                    }));
+                    // Ajouter les nouvelles notes et avis
+                    data.note.push(newReview.note);
+                    data.review.push(newReview.review);
+                    componentExists = true;
                 }
             });
         }
+
+        // Si le composant n'existe pas, ajoutez-le
+        if (!componentExists) {
+            data.name = newReview.name;
+            data.note = [newReview.note];
+            data.review = [newReview.review];
+        }
+
+        // Enregistrez les données mises à jour
+        await saveReviewsToGitHub(data);
+
     } catch (error) {
         console.error("Erreur lors du chargement des avis:", error);
         reviewsData = {};
@@ -2064,49 +2080,49 @@ async function fetchReviews() {
     
             const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
     
-            async function saveReviewsToGitHub() {
-                const username = 'Aalltra';
-                const repo = 'sponsor1';
-                const path = 'review.txt';
-                const token = decodeToken(encodedGithubToken);
-    
-                try {
-                    const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json' // Modifié pour obtenir le SHA
-                        }
-                    });
-    
-                    if (!getResponse.ok) {
-                        throw new Error('Échec de la récupération des informations du fichier');
-                    }
-    
-                    const getData = await getResponse.json();
-                    const sha = getData.sha;
-    
-                    const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        },
-                        body: JSON.stringify({
-                            message: 'Mise à jour des avis',
-                            content: btoa(JSON.stringify(reviewsData, null, 2)),
-                            sha: sha
-                        })
-                    });
-    
-                    if (!updateResponse.ok) {
-                        const errorData = await updateResponse.json();
-                        throw new Error(`Échec de la mise à jour du fichier: ${errorData.message}`);
-                    }
-                } catch (error) {
-                    console.error("Erreur lors de la sauvegarde des avis sur GitHub:", error);
-                    alert(`Erreur lors de la sauvegarde des avis: ${error.message}`);
-                }
+async function saveReviewsToGitHub(data) {
+    const username = 'Aalltra';
+    const repo = 'sponsor1';
+    const path = 'review.txt';
+    const token = decodeToken(encodedGithubToken);
+
+    try {
+        const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json' // Modifié pour obtenir le SHA
             }
+        });
+
+        if (!getResponse.ok) {
+            throw new Error('Échec de la récupération des informations du fichier');
+        }
+
+        const getData = await getResponse.json();
+        const sha = getData.sha;
+
+        const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify({
+                message: 'Mise à jour des avis',
+                content: btoa(JSON.stringify(data, null, 2)),
+                sha: sha
+            })
+        });
+
+        if (!updateResponse.ok) {
+            const errorData = await updateResponse.json();
+            throw new Error(`Échec de la mise à jour du fichier: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error("Erreur lors de la sauvegarde des avis sur GitHub:", error);
+        alert(`Erreur lors de la sauvegarde des avis: ${error.message}`);
+    }
+}
     
             function getAverageRating(componentId) {
                 const reviews = reviewsData[componentId] || [];
