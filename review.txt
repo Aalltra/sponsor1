@@ -28,5 +28,14 @@
     "review": [
       "Autre test"
     ]
+  },
+  "motherboard-0": {
+    "name": "Inter-Tech C-703 Vision",
+    "note": [
+      "4"
+    ],
+    "review": [
+      "Incroyable"
+    ]
   }
 }
