@@ -5,12 +5,14 @@
     "5",
     "2",
     "3",
+    "3",
     "3"
   ],
   "review": [
     "Bon composant",
     "Excellent Composant",
     "Bof pas ouf",
+    "Pas mal",
     "Pas mal",
     "Pas mal"
   ]
