@@ -3,11 +3,13 @@
   "note": [
     "4",
     "5",
-    "2"
+    "2",
+    "3"
   ],
   "review": [
     "Bon composant",
     "Excellent Composant",
-    "Bof pas ouf"
+    "Bof pas ouf",
+    "Pas mal"
   ]
 }
