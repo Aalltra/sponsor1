@@ -14,11 +14,13 @@
       "name": "Avis 3",
       "note": 2,
       "review": "Bof pas ouf"
-    },
+    }
+  ],
+  "cpu-1": [
     {
-      "name": "Avis 4",
-      "note": 1,
-      "review": "Ceci est un test"
+      "name": "Avis 1",
+      "note": 2,
+      "review": "Ceci est un autre test"
     }
   ]
 }
