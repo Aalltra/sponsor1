@@ -2098,23 +2098,26 @@
                     const card = document.createElement('div');
                     card.className = 'component-card';
                     card.innerHTML = `
-                        ${component.image ? `<img src="${component.image}" alt="${component.name}" width="600" height="400">` : ''}
+                        ${component.image ? `<img src="${component.image}" alt="${component.name}" width="600" height="400">` : `<svg width="100%" height="220" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100%" height="100%" fill="#fff" rx="16"></rect>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ccc" font-size="1.2rem">Image Indisponible</text>
+                        </svg>`}
                         <h3>${component.name}</h3>
                         <ul>
                             ${component.specs.map(spec => `<li><i class="fas fa-check"></i>${spec}</li>`).join('')}
                         </ul>
                         <p class="price">${component.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</p>
                         <div class="buttons">
-                            <button onclick="window.addToConfiguration('${currentCategory}', ${index})">Ajouter</button>
-                            <button onclick="window.compareComponent('${currentCategory}', ${index})">Comparer</button>
+                            <button onclick="window.addToConfiguration('${currentCategory}', ${index})"><i class="fas fa-plus"></i> Ajouter</button>
+                            <button onclick="window.compareComponent('${currentCategory}', ${index})"><i class="fas fa-exchange-alt"></i> Comparer</button>
                         </div>
                         <div class="rating">
                             <div class="stars" data-rating="${avgRating}" data-component-id="${componentId}">
                                 ${renderStars(avgRating)}
                             </div>
-                            <button class="review-button" onclick="window.openReviewModal('${componentId}')">Mettre une note</button>
+                            <button class="review-button" onclick="window.openReviewModal('${componentId}')"><i class="fas fa-star"></i> Mettre une note</button>
                         </div>
-                        <a href="#reviews" class="view-reviews" onclick="window.viewReviews('${componentId}')">Voir les avis</a>
+                        <a href="https://example.com/#reviews" class="view-reviews" onclick="window.viewReviews('${componentId}')"><i class="fas fa-eye"></i> Voir les avis</a>
                     `;
                     componentList.appendChild(card);
                 });
@@ -2215,6 +2218,17 @@
                         scales: {
                             y: {
                                 beginAtZero: true
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Comparaison de Performance'
                             }
                         }
                     }
@@ -2402,14 +2416,22 @@
 
                 gameFps.innerHTML = games.map(game => `
                     <div>
-                        <img src="game-${game.name.toLowerCase().replace(/\s/g, '')}.svg" alt="${game.name}" width="32" height="32">
+                        <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#3498db"></circle>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="12px">${game.name.slice(0,2)}</text>
+                        </svg>
                         <span>${game.fps} FPS</span>
                     </div>
                 `).join('');
             }
 
             function updateBudgetChart() {
-                const ctx = document.getElementById('budget-chart').getContext('2d');
+                const chartContainer = document.getElementById('budget-chart');
+                const ctx = document.createElement('canvas');
+                ctx.id = 'budgetChartCanvas';
+                chartContainer.innerHTML = '';
+                chartContainer.appendChild(ctx);
+
                 const data = {
                     labels: Object.keys(selectedComponents),
                     datasets: [{
@@ -2513,15 +2535,19 @@
                 const container = document.querySelector('.summary-3d-view');
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer();
+                const renderer = new THREE.WebGLRenderer({ antialias: true });
 
                 renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(renderer.domElement);
 
                 const geometry = new THREE.BoxGeometry();
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const material = new THREE.MeshStandardMaterial({ color: 0x00ff00, metalness: 0.5, roughness: 0.5 });
                 const cube = new THREE.Mesh(geometry, material);
                 scene.add(cube);
+
+                const light = new THREE.PointLight(0xffffff, 1);
+                light.position.set(10, 10, 10);
+                scene.add(light);
 
                 camera.position.z = 5;
 
@@ -2902,14 +2928,14 @@
   <nav>
     <div class="container">
       <ul class="nav-tabs">
-        <li><a href="#cpu"><i class="fas fa-microchip"></i>CPU</a></li>
-        <li><a href="#motherboard"><i class="fas fa-server"></i>Carte mère</a></li>
-        <li><a href="#ram"><i class="fas fa-memory"></i>RAM</a></li>
-        <li><a href="#gpu"><i class="fas fa-tv"></i>GPU</a></li>
-        <li><a href="#storage"><i class="fas fa-hdd"></i>Stockage</a></li>
-        <li><a href="#psu"><i class="fas fa-plug"></i>Alimentation</a></li>
-        <li><a href="#case"><i class="fas fa-desktop"></i>Boîtier</a></li>
-        <li><a href="#cooling"><i class="fas fa-fan"></i>Refroidissement</a></li>
+        <li><a href="https://example.com/#cpu"><i class="fas fa-microchip"></i>CPU</a></li>
+        <li><a href="https://example.com/#motherboard"><i class="fas fa-server"></i>Carte mère</a></li>
+        <li><a href="https://example.com/#ram"><i class="fas fa-memory"></i>RAM</a></li>
+        <li><a href="https://example.com/#gpu"><i class="fas fa-tv"></i>GPU</a></li>
+        <li><a href="https://example.com/#storage"><i class="fas fa-hdd"></i>Stockage</a></li>
+        <li><a href="https://example.com/#psu"><i class="fas fa-plug"></i>Alimentation</a></li>
+        <li><a href="https://example.com/#case"><i class="fas fa-desktop"></i>Boîtier</a></li>
+        <li><a href="https://example.com/#cooling"><i class="fas fa-fan"></i>Refroidissement</a></li>
       </ul>
     </div>
   </nav>
@@ -2978,15 +3004,24 @@
                 </div>
                 <div class="game-fps">
                     <div>
-                        <img src="game-cyberpunk2077.svg" alt="Cyberpunk 2077" width="32" height="32">
+                        <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#3498db"></circle>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="12px">CP</text>
+                        </svg>
                         <span>0 FPS</span>
                     </div>
                     <div>
-                        <img src="game-fortnite.svg" alt="Fortnite" width="32" height="32">
+                        <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#e74c3c"></circle>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="12px">FT</text>
+                        </svg>
                         <span>0 FPS</span>
                     </div>
                     <div>
-                        <img src="game-minecraftrtx.svg" alt="Minecraft RTX" width="32" height="32">
+                        <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="16" fill="#2ecc71"></circle>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="12px">MC</text>
+                        </svg>
                         <span>0 FPS</span>
                     </div>
                 </div>
@@ -3051,7 +3086,7 @@
             <input type="number" name="rating" min="1" max="5" required>
             <label for="review">Avis:</label>
             <textarea name="review" required></textarea>
-            <button type="submit">Soumettre</button>
+            <button type="submit"><i class="fas fa-paper-plane"></i> Soumettre</button>
         </form>
     </div>
 </div>
