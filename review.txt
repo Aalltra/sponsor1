@@ -1,5 +1,20 @@
 {
   "name": "AMD Ryzen 9 5900X Boxed",
-  "note": ["4", "5", "2"],
-  "review": ["Bon composant", "Excellent Composant", "Bof pas ouf"]
+  "note": [
+    "4",
+    "5",
+    "2"
+  ],
+  "review": [
+    "Bon composant",
+    "Excellent Composant",
+    "Bof pas ouf"
+  ],
+  "cpu-1": [
+    {
+      "name": "Avis 1",
+      "note": 5,
+      "review": "test"
+    }
+  ]
 }
