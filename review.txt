@@ -13,8 +13,8 @@
   "cpu-1": [
     {
       "name": "Avis 1",
-      "note": 5,
-      "review": "test"
+      "note": 2,
+      "review": "Second test"
     }
   ]
 }
