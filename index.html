@@ -2118,6 +2118,8 @@ async function saveReviewsToGitHub(data) {
             const errorData = await updateResponse.json();
             throw new Error(`Échec de la mise à jour du fichier: ${errorData.message}`);
         }
+
+        console.log('Avis enregistrés avec succès');
     } catch (error) {
         console.error("Erreur lors de la sauvegarde des avis sur GitHub:", error);
         alert(`Erreur lors de la sauvegarde des avis: ${error.message}`);
