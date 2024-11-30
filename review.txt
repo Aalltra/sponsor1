@@ -1,1 +1,10 @@
-
+{
+  "Inter-Tech C-703 Vision": {
+    "note": [
+      "2"
+    ],
+    "review": [
+      "bug"
+    ]
+  }
+}
