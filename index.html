@@ -1954,15 +1954,15 @@
                 motherboard: [
                 { name: "Inter-Tech C-703 Vision", specs: [], price: [85.61], image: "", brand: "", url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] },
             ],
-    
+
                 ram: [
                     ],
-    
-    
+
+
                 gpu: [
-    
+
                 ],
-    
+
                 storage: [
                 ],
                 psu: [
@@ -1972,7 +1972,7 @@
                 cooling: [
                     ],
             };
-    
+
           let reviewsData = {};
 
 async function fetchReviews() {
@@ -2035,6 +2035,8 @@ async function saveReviewsToGitHub() {
         const getData = await getResponse.json();
         const sha = getData.sha;
 
+        const encodedContent = btoa(unescape(encodeURIComponent(JSON.stringify(reviewsData, null, 2))));
+
         const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
             method: 'PUT',
             headers: {
@@ -2043,7 +2045,7 @@ async function saveReviewsToGitHub() {
             },
             body: JSON.stringify({
                 message: 'Mise à jour des avis',
-                content: btoa(JSON.stringify(reviewsData, null, 2)),
+                content: encodedContent,
                 sha: sha
             })
         });
@@ -2068,9 +2070,9 @@ function getAverageRating(componentId) {
 function updateBrandFilter() {
     const brandFilter = document.getElementById('brandFilter');
     brandFilter.innerHTML = '<option>Filtrer par marque</option>';
-    
+
     const brands = [...new Set(components[currentCategory].map(comp => comp.brand).filter(brand => brand))];
-    
+
     brands.forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
@@ -2271,9 +2273,26 @@ document.getElementById('order-button').addEventListener('click', () => {
 
     const modal = document.createElement('div');
     modal.className = 'custom-modal';
+    modal.style.display = 'block';
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.background = 'rgba(0,0,0,0.5)';
+    modal.style.zIndex = '1000';
 
     const modalContent = document.createElement('div');
     modalContent.className = 'custom-modal-content';
+    modalContent.style.position = 'absolute';
+    modalContent.style.top = '50%';
+    modalContent.style.left = '50%';
+    modalContent.style.transform = 'translate(-50%, -50%)';
+    modalContent.style.background = '#fff';
+    modalContent.style.padding = '2rem';
+    modalContent.style.borderRadius = '1rem';
+    modalContent.style.width = '90%';
+    modalContent.style.maxWidth = '800px';
 
     const title = document.createElement('h3');
     title.innerText = 'Marchands';
@@ -2306,6 +2325,11 @@ document.getElementById('order-button').addEventListener('click', () => {
         });
         linkContainer.appendChild(select);
 
+        const priceSpan = document.createElement('span');
+        priceSpan.className = 'merchant-price';
+        priceSpan.textContent = component.price[currentMerchantIndex].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'});
+        linkContainer.appendChild(priceSpan);
+
         const openButton = document.createElement('button');
         openButton.innerText = 'Ouvrir';
         openButton.className = 'open-button';
@@ -2321,6 +2345,9 @@ document.getElementById('order-button').addEventListener('click', () => {
             const selectedIdx = parseInt(e.target.value);
             selectedComponents[e.target.dataset.category].merchantIndex = selectedIdx;
             updateSummary();
+
+            // Update the price displayed in the modal
+            priceSpan.textContent = component.price[selectedIdx].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'});
         });
     });
 
@@ -2334,6 +2361,7 @@ document.getElementById('order-button').addEventListener('click', () => {
     const closeButton = document.createElement('button');
     closeButton.innerText = '✖';
     closeButton.className = 'close-button';
+    closeButton.style.marginTop = '1rem';
     modalContent.appendChild(closeButton);
 
     modal.appendChild(modalContent);
@@ -2691,7 +2719,7 @@ function shareConfiguration() {
     }
 
     const configData = JSON.stringify(selectedComponents);
-    const encodedData = encodeURIComponent(btoa(configData));
+    const encodedData = encodeURIComponent(btoa(unescape(encodeURIComponent(configData))));
     const shareURL = `${window.location.origin}${window.location.pathname}?config=${encodedData}`;
 
     prompt("Voici votre lien de partage:", shareURL);
@@ -2701,7 +2729,7 @@ function loadConfigurationFromURL() {
     const params = new URLSearchParams(window.location.search);
     if (params.has('config')) {
         try {
-            const decodedData = atob(decodeURIComponent(params.get('config')));
+            const decodedData = decodeURIComponent(atob(params.get('config')));
             const config = JSON.parse(decodedData);
             Object.keys(config).forEach(category => {
                 selectedComponents[category] = config[category];
@@ -2899,17 +2927,70 @@ if (reviewModal) {
 }
 
 window.openReviewModal = openReviewModal;
-});
-</script>
-<style>
-#budget-chart,
-.performance-widget,
-.summary-3d-view,
-.summary-actions,
-.financing-calculator {
-display: none;
-}
-</style>
+        });
+    </script>
+    <style>
+    #budget-chart,
+    .performance-widget,
+    .summary-3d-view,
+    .summary-actions,
+    .financing-calculator {
+    display: none;
+    }
+
+    /* Styles for the merchant price update */
+    .merchant-price {
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    /* Additional styles for modals */
+    .custom-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+    }
+
+    .custom-modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 90%;
+        max-width: 800px;
+    }
+
+    .close-button {
+        background: #ff4d4d;
+        border: none;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .close-button:hover {
+        background: #ff1a1a;
+    }
+    </style>
+    <script>
+        // Ensure that the review modal elements exist before adding event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewModal = document.getElementById('reviewModal');
+            if (reviewModal) {
+                reviewModal.querySelector('.close-modal').addEventListener('click', closeReviewModal);
+                reviewModal.querySelector('.review-form').addEventListener('submit', submitReview);
+            }
+        });
+    </script>
 </head>
 <body>
 <header>
@@ -2982,6 +3063,7 @@ display: none;
 <div class="total-price">Total: €0.00</div>
 <div class="summary-buttons">
 <button id="order-button"><i class="fas fa-shopping-cart"></i> Commander</button>
+<!-- Les graphiques et widgets sont initialement cachés -->
 <div id="budget-chart"></div>
 <div class="performance-widget">
     <h3>Performance estimée</h3>
