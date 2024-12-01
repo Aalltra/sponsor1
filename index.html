@@ -2358,7 +2358,7 @@
                 specs: [], 
                 price: [85.61], 
                 image: "", 
-                brand: "", 
+                brand: "Inter-Tech", 
                 url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
             },
             ],
@@ -2368,7 +2368,7 @@
                     specs: [], 
                     price: [85.61], 
                     image: "", 
-                    brand: "", 
+                    brand: "Inter-Tech", 
                     url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
                 },
             ],
@@ -3048,6 +3048,31 @@
             }
         }
 
+        function updateBrandFilter() {
+            const brandFilter = document.getElementById('brandFilter');
+            if (!brandFilter) return;
+
+            const brands = new Set();
+            Object.values(components).forEach(category => {
+                category.forEach(component => {
+                    if (component.brand) {
+                        brands.add(component.brand);
+                    }
+                });
+            });
+
+            brandFilter.querySelectorAll('option:not(:first-child)').forEach(option => option.remove());
+
+            const sortedBrands = Array.from(brands).sort();
+
+            sortedBrands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandFilter.appendChild(option);
+            });
+        }
+
         updateComponentList();
         updateBrandFilter();
         initThemeSelector();
@@ -3091,6 +3116,49 @@
 
         window.openReviewModal = openReviewModal;
     });
+
+    function initNewButtons() {
+    }
+
+    function loadConfigurationFromURL() {
+    }
+
+    function closeReviewModal() {
+        const reviewModal = document.getElementById('reviewModal');
+        if (reviewModal) {
+            reviewModal.style.display = 'none';
+        }
+    }
+
+    function submitReview(event) {
+        event.preventDefault();
+        const form = event.target;
+        const rating = form.rating.value;
+        const review = form.review.value;
+        const componentName = form.closest('.modal-content').getAttribute('data-component-name');
+
+        if (!reviewsData[componentName]) {
+            reviewsData[componentName] = { note: [], review: [] };
+        }
+
+        reviewsData[componentName].note.push(rating);
+        reviewsData[componentName].review.push(review);
+
+        saveReviewsToGitHub();
+
+        alert('Merci pour votre avis!');
+        form.reset();
+        closeReviewModal();
+    }
+
+    function openReviewModal(componentName) {
+        const reviewModal = document.getElementById('reviewModal');
+        if (reviewModal) {
+            const modalContent = reviewModal.querySelector('.modal-content');
+            modalContent.setAttribute('data-component-name', componentName);
+            reviewModal.style.display = 'block';
+        }
+    }
     </script>
     <style>
     #budget-chart,
