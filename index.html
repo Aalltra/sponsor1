@@ -2147,18 +2147,29 @@
             }
         }
 
-        function encodeToken(token) {
-            return btoa(token);
-        }
+function encodeToken(token) {
+    const encodedChars = token.split('').map(char => {
+        const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
+        return `2$${nextChar}`;
+    }).join('');
+    
+    return btoa(encodedChars);
+}
 
-        function decodeToken(encodedToken) {
-            try {
-                return atob(encodedToken);
-            } catch (error) {
-                console.error('Erreur de décodage du token:', error);
-                return '';
-            }
-        }
+function decodeToken(encodedToken) {
+    try {
+        const base64Decoded = atob(encodedToken);
+        
+        return base64Decoded
+            .split('2$')
+            .filter(char => char !== '')
+            .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+            .join('');
+    } catch (error) {
+        console.error('Erreur de décodage du token:', error);
+        return '';
+    }
+}
 
         const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
 
