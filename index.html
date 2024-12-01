@@ -2216,16 +2216,16 @@
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3.raw'
+                        'Accept': 'application/vnd.github.v3+json'
                     }
                 });
 
                 let accounts = {};
                 let sha = '';
                 if (accountResponse.ok) {
-                    const accountText = await accountResponse.text();
-                    accounts = JSON.parse(accountText);
                     const accountData = await accountResponse.json();
+                    const accountText = atob(accountData.content);
+                    accounts = JSON.parse(accountText);
                     sha = accountData.sha;
                 }
 
@@ -2283,7 +2283,7 @@
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3.raw'
+                        'Accept': 'application/vnd.github.v3+json'
                     }
                 });
 
@@ -2291,7 +2291,11 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accounts = JSON.parse(await accountResponse.text());
+                const accountData = await accountResponse.json();
+                const accountText = atob(accountData.content);
+                const accounts = JSON.parse(accountText);
+                const sha = accountData.sha;
+
                 let found = false;
                 let userAccount = null;
 
@@ -2573,7 +2577,7 @@
                     <tr>
                         <th>Caractéristique</th>
                         <th>${component.name}</th>
-                        ${components[category].map(comp => comp !== component ? `<th>${comp.name}</th>` : '').join('')}
+                        ${components[category].filter(comp => comp !== component).map(comp => `<th>${comp.name}</th>`).join('')}
                     </tr>
             `;
 
@@ -2582,7 +2586,7 @@
                     <tr>
                         <td>Spec ${i + 1}</td>
                         <td>${spec}</td>
-                        ${components[category].map(comp => comp !== component ? `<td>${comp.specs[i] || '-'}</td>` : '').join('')}
+                        ${components[category].filter(comp => comp !== component).map(comp => `<td>${comp.specs[i] || '-'}</td>`).join('')}
                     </tr>
                 `;
             });
@@ -2591,7 +2595,7 @@
                 <tr>
                     <td>Prix</td>
                     <td>${component.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>
-                    ${components[category].map(comp => comp !== component ? `<td>${comp.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>` : '').join('')}
+                    ${components[category].filter(comp => comp !== component).map(comp => `<td>${comp.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>`).join('')}
                 </tr>
             </table>
             <div class="performance-chart">
@@ -2607,7 +2611,7 @@
                 type: 'bar',
                 data: {
                     labels: ['Performance', 'Prix', 'Valeur'],
-                    datasets: components[category].map(comp => ({
+                    datasets: components[category].filter(comp => comp !== component).map(comp => ({
                         label: comp.name,
                         data: [
                             Math.floor(Math.random() * 100),
@@ -3098,12 +3102,12 @@
 
         window.onclick = function(event) {
             const modal = document.getElementById('comparisonModal');
-            if (event.target == modal) {
+            if (modal && event.target == modal) {
                 modal.style.display = "none";
             }
 
             const reviewModal = document.getElementById('reviewModal');
-            if (event.target == reviewModal) {
+            if (reviewModal && event.target == reviewModal) {
                 reviewModal.style.display = "none";
             }
         }
@@ -3115,6 +3119,7 @@
         }
 
         window.openReviewModal = openReviewModal;
+
     });
 
     function initNewButtons() {
