@@ -2176,12 +2176,20 @@
 
         // Fonction pour encoder une chaîne Unicode en base64
         function btoaUnicode(str) {
-            return btoa(unescape(encodeURIComponent(str)));
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                function(match, p1) {
+                    return String.fromCharCode('0x' + p1);
+                }
+            ));
         }
 
         // Fonction pour décoder une chaîne base64 en Unicode
         function atobUnicode(str) {
-            return decodeURIComponent(escape(atob(str)));
+            return decodeURIComponent(
+                Array.prototype.map.call(atob(str), function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join('')
+            );
         }
 
         // Fonction pour convertir un fichier en base64
@@ -2329,7 +2337,8 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accounts = JSON.parse(await accountResponse.text());
+                const accountsText = await accountResponse.text();
+                const accounts = JSON.parse(accountsText);
                 let found = false;
                 let userAccount = null;
 
@@ -2474,11 +2483,19 @@
         }
 
         function btoaUnicode(str) {
-            return btoa(unescape(encodeURIComponent(str)));
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                function(match, p1) {
+                    return String.fromCharCode('0x' + p1);
+                }
+            ));
         }
 
         function atobUnicode(str) {
-            return decodeURIComponent(escape(atob(str)));
+            return decodeURIComponent(
+                Array.prototype.map.call(atob(str), function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join('')
+            );
         }
 
         async function saveReviewsToGitHub() {
