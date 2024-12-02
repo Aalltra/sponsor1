@@ -2430,29 +2430,32 @@
             updateComponentList();
         }
 
-        function encodeToken(token) {
-            const encodedChars = token.split('').map(char => {
-                const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
-                return `2$${nextChar}`;
-            });
-            return encodedChars.join('');
-        }
+function encodeCustomToken(token) {
+    const encodedChars = token.split('').map(char => {
+        const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
+        return `2$${nextChar}`;
+    });
+    return encodedChars.join('');
+}
 
-        function decodeToken(encodedToken) {
-            return encodedToken
-                .split('2$')
-                .filter(char => char !== '')
-                .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
-                .join('');
-        }
+// Décodage personnalisé avec retour au caractère original
+function decodeCustomToken(encodedToken) {
+    return encodedToken
+        .split('2$')
+        .filter(char => char !== '')
+        .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+        .join('');
+}
 
-        function btoaUnicode(str) {
-            return btoa(unescape(encodeURIComponent(str)));
-        }
+// Encodage Unicode-sûr en Base64
+function btoaUnicode(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
 
-        function atobUnicode(str) {
-            return decodeURIComponent(escape(atob(str)));
-        }
+// Décodage Unicode-sûr en Base64
+function atobUnicode(str) {
+    return decodeURIComponent(escape(atob(str)));
+}
 
         async function saveReviewsToGitHub() {
             const username = 'Aalltra';
