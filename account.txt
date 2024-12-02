@@ -14,5 +14,13 @@
     "logo": "QMD France_1733181937577.jpg",
     "ip": "37.67.199.77",
     "coche": "True"
+  },
+  "Account 3": {
+    "email": "bucephale77380@gmail.com",
+    "password": "Pasteur1822",
+    "username": "Autre test",
+    "logo": "Autre test_1733182075503.png",
+    "ip": "37.67.199.77",
+    "coche": "True"
   }
 }
