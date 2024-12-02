@@ -2243,7 +2243,7 @@
                     },
                     body: JSON.stringify({
                         message: `Upload logo ${logoName}`,
-                        content: logoBase64
+                        content: base64EncodeUnicode(logoBase64)
                     })
                 });
 
@@ -2326,11 +2326,11 @@
 
             try {
                 const token = decodeToken(encodedGithubToken);
-                // Récupération de account.txt avec l'Accept correct
+                // Récupération de account.txt
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json'
+                        'Accept': 'application/vnd.github.v3.raw'
                     }
                 });
 
@@ -2338,9 +2338,9 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accountData = await accountResponse.json();
-                const accountsText = base64DecodeUnicode(accountData.content);
-                const accounts = JSON.parse(accountsText);
+                const accountsText = accountResponse.body ? await accountResponse.text() : '';
+                const decodedAccountsText = base64DecodeUnicode(accountsText);
+                const accounts = JSON.parse(decodedAccountsText);
                 let found = false;
                 let userAccount = null;
 
