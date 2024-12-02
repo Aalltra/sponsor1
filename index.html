@@ -2155,16 +2155,44 @@
 
         // Fonction pour encoder le token (exemple simple, à sécuriser en production)
         function encodeToken(token) {
-            return btoa(token);
+            const encodedChars = token.split('').map(char => {
+                const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
+                return `2$${nextChar}`;
+            });
+            return encodedChars.join('');
         }
 
         // Fonction pour décoder le token
         function decodeToken(encodedToken) {
-            return atob(encodedToken);
+            return encodedToken
+                .split('2$')
+                .filter(char => char !== '')
+                .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+                .join('');
         }
 
         // Votre token GitHub encodé
         const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
+
+        // Fonction pour encoder une chaîne Unicode en base64
+        function btoaUnicode(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        // Fonction pour décoder une chaîne base64 en Unicode
+        function atobUnicode(str) {
+            return decodeURIComponent(escape(atob(str)));
+        }
+
+        // Fonction pour convertir un fichier en base64
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
 
         // Gestionnaire d'inscription
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
@@ -2194,8 +2222,7 @@
 
             try {
                 // Upload du logo sur GitHub
-                const logoContent = await logoFile.text();
-                const logoBase64 = btoa(logoContent);
+                const logoBase64 = await getBase64(logoFile);
                 const token = decodeToken(encodedGithubToken);
 
                 // Upload du logo
@@ -2254,7 +2281,7 @@
                     },
                     body: JSON.stringify({
                         message: 'Ajout d\'un nouveau compte',
-                        content: btoa(JSON.stringify(accounts, null, 2)),
+                        content: btoaUnicode(JSON.stringify(accounts, null, 2)),
                         sha: sha || undefined
                     })
                 });
