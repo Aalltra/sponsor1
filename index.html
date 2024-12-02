@@ -2243,7 +2243,7 @@
                     },
                     body: JSON.stringify({
                         message: `Upload logo ${logoName}`,
-                        content: base64EncodeUnicode(logoBase64)
+                        content: logoBase64 // Correction apportée ici: suppression de base64EncodeUnicode
                     })
                 });
 
