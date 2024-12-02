@@ -2081,8 +2081,8 @@
         const authButtons = document.createElement('div');
         authButtons.className = 'auth-buttons';
         authButtons.innerHTML = `
-            <a href="https://aalltra.github.io/sponsor1/inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
-            <a href="https://aalltra.github.io/sponsor1/connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+            <a href="https://example.com/inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
+            <a href="https://example.com/connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
         `;
         headerContent.appendChild(authButtons);
 
@@ -2243,7 +2243,7 @@
                     },
                     body: JSON.stringify({
                         message: `Upload logo ${logoName}`,
-                        content: logoBase64 // Correction apportée ici: suppression de base64EncodeUnicode
+                        content: logoBase64
                     })
                 });
 
@@ -2326,11 +2326,11 @@
 
             try {
                 const token = decodeToken(encodedGithubToken);
-                // Récupération de account.txt
+                // Récupération de account.txt avec l'Accept correct
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3.raw'
+                        'Accept': 'application/vnd.github.v3+json'
                     }
                 });
 
@@ -2338,9 +2338,9 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accountsText = accountResponse.body ? await accountResponse.text() : '';
-                const decodedAccountsText = base64DecodeUnicode(accountsText);
-                const accounts = JSON.parse(decodedAccountsText);
+                const accountData = await accountResponse.json();
+                const accountsText = base64DecodeUnicode(accountData.content);
+                const accounts = JSON.parse(accountsText);
                 let found = false;
                 let userAccount = null;
 
