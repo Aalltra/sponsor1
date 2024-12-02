@@ -6,5 +6,13 @@
     "logo": "QMD France_1733181937577.jpg",
     "ip": "37.67.199.77",
     "coche": "True"
+  },
+  "Account 2": {
+    "email": "aalltrac@gmail.com",
+    "password": "Pasteur1822",
+    "username": "Aalltrac",
+    "logo": "Aalltrac_1733182731713.png",
+    "ip": "37.67.199.77",
+    "coche": "True"
   }
 }
