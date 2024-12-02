@@ -2166,16 +2166,6 @@
         // Votre token GitHub encodé
         const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
 
-        // Fonction pour convertir un fichier en base64
-        function getBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = error => reject(error);
-            });
-        }
-
         // Gestionnaire d'inscription
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -2204,7 +2194,8 @@
 
             try {
                 // Upload du logo sur GitHub
-                const logoBase64 = await getBase64(logoFile);
+                const logoContent = await logoFile.text();
+                const logoBase64 = btoa(logoContent);
                 const token = decodeToken(encodedGithubToken);
 
                 // Upload du logo
@@ -3127,6 +3118,7 @@
     });
     </script>
     <style>
+    /* Styles additionnels pour le configurateur */
     #budget-chart,
     .performance-widget,
     .summary-3d-view,
