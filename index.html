@@ -2057,6 +2057,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Boutons Inscription et Connexion
         const headerContent = document.querySelector('.header-content');
         const authButtons = document.createElement('div');
         authButtons.className = 'auth-buttons';
@@ -2066,6 +2067,7 @@
         `;
         headerContent.appendChild(authButtons);
 
+        // Section Inscription
         const mainContent = document.querySelector('main');
         const signupSection = document.createElement('div');
         signupSection.id = 'inscription';
@@ -2096,6 +2098,7 @@
         `;
         mainContent.insertBefore(signupSection, mainContent.firstChild);
 
+        // Section Connexion
         const loginSection = document.createElement('div');
         loginSection.id = 'connexion';
         loginSection.className = 'auth-section';
@@ -2114,6 +2117,7 @@
         `;
         mainContent.insertBefore(loginSection, mainContent.firstChild);
 
+        // Affichage de l'utilisateur connecté
         const userInfo = document.createElement('div');
         userInfo.className = 'user-info';
         userInfo.innerHTML = `
@@ -2122,6 +2126,7 @@
         `;
         headerContent.appendChild(userInfo);
 
+        // Fonction pour afficher les sections en fonction du hash
         function showSection() {
             const hash = window.location.hash;
             document.querySelectorAll('.auth-section').forEach(section => {
@@ -2134,8 +2139,9 @@
         }
 
         window.addEventListener('hashchange', showSection);
-        showSection();
+        showSection(); // Initial call
 
+        // Fonction pour obtenir l'adresse IP
         async function getUserIP() {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
@@ -2147,24 +2153,20 @@
             }
         }
 
-    function encodeToken(token) {
-        const encodedChars = token.split('').map(char => {
-            const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
-            return `2$${nextChar}`;
-        });
-        return encodedChars.join('');
-    }
-    
-    function decodeToken(encodedToken) {
-        return encodedToken
-            .split('2$')
-            .filter(char => char !== '')
-            .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
-            .join('');
-    }
+        // Fonction pour encoder le token (exemple simple, à sécuriser en production)
+        function encodeToken(token) {
+            return btoa(token);
+        }
 
-        const encodedGithubToken = '2$h2$i2$q2$`2$[2$p2$52$C2$R2$z2$Q2${2$G2$22$j2$y2$:2$j2$S2$r2$e2$X2$q2$x2$j2$C2$K2$M2$N2$T2$C2$42$i2$Q2$42$T2$Z2$y2$Q2$u';
+        // Fonction pour décoder le token
+        function decodeToken(encodedToken) {
+            return atob(encodedToken);
+        }
 
+        // Votre token GitHub encodé
+        const encodedGithubToken = 'VOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTREVOTRE';
+
+        // Fonction pour convertir un fichier en base64
         function getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -2174,6 +2176,7 @@
             });
         }
 
+        // Gestionnaire d'inscription
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const errorDiv = document.getElementById('signup-error');
@@ -2200,13 +2203,11 @@
             const logoName = `${username}_${Date.now()}${logoFile.name.substring(logoFile.name.lastIndexOf('.'))}`;
 
             try {
+                // Upload du logo sur GitHub
                 const logoBase64 = await getBase64(logoFile);
                 const token = decodeToken(encodedGithubToken);
 
-                if (!token) {
-                    throw new Error('Token GitHub invalide.');
-                }
-
+                // Upload du logo
                 const uploadLogoResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/logo/' + logoName, {
                     method: 'PUT',
                     headers: {
@@ -2223,21 +2224,23 @@
                     throw new Error('Échec de l\'upload du logo.');
                 }
 
+                // Récupération de l'IP
                 const userIP = await getUserIP();
 
+                // Récupération et mise à jour de account.txt
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json'
+                        'Accept': 'application/vnd.github.v3.raw'
                     }
                 });
 
                 let accounts = {};
                 let sha = '';
                 if (accountResponse.ok) {
-                    const accountData = await accountResponse.json();
-                    const accountText = atob(accountData.content);
+                    const accountText = await accountResponse.text();
                     accounts = JSON.parse(accountText);
+                    const accountData = await accountResponse.json();
                     sha = accountData.sha;
                 }
 
@@ -2251,6 +2254,7 @@
                     "coche": adsConsent ? "True" : "False"
                 };
 
+                // Sauvegarde de account.txt sur GitHub
                 const updatedAccountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     method: 'PUT',
                     headers: {
@@ -2269,7 +2273,9 @@
                 }
 
                 alert('Inscription réussie! Vous pouvez maintenant vous connecter.');
+                // Réinitialiser le formulaire
                 document.getElementById('signup-form').reset();
+                // Rediriger vers connexion
                 window.location.hash = '#connexion';
             } catch (error) {
                 console.error(error);
@@ -2277,6 +2283,7 @@
             }
         });
 
+        // Gestionnaire de connexion
         document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const errorDiv = document.getElementById('login-error');
@@ -2292,13 +2299,11 @@
 
             try {
                 const token = decodeToken(encodedGithubToken);
-                if (!token) {
-                    throw new Error('Token GitHub invalide.');
-                }
+                // Récupération de account.txt
                 const accountResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/account.txt', {
                     headers: {
                         'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json'
+                        'Accept': 'application/vnd.github.v3.raw'
                     }
                 });
 
@@ -2306,11 +2311,7 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accountData = await accountResponse.json();
-                const accountText = atob(accountData.content);
-                const accounts = JSON.parse(accountText);
-                const sha = accountData.sha;
-
+                const accounts = JSON.parse(await accountResponse.text());
                 let found = false;
                 let userAccount = null;
 
@@ -2327,12 +2328,15 @@
                     return;
                 }
 
+                // Affichage des informations utilisateur
                 document.querySelector('.auth-buttons').style.display = 'none';
                 userInfo.style.display = 'flex';
                 document.getElementById('user-username').textContent = userAccount.username;
                 document.getElementById('user-logo').src = `logo/${userAccount.logo}`;
 
+                // Réinitialiser le formulaire
                 document.getElementById('login-form').reset();
+                // Rediriger vers la page principale
                 window.location.hash = '';
             } catch (error) {
                 console.error(error);
@@ -2340,6 +2344,7 @@
             }
         });
 
+        // Gestion de la déconnexion
         const logoutButton = document.createElement('button');
         logoutButton.innerHTML = '<i class="fas fa-sign-out-alt"></i> Déconnexion';
         logoutButton.style.marginLeft = '10px';
@@ -2363,6 +2368,7 @@
             document.querySelector('.auth-buttons').style.display = 'flex';
         });
 
+        // Initial Configurator Code
         const components = {
             cpu: [{
                 name: "AMD Ryzen 9 5900X Boxed",
@@ -2377,7 +2383,7 @@
                 specs: [], 
                 price: [85.61], 
                 image: "", 
-                brand: "Inter-Tech", 
+                brand: "", 
                 url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
             },
             ],
@@ -2387,21 +2393,27 @@
                     specs: [], 
                     price: [85.61], 
                     image: "", 
-                    brand: "Inter-Tech", 
+                    brand: "", 
                     url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
                 },
             ],
             ram: [
+                // Add RAM components here
             ],
             gpu: [
+                // Add GPU components here
             ],
             storage: [
+                // Add Storage components here
             ],
             psu: [
+                // Add PSU components here
             ],
             case: [
+                // Add Case components here
             ],
             cooling: [
+                // Add Cooling components here
             ],
         };
 
@@ -2427,6 +2439,22 @@
             updateComponentList();
         }
 
+        function encodeToken(token) {
+            const encodedChars = token.split('').map(char => {
+                const nextChar = String.fromCharCode(char.charCodeAt(0) + 1);
+                return `2$${nextChar}`;
+            });
+            return encodedChars.join('');
+        }
+
+        function decodeToken(encodedToken) {
+            return encodedToken
+                .split('2$')
+                .filter(char => char !== '')
+                .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+                .join('');
+        }
+
         function btoaUnicode(str) {
             return btoa(unescape(encodeURIComponent(str)));
         }
@@ -2440,11 +2468,6 @@
             const repo = 'sponsor1';
             const path = 'review.txt';
             const token = decodeToken(encodedGithubToken);
-
-            if (!token) {
-                alert('Token GitHub invalide.');
-                return;
-            }
 
             try {
                 const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
@@ -2581,7 +2604,7 @@
                     <tr>
                         <th>Caractéristique</th>
                         <th>${component.name}</th>
-                        ${components[category].filter(comp => comp !== component).map(comp => `<th>${comp.name}</th>`).join('')}
+                        ${components[category].map(comp => comp !== component ? `<th>${comp.name}</th>` : '').join('')}
                     </tr>
             `;
 
@@ -2590,7 +2613,7 @@
                     <tr>
                         <td>Spec ${i + 1}</td>
                         <td>${spec}</td>
-                        ${components[category].filter(comp => comp !== component).map(comp => `<td>${comp.specs[i] || '-'}</td>`).join('')}
+                        ${components[category].map(comp => comp !== component ? `<td>${comp.specs[i] || '-'}</td>` : '').join('')}
                     </tr>
                 `;
             });
@@ -2599,7 +2622,7 @@
                 <tr>
                     <td>Prix</td>
                     <td>${component.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>
-                    ${components[category].filter(comp => comp !== component).map(comp => `<td>${comp.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>`).join('')}
+                    ${components[category].map(comp => comp !== component ? `<td>${comp.price[0].toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}</td>` : '').join('')}
                 </tr>
             </table>
             <div class="performance-chart">
@@ -2615,7 +2638,7 @@
                 type: 'bar',
                 data: {
                     labels: ['Performance', 'Prix', 'Valeur'],
-                    datasets: components[category].filter(comp => comp !== component).map(comp => ({
+                    datasets: components[category].map(comp => ({
                         label: comp.name,
                         data: [
                             Math.floor(Math.random() * 100),
@@ -2670,6 +2693,7 @@
             updatePerformanceWidget();
             updateBudgetChart();
             
+            // Update merchant window if it's open
             const merchantModal = document.querySelector('.custom-modal');
             if (merchantModal) {
                 const selects = merchantModal.querySelectorAll('.merchant-select');
@@ -2679,6 +2703,7 @@
                         select.value = selectedComponents[category].merchantIndex;
                     }
                 });
+                // Update total price in merchant window
                 const totalPriceDiv = merchantModal.querySelector('.total-price');
                 if (totalPriceDiv) {
                     totalPriceDiv.textContent = `Total: ${totalPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'})}`;
@@ -3056,31 +3081,7 @@
             }
         }
 
-        function updateBrandFilter() {
-            const brandFilter = document.getElementById('brandFilter');
-            if (!brandFilter) return;
-
-            const brands = new Set();
-            Object.values(components).forEach(category => {
-                category.forEach(component => {
-                    if (component.brand) {
-                        brands.add(component.brand);
-                    }
-                });
-            });
-
-            brandFilter.querySelectorAll('option:not(:first-child)').forEach(option => option.remove());
-
-            const sortedBrands = Array.from(brands).sort();
-
-            sortedBrands.forEach(brand => {
-                const option = document.createElement('option');
-                option.value = brand;
-                option.textContent = brand;
-                brandFilter.appendChild(option);
-            });
-        }
-
+        // Initialize Configurator Functions and Components
         updateComponentList();
         updateBrandFilter();
         initThemeSelector();
@@ -3106,12 +3107,12 @@
 
         window.onclick = function(event) {
             const modal = document.getElementById('comparisonModal');
-            if (modal && event.target == modal) {
+            if (event.target == modal) {
                 modal.style.display = "none";
             }
 
             const reviewModal = document.getElementById('reviewModal');
-            if (reviewModal && event.target == reviewModal) {
+            if (event.target == reviewModal) {
                 reviewModal.style.display = "none";
             }
         }
@@ -3123,51 +3124,7 @@
         }
 
         window.openReviewModal = openReviewModal;
-
     });
-
-    function initNewButtons() {
-    }
-
-    function loadConfigurationFromURL() {
-    }
-
-    function closeReviewModal() {
-        const reviewModal = document.getElementById('reviewModal');
-        if (reviewModal) {
-            reviewModal.style.display = 'none';
-        }
-    }
-
-    function submitReview(event) {
-        event.preventDefault();
-        const form = event.target;
-        const rating = form.rating.value;
-        const review = form.review.value;
-        const componentName = form.closest('.modal-content').getAttribute('data-component-name');
-
-        if (!reviewsData[componentName]) {
-            reviewsData[componentName] = { note: [], review: [] };
-        }
-
-        reviewsData[componentName].note.push(rating);
-        reviewsData[componentName].review.push(review);
-
-        saveReviewsToGitHub();
-
-        alert('Merci pour votre avis!');
-        form.reset();
-        closeReviewModal();
-    }
-
-    function openReviewModal(componentName) {
-        const reviewModal = document.getElementById('reviewModal');
-        if (reviewModal) {
-            const modalContent = reviewModal.querySelector('.modal-content');
-            modalContent.setAttribute('data-component-name', componentName);
-            reviewModal.style.display = 'block';
-        }
-    }
     </script>
     <style>
     #budget-chart,
@@ -3177,152 +3134,14 @@
     .financing-calculator {
         display: none;
     }
-
-    .comparison-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    .comparison-table th, .comparison-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-    }
-
-    .comparison-table th {
-        background-color: var(--secondary-color, #1e88e5);
-        color: white;
-    }
-
-    .open-button {
-        padding: 5px 10px;
-        background-color: var(--accent-color, #00e5ff);
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .open-button:hover {
-        background-color: #00c8d1;
-    }
-
-    .reviews-section {
-        padding: 20px;
-    }
-
-    .review {
-        background-color: var(--background-color, #0d1117);
-        color: var(--text-color, #e0e0e0);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-    }
-
-    .review h4 {
-        margin: 0 0 5px 0;
-    }
-
-    .review p {
-        margin: 5px 0;
-    }
-
-    .selected-components li {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .progress-step {
-        width: 20px;
-        height: 20px;
-        background-color: #ccc;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .progress-step.completed {
-        background-color: var(--secondary-color, #1e88e5);
-    }
-
-    .custom-modal {
-        display: none;
-        position: fixed;
-        z-index: 1003;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.5);
-    }
-
-    .custom-modal .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-        border-radius: 10px;
-        position: relative;
-    }
-
-    .close-button {
-        color: #aaa;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 25px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close-button:hover,
-    .close-button:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
     </style>
-    <script>
-    async function viewReviews(componentName) {
-        const reviewsSection = document.getElementById('reviews');
-        reviewsSection.innerHTML = `<h2>Avis pour ${componentName}</h2>`;
-
-        if (reviewsData[componentName] && reviewsData[componentName].review.length > 0) {
-            reviewsData[componentName].review.forEach((rev, index) => {
-                reviewsSection.innerHTML += `
-                    <div class="review">
-                        <h4>Note: ${reviewsData[componentName].note[index]}/5</h4>
-                        <p>${rev}</p>
-                    </div>
-                `;
-            });
-        } else {
-            reviewsSection.innerHTML += '<p>Aucun avis pour le moment.</p>';
-        }
-    }
-
-    window.shareSocial = function() {
-        alert('Fonction de partage social à implémenter.');
-    };
-
-    window.generatePDF = function() {
-        alert('Fonction d\'export PDF à implémenter.');
-    };
-
-    window.viewInAR = function() {
-        alert('Fonction de réalité augmentée à implémenter.');
-    };
-    </script>
 </head>
 <body>
 <header>
     <div class="container">
         <div class="header-content">
             <h1><i class="fas fa-desktop header-icon"></i>QMD - Configurateur PC</h1>
+            <!-- Les boutons Inscription et Connexion sont ajoutés dynamiquement par JavaScript -->
         </div>
         <div class="progress-bar">
             <div class="progress"></div>
@@ -3369,12 +3188,14 @@
             </div>
         </div>
         <div class="components-grid">
+            <!-- Composants générés dynamiquement -->
         </div>
     </div>
 
     <div class="configuration-summary">
         <h2>Résumé de la configuration</h2>
         <ul class="selected-components">
+            <!-- Composants sélectionnés affichés ici -->
         </ul>
         <div class="total-price">Total: €0.00</div>
         <div class="summary-buttons">
