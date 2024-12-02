@@ -3101,13 +3101,10 @@
 
         // Initialize Configurator Functions and Components
         updateComponentList();
-        updateBrandFilter();
         initThemeSelector();
         init3DView();
         initFinancingCalculator();
         initFilters();
-        initNewButtons();
-        loadConfigurationFromURL();
         fetchReviews();
 
         document.querySelectorAll('.nav-tabs a').forEach(tab => {
@@ -3118,7 +3115,6 @@
 
                 currentCategory = href.substring(1);
                 filteredComponents = [...components[currentCategory]];
-                updateBrandFilter();
                 updateComponentList();
             });
         });
@@ -3137,11 +3133,133 @@
 
         const reviewModalElement = document.getElementById('reviewModal');
         if (reviewModalElement) {
-            reviewModalElement.querySelector('.close-modal').addEventListener('click', closeReviewModal);
-            reviewModalElement.querySelector('.review-form').addEventListener('submit', submitReview);
+            reviewModalElement.querySelector('.close-modal').addEventListener('click', () => {
+                reviewModalElement.style.display = 'none';
+            });
+            reviewModalElement.querySelector('.review-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const rating = reviewModalElement.querySelector('input[name="rating"]').value;
+                const review = reviewModalElement.querySelector('textarea[name="review"]').value.trim();
+                const componentName = reviewModalElement.getAttribute('data-component-name');
+
+                if (!rating || !review) {
+                    alert('Veuillez remplir tous les champs.');
+                    return;
+                }
+
+                if (!reviewsData[componentName]) {
+                    reviewsData[componentName] = { note: [], review: [] };
+                }
+
+                reviewsData[componentName].note.push(rating);
+                reviewsData[componentName].review.push(review);
+
+                await saveReviewsToGitHub();
+                reviewModalElement.style.display = 'none';
+                updateComponentList();
+            });
         }
 
-        window.openReviewModal = openReviewModal;
+        window.openReviewModal = function(componentName) {
+            const reviewModal = document.getElementById('reviewModal');
+            if (reviewModal) {
+                reviewModal.style.display = 'block';
+                reviewModal.setAttribute('data-component-name', componentName);
+            }
+        };
+
+        function updateBrandFilter() {
+            const brandFilter = document.getElementById('brandFilter');
+            const brands = new Set();
+
+            components[currentCategory].forEach(component => {
+                if (component.brand) {
+                    brands.add(component.brand);
+                }
+            });
+
+            brandFilter.innerHTML = '<option>Filtrer par marque</option>';
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandFilter.appendChild(option);
+            });
+        }
+
+        function updatePerformanceWidget() {
+            const performanceScore = document.querySelector('.performance-score');
+            const gameFps = document.querySelector('.game-fps');
+
+            let score = 0;
+            if (selectedComponents.cpu) score += selectedComponents.cpu.component.price[selectedComponents.cpu.merchantIndex] / 10;
+            if (selectedComponents.gpu) score += selectedComponents.gpu.component.price[selectedComponents.gpu.merchantIndex] / 5;
+            if (selectedComponents.ram) score += selectedComponents.ram.component.price[selectedComponents.ram.merchantIndex] / 20;
+
+            performanceScore.textContent = Math.round(score);
+
+            const games = [
+                { name: 'Cyberpunk 2077', fps: Math.round(score / 2) },
+                { name: 'Fortnite', fps: Math.round(score * 1.5) },
+                { name: 'Minecraft RTX', fps: Math.round(score * 1.2) }
+            ];
+
+            gameFps.innerHTML = games.map(game => `
+                <div>
+                    <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="16" fill="#3498db"></circle>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="12px">${game.name.slice(0,2)}</text>
+                    </svg>
+                    <span>${game.fps} FPS</span>
+                </div>
+            `).join('');
+        }
+
+        function initNewButtons() {
+            // Placeholder for any new button initializations
+        }
+
+        function loadConfigurationFromURL() {
+            // Placeholder for loading configuration from URL if needed
+        }
+
+        window.shareSocial = function() {
+            // Placeholder for sharing functionality
+            alert('Partager la configuration');
+        };
+
+        window.generatePDF = function() {
+            // Placeholder for PDF generation functionality
+            alert('Générer un PDF');
+        };
+
+        window.viewInAR = function() {
+            // Placeholder for AR functionality
+            alert('Voir en réalité augmentée');
+        };
+
+        window.viewReviews = function(componentName) {
+            const reviewsSection = document.getElementById('reviews');
+            if (!reviewsData[componentName]) {
+                reviewsSection.innerHTML = `<h3>Aucun avis pour ${componentName}</h3>`;
+                return;
+            }
+
+            const reviews = reviewsData[componentName].review;
+            const notes = reviewsData[componentName].note;
+
+            let reviewsHTML = `<h3>Avis pour ${componentName}</h3>`;
+            reviews.forEach((review, index) => {
+                reviewsHTML += `
+                    <div class="review">
+                        <p><strong>Note:</strong> ${notes[index]} / 5</p>
+                        <p>${review}</p>
+                    </div>
+                `;
+            });
+
+            reviewsSection.innerHTML = reviewsHTML;
+        };
     });
     </script>
     <style>
