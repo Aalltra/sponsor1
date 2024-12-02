@@ -2450,7 +2450,8 @@
             try {
                 const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/review.txt');
                 const text = await response.text();
-                const parsedData = JSON.parse(text);
+                const decodedText = atobUnicode(text);
+                const parsedData = JSON.parse(decodedText);
 
                 reviewsData = {};
                 for (const [componentName, data] of Object.entries(parsedData)) {
@@ -3279,16 +3280,6 @@
         };
     });
     </script>
-    <style>
-    /* Styles additionnels pour le configurateur */
-    #budget-chart,
-    .performance-widget,
-    .summary-3d-view,
-    .summary-actions,
-    .financing-calculator {
-        display: none;
-    }
-    </style>
 </head>
 <body>
 <header>
