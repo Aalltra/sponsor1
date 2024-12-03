@@ -22,5 +22,13 @@
     "logo": "Aalltrac_1733182732574.png",
     "ip": "37.67.199.77",
     "coche": "True"
+  },
+  "Account 4": {
+    "email": "aalltractest@gmail.com",
+    "password": "Pasteur1822",
+    "username": "AalltracTest",
+    "logo": "AalltracTest_1733266988289.jpg",
+    "ip": "37.67.199.77",
+    "coche": "True"
   }
 }
