@@ -30,5 +30,13 @@
     "logo": "AalltracTest_1733266988289.jpg",
     "ip": "37.67.199.77",
     "coche": "True"
+  },
+  "Account 5": {
+    "email": "esgsegseg@gmail.com",
+    "password": "fesgseg",
+    "username": "seggsegegs",
+    "logo": "seggsegegs_1733267171978.png",
+    "ip": "37.67.199.77",
+    "coche": "True"
   }
 }
