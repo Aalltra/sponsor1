@@ -1,1 +1,10 @@
-
+{
+  "AMD Ryzen 7 7800X3D": {
+    "note": [
+      "5"
+    ],
+    "review": [
+      "Un excellent processeur pour le gaming."
+    ]
+  }
+}
