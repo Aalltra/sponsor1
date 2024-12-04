@@ -2054,159 +2054,157 @@
     }
 
     .message-selector {
-            position: fixed;
-            bottom: 80px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: var(--secondary-color, #1e88e5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            z-index: 1000;
-        }
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--secondary-color, #1e88e5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+.message-selector:hover {
+    background-color: var(--accent-color, #00e5ff);
+    transform: scale(1.1);
+}
 
-        .message-selector:hover {
-            background-color: var(--accent-color, #00e5ff);
-        }
+.discussion-window {
+    position: fixed;
+    bottom: 150px;
+    right: 20px;
+    width: 300px;
+    max-height: 500px;
+    background-color: var(--background-color, #0d1117);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 1001;
+    overflow: hidden;
+}
+.discussion-header {
+    background-color: var(--secondary-color, #1e88e5);
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.discussion-body {
+    flex: 1;
+    padding: 10px;
+    background-color: var(--background-color, #0d1117);
+    overflow-y: auto;
+}
+.discussion-footer {
+    padding: 10px;
+    background-color: var(--secondary-color, #1e88e5);
+    display: flex;
+}
+.discussion-footer input {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+.discussion-footer button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent-color, #00e5ff);
+    color: #fff;
+    cursor: pointer;
+}
+.discussion-footer button:hover {
+    background-color: #028090;
+}
 
-        .message-selector svg {
-            width: 24px;
-            height: 24px;
-            fill: #fff;
-        }
+.auth-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1002;
+    align-items: center;
+    justify-content: center;
+}
+.auth-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+.auth-modal-content h2 {
+    margin-bottom: 20px;
+}
+.auth-modal-content button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#auth-signup-button {
+    background-color: var(--secondary-color, #1e88e5);
+    color: #fff;
+}
+#auth-signup-button:hover {
+    background-color: var(--accent-color, #00e5ff);
+}
+#auth-login-button {
+    background-color: #ccc;
+    color: #333;
+}
+#auth-login-button:hover {
+    background-color: #bbb;
+}
 
-        .auth-modal {
-            display: none; 
-            position: fixed; 
-            top:0; 
-            left:0; 
-            width:100%; 
-            height:100%; 
-            background:rgba(0,0,0,0.5); 
-            z-index: 1001;
-        }
-
-        .auth-modal-content {
-            position: absolute; 
-            top:50%; 
-            left:50%; 
-            transform:translate(-50%, -50%); 
-            background:#fff; 
-            padding:2rem; 
-            border-radius:1rem; 
-            width:90%; 
-            max-width:400px;
-            text-align: center;
-        }
-
-        .auth-modal-content button {
-            margin: 10px;
-            padding: 10px 20px;
-            background-color: var(--secondary-color, #1e88e5);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .auth-modal-content button:hover {
-            background-color: var(--accent-color, #00e5ff);
-        }
-
-        .chat-window {
-            display: none;
-            position: fixed;
-            bottom: 140px;
-            right: 20px;
-            width: 300px;
-            max-height: 400px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            z-index: 1002;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            background-color: var(--secondary-color, #1e88e5);
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px 10px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-header .close-chat {
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-        }
-
-        .chat-input {
-            display: flex;
-            border-top: 1px solid #ccc;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 0 0 0 10px;
-            outline: none;
-        }
-
-        .chat-input button {
-            padding: 10px;
-            border: none;
-            background-color: var(--secondary-color, #1e88e5);
-            color: #fff;
-            border-radius: 0 0 10px 0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .chat-input button:hover {
-            background-color: var(--accent-color, #00e5ff);
-        }
-
-        .chat-message {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .chat-message img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .chat-message .message-content {
-            background-color: #e0e0e0;
-            padding: 5px 10px;
-            border-radius: 10px;
-            max-width: 80%;
-        }
-
-        .chat-message .reply {
-            font-size: 0.8rem;
-            color: #555;
-        }
+/* Styles pour les messages */
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.message img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.message-content {
+    background-color: #ffffff33;
+    padding: 8px;
+    border-radius: 5px;
+    color: #fff;
+    position: relative;
+}
+.message-content::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent var(--background-color, #0d1117) transparent transparent;
+}
+.reply {
+    margin-top: 5px;
+    margin-left: 40px;
+}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -2523,6 +2521,240 @@
             userInfo.style.display = 'none';
             document.querySelector('.auth-buttons').style.display = 'flex';
         });
+
+        const discussionWindow = document.createElement('div');
+        discussionWindow.className = 'discussion-window';
+        discussionWindow.innerHTML = `
+            <div class="discussion-header">
+                <span>Discussion Général</span>
+                <button id="close-discussion">&times;</button>
+            </div>
+            <div class="discussion-body" id="discussion-body">
+                <p>Aucun message pour le moment.</p>
+            </div>
+            <div class="discussion-footer">
+                <input type="text" id="message-input" placeholder="Votre message...">
+                <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        `;
+        document.body.appendChild(discussionWindow);
+
+        const messageSelector = document.createElement('div');
+        messageSelector.className = 'message-selector';
+        messageSelector.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 24 24">
+                <path d="M12 3C7.031 3 3 6.935 3 11c0 3.763 2.693 6.929 6.162 7.732L11 20l1.838-1.268C18.307 17.929 21 14.763 21 11c0-4.065-4.031-8-9-8z"/>
+            </svg>
+        `;
+        document.body.appendChild(messageSelector);
+
+        const authModal = document.createElement('div');
+        authModal.className = 'auth-modal';
+        authModal.innerHTML = `
+            <div class="auth-modal-content">
+                <h2>Accès réservé</h2>
+                <p>Vous devez créer un compte pour accéder à cet espace.</p>
+                <button id="auth-signup-button"><i class="fas fa-user-plus"></i> Inscription</button>
+                <button id="auth-login-button"><i class="fas fa-sign-in-alt"></i> Connexion</button>
+            </div>
+        `;
+        document.body.appendChild(authModal);
+
+        function isUserLoggedIn() {
+            const userInfo = document.querySelector('.user-info');
+            return userInfo && userInfo.style.display === 'flex';
+        }
+
+        function showAuthModal() {
+            authModal.style.display = 'flex';
+        }
+
+        function hideAuthModal() {
+            authModal.style.display = 'none';
+        }
+
+        document.getElementById('auth-signup-button').addEventListener('click', () => {
+            hideAuthModal();
+            window.location.hash = '#inscription';
+        });
+
+        document.getElementById('auth-login-button').addEventListener('click', () => {
+            hideAuthModal();
+            window.location.hash = '#connexion';
+        });
+
+        messageSelector.addEventListener('click', () => {
+            if (!isUserLoggedIn()) {
+                showAuthModal();
+            } else {
+                toggleDiscussionWindow();
+                loadMessages();
+            }
+        });
+
+        function toggleDiscussionWindow() {
+            if (discussionWindow.style.display === 'flex') {
+                discussionWindow.style.display = 'none';
+            } else {
+                discussionWindow.style.display = 'flex';
+            }
+        }
+
+        document.getElementById('close-discussion').addEventListener('click', () => {
+            discussionWindow.style.display = 'none';
+        });
+
+        async function loadMessages() {
+            const discussionBody = document.getElementById('discussion-body');
+            discussionBody.innerHTML = 'Chargement des messages...';
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/discussion.txt');
+                if (!response.ok) {
+                    throw new Error('Échec de la récupération des messages.');
+                }
+                const text = await response.text();
+                const messages = JSON.parse(text);
+                displayMessages(messages);
+            } catch (error) {
+                console.error(error);
+                discussionBody.innerHTML = 'Erreur lors du chargement des messages.';
+            }
+        }
+
+        function displayMessages(messages) {
+            const discussionBody = document.getElementById('discussion-body');
+            discussionBody.innerHTML = '';
+            const messageKeys = Object.keys(messages).sort((a, b) => {
+                const aNum = parseInt(a.replace('Message ', ''));
+                const bNum = parseInt(b.replace('Message ', ''));
+                return aNum - bNum;
+            });
+            if (messageKeys.length === 0) {
+                discussionBody.innerHTML = '<p>Aucun message pour le moment.</p>';
+                return;
+            }
+            messageKeys.forEach(key => {
+                const msg = messages[key];
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                messageDiv.innerHTML = `
+                    <img src="logo/${msg.logo}" alt="${msg.username} Logo">
+                    <div>
+                        <strong>${msg.username}</strong>
+                        <div class="message-content">
+                            <p>${msg.message}</p>
+                        </div>
+                    </div>
+                `;
+                if (msg.reply !== "None") {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.className = 'reply';
+                    replyDiv.innerHTML = `
+                        <div class="message">
+                            <img src="logo/${msg.logo}" alt="${msg.username} Logo">
+                            <div>
+                                <strong>${msg.username}</strong>
+                                <div class="message-content">
+                                    <p><em>Réponse à ${msg.reply}</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    messageDiv.appendChild(replyDiv);
+                }
+                discussionBody.appendChild(messageDiv);
+            });
+            discussionBody.scrollTop = discussionBody.scrollHeight;
+        }
+
+        document.getElementById('send-message').addEventListener('click', sendMessage);
+        document.getElementById('message-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const messageText = messageInput.value.trim();
+            if (messageText === '') return;
+            const userInfo = document.querySelector('.user-info');
+            const username = userInfo.querySelector('#user-username').textContent;
+            const logoSrc = userInfo.querySelector('#user-logo').src;
+            const logoName = logoSrc.substring(logoSrc.lastIndexOf('/') + 1);
+
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/discussion.txt');
+                let messages = {};
+                if (response.ok) {
+                    const text = await response.text();
+                    messages = JSON.parse(text);
+                }
+                const messageNumbers = Object.keys(messages).map(key => parseInt(key.replace('Message ', '')));
+                const newMessageNumber = messageNumbers.length > 0 ? Math.max(...messageNumbers) + 1 : 1;
+                const newMessageKey = `Message ${newMessageNumber}`;
+                messages[newMessageKey] = {
+                    "username": username,
+                    "logo": logoName,
+                    "message": messageText,
+                    "reply": "None"
+                };
+                const token = decodeToken(encodedGithubToken);
+                const shaResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                let sha = '';
+                if (shaResponse.ok) {
+                    const shaData = await shaResponse.json();
+                    sha = shaData.sha;
+                }
+                const updateResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: `Ajout de ${newMessageKey}`,
+                        content: btoaUnicode(JSON.stringify(messages, null, 2)),
+                        sha: sha || undefined
+                    })
+                });
+                if (!updateResponse.ok) {
+                    throw new Error('Échec de l\'envoi du message.');
+                }
+                messageInput.value = '';
+                loadMessages();
+            } catch (error) {
+                console.error(error);
+                alert('Erreur lors de l\'envoi du message.');
+            }
+        }
+
+        function btoaUnicode(str) {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                function(match, p1) {
+                    return String.fromCharCode('0x' + p1);
+                }
+            ));
+        }
+
+        function decodeToken(encodedToken) {
+            return encodedToken
+                .split('2$')
+                .filter(char => char !== '')
+                .map(char => String.fromCharCode(char.charCodeAt(0) - 1))
+                .join('');
+        }
+
+        setInterval(() => {
+            if (discussionWindow.style.display === 'flex') {
+                loadMessages();
+            }
+        }, 5000);
 
             const components = {
               cpu: [
@@ -3460,286 +3692,71 @@ function getComponentNameByName(name) {
 }
 
 window.shareSocial = function() {
-      console.log("Sharing on social media...");
-    }
+  console.log("Sharing on social media...");
+}
 
-    window.viewInAR = function() {
-      console.log("Opening AR view...");
-    }
+window.viewInAR = function() {
+  console.log("Opening AR view...");
+}
 
-    window.viewReviews = viewReviews;
+window.viewReviews = viewReviews;
 
-    updateComponentList();
-    updateBrandFilter();
-    initThemeSelector();
-    init3DView();
-    initFinancingCalculator();
-    initFilters();
-    initNewButtons();
-    loadConfigurationFromURL();
-    fetchReviews();
+updateComponentList();
+updateBrandFilter();
+initThemeSelector();
+init3DView();
+initFinancingCalculator();
+initFilters();
+initNewButtons();
+loadConfigurationFromURL();
+fetchReviews();
 
-    document.querySelectorAll('.nav-tabs a').forEach(tab => {
-      tab.addEventListener('click', (e) => {
-          e.preventDefault();
-          const href = e.target.getAttribute('href');
-          if (!href) return;
+document.querySelectorAll('.nav-tabs a').forEach(tab => {
+  tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = e.target.getAttribute('href');
+      if (!href) return;
 
-          currentCategory = href.substring(1);
-          filteredComponents = [...components[currentCategory]];
-          updateBrandFilter();
-          updateComponentList();
-      });
-    });
+      currentCategory = href.substring(1);
+      filteredComponents = [...components[currentCategory]];
+      updateBrandFilter();
+      updateComponentList();
+  });
+});
 
-    window.onclick = function(event) {
-      const modal = document.getElementById('comparisonModal');
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
+window.onclick = function(event) {
+  const modal = document.getElementById('comparisonModal');
+  if (event.target == modal) {
+      modal.style.display = "none";
+  }
 
-      const reviewModal = document.getElementById('reviewModal');
-      if (event.target == reviewModal) {
-          reviewModal.style.display = "none";
-      }
+  const reviewModal = document.getElementById('reviewModal');
+  if (event.target == reviewModal) {
+      reviewModal.style.display = "none";
+  }
+}
 
-      const authModal = document.getElementById('authModal');
-      if (event.target == authModal) {
-          authModal.style.display = "none";
-      }
-    }
+window.generatePDF = function() {
+  console.log("Generating PDF...");
+}
 
-    window.generatePDF = function() {
-      console.log("Generating PDF...");
-    }
+const reviewModalElement = document.getElementById('reviewModal');
+if (reviewModalElement) {
+  reviewModalElement.querySelector('.close-modal').addEventListener('click', closeReviewModal);
+  reviewModalElement.querySelector('.review-form').addEventListener('submit', submitReview);
+}
 
-    const reviewModalElement = document.getElementById('reviewModal');
-    if (reviewModalElement) {
-      reviewModalElement.querySelector('.close-modal').addEventListener('click', closeReviewModal);
-      reviewModalElement.querySelector('.review-form').addEventListener('submit', submitReview);
-    }
-
-    window.openReviewModal = openReviewModal;
-
-    const body = document.querySelector('body');
-    const messageSelector = document.createElement('div');
-    messageSelector.className = 'message-selector';
-    messageSelector.innerHTML = `
-        <svg viewBox="0 0 24 24">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-        </svg>
-    `;
-    body.appendChild(messageSelector);
-
-    const authModal = document.createElement('div');
-    authModal.className = 'auth-modal';
-    authModal.id = 'authModal';
-    authModal.innerHTML = `
-        <div class="auth-modal-content">
-            <p>Vous devez créer un compte pour accéder à cet espace.</p>
-            <button id="auth-signup-button"><i class="fas fa-user-plus"></i> Inscription</button>
-            <button id="auth-login-button"><i class="fas fa-sign-in-alt"></i> Connexion</button>
-        </div>
-    `;
-    body.appendChild(authModal);
-
-    const chatWindow = document.createElement('div');
-    chatWindow.className = 'chat-window';
-    chatWindow.id = 'chatWindow';
-    chatWindow.innerHTML = `
-        <div class="chat-header">
-            <span>Discussion Général</span>
-            <span class="close-chat">&times;</span>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <!-- Messages will be loaded here -->
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Écrire un message..." aria-label="Écrire un message">
-            <button id="sendChatButton"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    `;
-    body.appendChild(chatWindow);
-
-    messageSelector.addEventListener('click', () => {
-        const username = document.getElementById('user-username').textContent;
-        if (!username) {
-            authModal.style.display = 'block';
-        } else {
-            chatWindow.style.display = 'flex';
-            loadMessages();
-        }
-    });
-
-    document.getElementById('auth-signup-button').addEventListener('click', () => {
-        authModal.style.display = 'none';
-        window.location.hash = '#inscription';
-    });
-
-    document.getElementById('auth-login-button').addEventListener('click', () => {
-        authModal.style.display = 'none';
-        window.location.hash = '#connexion';
-    });
-
-    chatWindow.querySelector('.close-chat').addEventListener('click', () => {
-        chatWindow.style.display = 'none';
-    });
-
-    async function loadMessages() {
-        try {
-            const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/discussion.txt');
-            const text = await response.text();
-            const messagesData = JSON.parse(text);
-            displayMessages(messagesData);
-        } catch (error) {
-            console.error('Erreur lors du chargement des messages:', error);
-            document.getElementById('chatMessages').innerHTML = '<p>Impossible de charger les messages.</p>';
-        }
-    }
-
-    function displayMessages(messagesData) {
-        const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML = '';
-
-        const sortedKeys = Object.keys(messagesData).sort((a, b) => {
-            const numA = parseInt(a.replace('Message ', ''));
-            const numB = parseInt(b.replace('Message ', ''));
-            return numA - numB;
-        });
-
-        sortedKeys.forEach(key => {
-            const msg = messagesData[key];
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message';
-
-            const userLogo = document.createElement('img');
-            userLogo.src = `logo/${msg.logo}`;
-            userLogo.alt = `${msg.username} logo`;
-
-            const messageContent = document.createElement('div');
-            messageContent.className = 'message-content';
-
-            const usernameSpan = document.createElement('strong');
-            usernameSpan.textContent = msg.username;
-
-            const messageText = document.createElement('p');
-            messageText.textContent = msg.message;
-
-            messageContent.appendChild(usernameSpan);
-            messageContent.appendChild(messageText);
-
-            if (msg.reply && messagesData[msg.reply]) {
-                const replyText = messagesData[msg.reply].message;
-                const replyDiv = document.createElement('div');
-                replyDiv.className = 'reply';
-                replyDiv.textContent = `Réponse à: ${replyText}`;
-                messageContent.appendChild(replyDiv);
-            }
-
-            messageDiv.appendChild(userLogo);
-            messageDiv.appendChild(messageContent);
-            chatMessages.appendChild(messageDiv);
-        });
-
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    document.getElementById('sendChatButton').addEventListener('click', sendMessage);
-    document.getElementById('chatInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    async function sendMessage() {
-        const chatInput = document.getElementById('chatInput');
-        const messageText = chatInput.value.trim();
-        if (messageText === '') return;
-
-        const username = document.getElementById('user-username').textContent;
-        const userLogo = document.getElementById('user-logo').src.split('/').pop();
-
-        try {
-            const token = decodeToken(encodedGithubToken);
-
-            const getResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                }
-            });
-
-            let messages = {};
-            let sha = '';
-            if (getResponse.ok) {
-                const getData = await getResponse.json();
-                const discussionText = atobUnicode(getData.content);
-                messages = JSON.parse(discussionText);
-                sha = getData.sha;
-            }
-
-            const messageNumbers = Object.keys(messages).map(key => parseInt(key.replace('Message ', '')));
-            const nextNumber = messageNumbers.length > 0 ? Math.max(...messageNumbers) + 1 : 1;
-            const newMessageKey = `Message ${nextNumber}`;
-
-            messages[newMessageKey] = {
-                "username": username,
-                "logo": userLogo,
-                "message": messageText,
-                "reply": "None"
-            };
-
-            const updateResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify({
-                    message: `Ajout de ${newMessageKey}`,
-                    content: btoaUnicode(JSON.stringify(messages, null, 2)),
-                    sha: sha || undefined
-                })
-            });
-
-            if (!updateResponse.ok) {
-                throw new Error('Échec de l\'envoi du message.');
-            }
-
-            chatInput.value = '';
-
-            loadMessages();
-
-        } catch (error) {
-            console.error('Erreur lors de l\'envoi du message:', error);
-            alert('Erreur lors de l\'envoi du message.');
-        }
-    }
-
-    setInterval(() => {
-        if (chatWindow.style.display === 'flex') {
-            loadMessages();
-        }
-    }, 5000);
-
-    });
-    </script>
+window.openReviewModal = openReviewModal;
+});
+</script>
 <style>
-    #budget-chart,
-    .performance-widget,
-    .summary-3d-view,
-    .summary-actions,
-    .financing-calculator {
-    display: none;
-    }
-
-    .auth-section {
-        display: none;
-    }
-
-    .auth-section.active {
-        display: block;
-    }
+#budget-chart,
+.performance-widget,
+.summary-3d-view,
+.summary-actions,
+.financing-calculator {
+display: none;
+}
 </style>
 </head>
 <body>
@@ -3855,20 +3872,6 @@ window.shareSocial = function() {
       </div>
     </div>
     </div>
-    <div class="summary-3d-view">
-    Vue 3D de la configuration
-    </div>
-    <div class="summary-actions">
-    <button onclick="window.shareSocial()"><i class="fas fa-share-alt"></i> Partager</button>
-    <button onclick="window.generatePDF()"><i class="fas fa-file-pdf"></i> Exporter PDF</button>
-    <button onclick="window.viewInAR()"><i class="fas fa-glasses"></i> Comparer</button>
-    </div>
-    <div class="financing-calculator">
-    <h3>Calculateur de financement</h3>
-    <input type="number" id="interest-rate" placeholder="Taux d'intérêt (%)">
-    <input type="number" id="loan-term" placeholder="Durée du prêt (mois)">
-    <button>Calculer</button>
-    <div class="monthly-payment">Mensualité: €0.00</div>
     </div>
     </div>
     
@@ -3919,25 +3922,33 @@ window.shareSocial = function() {
     </div>
     </div>
     
-    <div class="auth-modal" id="authModal">
+    <div class="auth-modal">
         <div class="auth-modal-content">
+            <h2>Accès réservé</h2>
             <p>Vous devez créer un compte pour accéder à cet espace.</p>
             <button id="auth-signup-button"><i class="fas fa-user-plus"></i> Inscription</button>
             <button id="auth-login-button"><i class="fas fa-sign-in-alt"></i> Connexion</button>
         </div>
     </div>
     
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
+    <div class="discussion-window">
+        <div class="discussion-header">
             <span>Discussion Général</span>
-            <span class="close-chat">&times;</span>
+            <button id="close-discussion">&times;</button>
         </div>
-        <div class="chat-messages" id="chatMessages">
+        <div class="discussion-body" id="discussion-body">
+            <p>Aucun message pour le moment.</p>
         </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Écrire un message..." aria-label="Écrire un message">
-            <button id="sendChatButton"><i class="fas fa-paper-plane"></i></button>
+        <div class="discussion-footer">
+            <input type="text" id="message-input" placeholder="Votre message...">
+            <button id="send-message"><i class="fas fa-paper-plane"></i></button>
         </div>
+    </div>
+    
+    <div class="message-selector">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 24 24">
+            <path d="M12 3C7.031 3 3 6.935 3 11c0 3.763 2.693 6.929 6.162 7.732L11 20l1.838-1.268C18.307 17.929 21 14.763 21 11c0-4.065-4.031-8-9-8z"/>
+        </svg>
     </div>
     
     </body>
