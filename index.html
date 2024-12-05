@@ -2442,7 +2442,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const logoBase64 = await getBase64(logoFile);
             const token = decodeToken(encodedGithubToken);
 
-            const uploadLogoResponse = await fetch('https://api.github.com/repos/Aalltra/QMD/contents/logo/' + logoName, {
+            const uploadLogoResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/logo/' + logoName, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `token ${token}`,
@@ -2637,8 +2637,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="modal-content">
             <div class="message-prompt">
                 <p>Vous devez créer un compte pour accéder à cet espace.</p>
-                <a href="https://aalltra.github.io/QMD/#inscription">Inscription</a>
-                <a href="https://aalltra.github.io/QMD/#connexion">Connexion</a>
+                <a href="https://aalltra.github.io/sponsor1/#inscription">Inscription</a>
+                <a href="https://aalltra.github.io/sponsor1/#connexion">Connexion</a>
             </div>
         </div>
     `;
@@ -3067,7 +3067,7 @@ function updateComponentList() {
               </div>
               <button class="review-button" onclick="window.openReviewModal('${componentName}')"><i class="fas fa-star"></i> Mettre une note</button>
           </div>
-          <a href="https://aalltra.github.io/QMD/#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
+          <a href="https://aalltra.github.io/sponsor1/#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
       `;
       componentList.appendChild(card);
   });
@@ -4179,8 +4179,8 @@ Vue 3D de la configuration
     <div class="modal-content">
         <div class="message-prompt">
             <p>Vous devez créer un compte pour accéder à cet espace.</p>
-            <a href="https://aalltra.github.io/QMD/#inscription">Inscription</a>
-            <a href="https://aalltra.github.io/QMD/#connexion">Connexion</a>
+            <a href="https://aalltra.github.io/sponsor1/#inscription">Inscription</a>
+            <a href="https://aalltra.github.io/sponsor1/#connexion">Connexion</a>
         </div>
     </div>
 </div>
