@@ -2211,6 +2211,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   setInterval(checkLogin, 1000);
 
+  function displayMessages(messages) {
+    const messagesContainer = chatWindow.querySelector('.chat-messages');
+    messagesContainer.innerHTML = '';
+    
+    Object.values(messages).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)).forEach(msg => {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${msg.username === currentUser.username ? 'sent' : 'received'}`;
+      messageDiv.innerHTML = `
+        <div class="user-info">
+          <img src="assets/avatars/${msg.logo}" class="user-logo" alt="user avatar">
+          <span>${msg.username}</span>
+        </div>
+        <div>${msg.message}</div>
+      `;
+      messagesContainer.appendChild(messageDiv);
+    });
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
   chatIcon.addEventListener('click', () => {
     if (!checkLogin()) {
       chatWindow.style.display = 'block';
@@ -2242,7 +2262,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       if (!response.ok) {
-        console.error('Error loading messages:', await response.text());
         throw new Error('Erreur lors du chargement des messages');
       }
 
@@ -2258,60 +2277,72 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       const token = decodeToken(encodedGithubToken);
       
+      // First get the current file content and SHA
       const getResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
         headers: {
           'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3+json'
+          'Content-Type': 'application/json'
         }
       });
 
-      if (!getResponse.ok) {
-        console.error('Error getting file:', await getResponse.text());
-        throw new Error('Erreur lors de la récupération des messages');
-      }
+      let fileData;
+      let existingMessages = {};
+      let sha;
 
-      const fileData = await getResponse.json();
-      let messages = {};
-      
-      if (fileData.content) {
-        try {
-          const currentContent = atob(fileData.content);
-          messages = JSON.parse(currentContent);
-        } catch (e) {
-          console.log('Creating new messages file');
+      if (getResponse.ok) {
+        fileData = await getResponse.json();
+        sha = fileData.sha;
+        if (fileData.content) {
+          const decodedContent = atob(fileData.content);
+          try {
+            existingMessages = JSON.parse(decodedContent);
+          } catch (e) {
+            console.log('Creating new messages object');
+          }
         }
+      } else if (getResponse.status === 404) {
+        // File doesn't exist yet, that's fine
+        console.log('Creating new file');
+      } else {
+        throw new Error('Failed to get current file content');
       }
 
+      // Add new message
       const timestamp = new Date().toISOString();
-      messages[timestamp] = {
+      existingMessages[timestamp] = {
         username: currentUser.username,
         logo: currentUser.logo,
         message: content,
         timestamp: timestamp
       };
 
-      const encodedContent = btoa(JSON.stringify(messages, null, 2));
+      // Prepare the update
+      const updateData = {
+        message: 'Add new message',
+        content: btoa(JSON.stringify(existingMessages, null, 2)),
+        branch: 'main'
+      };
 
+      // Include SHA if we have it (updating existing file)
+      if (sha) {
+        updateData.sha = sha;
+      }
+
+      // Send the update
       const updateResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
         method: 'PUT',
         headers: {
           'Authorization': `token ${token}`,
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          message: 'Add new message',
-          content: encodedContent,
-          sha: fileData.sha,
-          branch: 'main'
-        })
+        body: JSON.stringify(updateData)
       });
 
       if (!updateResponse.ok) {
-        const errorText = await updateResponse.text();
-        console.error('Update response error:', errorText);
-        throw new Error('Erreur lors de l\'envoi du message');
+        throw new Error('Failed to update file');
       }
 
+      // Reload messages to show the update
       await loadMessages();
     } catch (error) {
       console.error('Send message error:', error);
