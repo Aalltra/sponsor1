@@ -2242,6 +2242,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       if (!response.ok) {
+        console.error('Error loading messages:', await response.text());
         throw new Error('Erreur lors du chargement des messages');
       }
 
@@ -2253,33 +2254,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function displayMessages(messages) {
-    const messagesDiv = chatWindow.querySelector('.chat-messages');
-    messagesDiv.innerHTML = '';
-
-    Object.values(messages).forEach(msg => {
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${msg.username === currentUser.username ? 'sent' : 'received'}`;
-      
-      messageDiv.innerHTML = `
-        <div class="user-info">
-          <img src="logo/${msg.logo}" class="user-logo" alt="${msg.username}">
-          <span>${msg.username}</span>
-        </div>
-        <div class="message-content">${msg.message}</div>
-      `;
-      
-      messagesDiv.appendChild(messageDiv);
-    });
-
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-
   async function sendMessage(content) {
     try {
       const token = decodeToken(encodedGithubToken);
       
-      // Récupérer les messages existants et le SHA
       const getResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
         headers: {
           'Authorization': `token ${token}`,
@@ -2288,32 +2266,32 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       if (!getResponse.ok) {
+        console.error('Error getting file:', await getResponse.text());
         throw new Error('Erreur lors de la récupération des messages');
       }
 
       const fileData = await getResponse.json();
       let messages = {};
       
-      try {
-        const currentContent = atob(fileData.content);
-        messages = JSON.parse(currentContent);
-      } catch (e) {
-        console.log('Fichier vide ou invalide, création d\'un nouveau fichier');
+      if (fileData.content) {
+        try {
+          const currentContent = atob(fileData.content);
+          messages = JSON.parse(currentContent);
+        } catch (e) {
+          console.log('Creating new messages file');
+        }
       }
 
-      // Ajouter le nouveau message
-      const messageCount = Object.keys(messages).length + 1;
-      messages[`Message ${messageCount}`] = {
+      const timestamp = new Date().toISOString();
+      messages[timestamp] = {
         username: currentUser.username,
         logo: currentUser.logo,
         message: content,
-        reply: "None"
+        timestamp: timestamp
       };
 
-      // Encoder le contenu en base64
       const encodedContent = btoa(JSON.stringify(messages, null, 2));
 
-      // Sauvegarder les messages
       const updateResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
         method: 'PUT',
         headers: {
@@ -2321,21 +2299,23 @@ document.addEventListener('DOMContentLoaded', function() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: 'Nouveau message',
+          message: 'Add new message',
           content: encodedContent,
-          sha: fileData.sha
+          sha: fileData.sha,
+          branch: 'main'
         })
       });
 
       if (!updateResponse.ok) {
-        const errorData = await updateResponse.json();
-        console.error('Erreur de réponse:', errorData);
+        const errorText = await updateResponse.text();
+        console.error('Update response error:', errorText);
         throw new Error('Erreur lors de l\'envoi du message');
       }
 
       await loadMessages();
     } catch (error) {
-      console.error('Erreur:', error);
+      console.error('Send message error:', error);
+      alert('Erreur lors de l\'envoi du message. Veuillez réessayer.');
     }
   }
 
