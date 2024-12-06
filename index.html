@@ -2196,7 +2196,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let isLoggedIn = false;
   let currentUser = null;
 
-  // Vérifier si l'utilisateur est connecté
   function checkLogin() {
     const userInfo = document.querySelector('.user-info');
     isLoggedIn = userInfo && userInfo.style.display === 'flex';
@@ -2210,7 +2209,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return false;
   }
 
-  // Vérification périodique de la connexion
   setInterval(checkLogin, 1000);
 
   chatIcon.addEventListener('click', () => {
@@ -2247,7 +2245,8 @@ document.addEventListener('DOMContentLoaded', function() {
         throw new Error('Erreur lors du chargement des messages');
       }
 
-      const messages = await response.json();
+      const content = await response.text();
+      const messages = content ? JSON.parse(content) : {};
       displayMessages(messages);
     } catch (error) {
       console.error('Erreur:', error);
@@ -2293,8 +2292,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const fileData = await getResponse.json();
-      const currentContent = atob(fileData.content);
-      let messages = JSON.parse(currentContent);
+      let messages = {};
+      
+      try {
+        const currentContent = atob(fileData.content);
+        messages = JSON.parse(currentContent);
+      } catch (e) {
+        console.log('Fichier vide ou invalide, création d\'un nouveau fichier');
+      }
 
       // Ajouter le nouveau message
       const messageCount = Object.keys(messages).length + 1;
@@ -2305,25 +2310,30 @@ document.addEventListener('DOMContentLoaded', function() {
         reply: "None"
       };
 
-      // Sauvegarder les messages avec le SHA
+      // Encoder le contenu en base64
+      const encodedContent = btoa(JSON.stringify(messages, null, 2));
+
+      // Sauvegarder les messages
       const updateResponse = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
         method: 'PUT',
         headers: {
           'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3+json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: 'Nouveau message',
-          content: btoa(JSON.stringify(messages, null, 2)),
+          content: encodedContent,
           sha: fileData.sha
         })
       });
 
       if (!updateResponse.ok) {
+        const errorData = await updateResponse.json();
+        console.error('Erreur de réponse:', errorData);
         throw new Error('Erreur lors de l\'envoi du message');
       }
 
-      loadMessages();
+      await loadMessages();
     } catch (error) {
       console.error('Erreur:', error);
     }
