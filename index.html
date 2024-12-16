@@ -2633,6 +2633,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fonction pour ouvrir la fenêtre de discussion
     function openDiscussionWindow() {
         discussionWindow.classList.add('open');
+        loadMessages(); // Ajout de l'appel à loadMessages ici
     }
 
     // Fonction pour fermer la fenêtre de discussion
@@ -2691,7 +2692,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const discussionText = await response.text();
             discussionData = JSON.parse(discussionText);
-            renderMessages();
+            renderMessages(); // S'assurer que cette fonction est appelée après la récupération des données
         } catch (error) {
             console.error(error);
             alert('Erreur lors du chargement des discussions.');
