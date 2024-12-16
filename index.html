@@ -1,5 +1,5 @@
 <html lang="fr">
-<base href="https://aalltra.github.io/QMD/">
+<base href="https://aalltra.github.io/sponsor1/">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2247,8 +2247,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const authButtons = document.createElement('div');
     authButtons.className = 'auth-buttons';
     authButtons.innerHTML = `
-        <a href="https://example.com#inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
-        <a href="https://example.com#connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+        <a href="#inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
+        <a href="#connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
     `;
     headerContent.appendChild(authButtons);
 
@@ -2595,8 +2595,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="discussion-modal-content">
             <p>Vous devez créer un compte pour accéder à cet espace.</p>
             <div class="modal-buttons">
-                <a href="https://example.com#inscription">Inscription</a>
-                <a href="https://example.com#connexion">Connexion</a>
+                <a href="#inscription">Inscription</a>
+                <a href="#connexion">Connexion</a>
             </div>
         </div>
     `;
@@ -2869,7 +2869,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       async function fetchReviews() {
         try {
-            const response = await fetch('https://example.com/review.txt');
+            const response = await fetch('https://raw.githubusercontent.com/Aalltra/sponsor1/main/review.txt');
             const text = await response.text();
             const parsedData = JSON.parse(text);
 
@@ -3021,7 +3021,7 @@ function updateComponentList() {
                 </div>
                 <button class="review-button" onclick="window.openReviewModal('${componentName}')"><i class="fas fa-star"></i> Mettre une note</button>
             </div>
-            <a href="https://example.com#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
+            <a href="#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
         `;
         componentList.appendChild(card);
     });
@@ -4023,8 +4023,8 @@ display: none;
     <div class="discussion-modal-content">
         <p>Vous devez créer un compte pour accéder à cet espace.</p>
         <div class="modal-buttons">
-            <a href="https://example.com#inscription">Inscription</a>
-            <a href="https://example.com#connexion">Connexion</a>
+            <a href="#inscription">Inscription</a>
+            <a href="#connexion">Connexion</a>
         </div>
     </div>
 </div>
