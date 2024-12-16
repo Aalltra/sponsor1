@@ -2247,8 +2247,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const authButtons = document.createElement('div');
     authButtons.className = 'auth-buttons';
     authButtons.innerHTML = `
-        <a href="#inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
-        <a href="#connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+        <a href="https://example.com#inscription" id="signup-button"><i class="fas fa-user-plus"></i> Inscription</a>
+        <a href="https://example.com#connexion" id="login-button"><i class="fas fa-sign-in-alt"></i> Connexion</a>
     `;
     headerContent.appendChild(authButtons);
 
@@ -2526,6 +2526,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById('login-form').reset();
             window.location.hash = '';
+            checkLoginStatus();
         } catch (error) {
             console.error(error);
             errorDiv.textContent = error.message;
@@ -2560,48 +2561,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* Nouvelle fonctionnalité de discussion générale */
 
-    // Ajouter le sélecteur de discussion
-    const discussionSelector = document.createElement('div');
-    discussionSelector.className = 'discussion-selector';
-    discussionSelector.innerHTML = `
-        <svg viewBox="0 0 24 24">
-            <path d="M12 3C7.79 3 4 6.58 4 11c0 3.25 1.92 6.19 4.84 7.65L8 21l5-3 5 3-1.84-2.35C18.08 17.19 20 14.25 20 11c0-4.42-3.79-8-8-8zm0 14l-4.24 2.52L8 19l4.24-2.52L16 19l.24-0.48L12 17z"/>
-        </svg>
-    `;
-    document.body.appendChild(discussionSelector);
-
-    // Créer la fenêtre de discussion générale
-    const discussionWindow = document.createElement('div');
-    discussionWindow.className = 'discussion-window';
-    discussionWindow.innerHTML = `
-        <div class="discussion-header">
-            <h3>Discussion Général</h3>
-            <span class="discussion-close">&times;</span>
-        </div>
-        <div class="discussion-messages" id="discussion-messages">
-            <!-- Messages seront chargés ici -->
-        </div>
-        <div class="discussion-input">
-            <textarea id="discussion-input-text" placeholder="Écrire un message..."></textarea>
-            <button id="discussion-send-button"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    `;
-    document.body.appendChild(discussionWindow);
-
-    // Créer le modal pour la connexion requise
-    const discussionModal = document.createElement('div');
-    discussionModal.className = 'discussion-modal';
-    discussionModal.innerHTML = `
-        <div class="discussion-modal-content">
-            <p>Vous devez créer un compte pour accéder à cet espace.</p>
-            <div class="modal-buttons">
-                <a href="#inscription">Inscription</a>
-                <a href="#connexion">Connexion</a>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(discussionModal);
-
     // Variables pour la gestion des discussions
     let isLoggedIn = false;
     let currentUser = null;
@@ -2630,10 +2589,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     checkLoginStatus();
 
+    // Sélecteur de discussion existant
+    const discussionSelector = document.querySelector('.discussion-selector');
+    const discussionWindow = document.getElementById('discussion-window');
+    const discussionModal = document.getElementById('discussion-modal');
+    const discussionClose = discussionWindow.querySelector('.discussion-close');
+    const discussionSendButton = document.getElementById('discussion-send-button');
+    const discussionInputText = document.getElementById('discussion-input-text');
+
     // Fonction pour ouvrir la fenêtre de discussion
     function openDiscussionWindow() {
         discussionWindow.classList.add('open');
-        loadMessages(); // Ajout de l'appel à loadMessages ici
     }
 
     // Fonction pour fermer la fenêtre de discussion
@@ -2663,7 +2629,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Gestion des clics sur le bouton de fermeture de la discussion
-    discussionWindow.querySelector('.discussion-close').addEventListener('click', closeDiscussionWindow);
+    discussionClose.addEventListener('click', closeDiscussionWindow);
 
     // Gestion des clics en dehors de la fenêtre de discussion pour la fermer
     window.addEventListener('click', (event) => {
@@ -2692,7 +2658,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const discussionText = await response.text();
             discussionData = JSON.parse(discussionText);
-            renderMessages(); // S'assurer que cette fonction est appelée après la récupération des données
+            renderMessages();
         } catch (error) {
             console.error(error);
             alert('Erreur lors du chargement des discussions.');
@@ -2709,7 +2675,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageElement = document.createElement('div');
             messageElement.className = 'discussion-message';
             messageElement.innerHTML = `
-                <img src="logo/${msg.logo}" alt="${msg.username}'s Logo">
+                <img src="https://aalltra.github.io/QMD/logo/${msg.logo}" alt="${msg.username}'s Logo">
                 <div class="discussion-message-content">
                     <strong>${msg.username}</strong>
                     <p>${msg.message}</p>
@@ -2724,8 +2690,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour envoyer un nouveau message
     async function sendMessage() {
-        const messageInput = document.getElementById('discussion-input-text');
-        const messageContent = messageInput.value.trim();
+        const messageContent = discussionInputText.value.trim();
         if (messageContent === '') return;
 
         const token = decodeToken(encodedGithubToken);
@@ -2779,7 +2744,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mettre à jour localement et rendre les messages
             discussionData = currentDiscussion;
             renderMessages();
-            messageInput.value = '';
+            discussionInputText.value = '';
         } catch (error) {
             console.error(error);
             alert('Erreur lors de l\'envoi du message.');
@@ -2787,7 +2752,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Gestion du clic sur le bouton d'envoi de message
-    document.getElementById('discussion-send-button').addEventListener('click', sendMessage);
+    discussionSendButton.addEventListener('click', sendMessage);
 
     // Charger les messages à intervalle régulier (5 secondes)
     setInterval(() => {
@@ -2803,23 +2768,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Fonction de codage et décodage base64 pour les messages
-    function btoaUnicode(str) {
-        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-            function(match, p1) {
-                return String.fromCharCode('0x' + p1);
-            }
-        ));
-    }
-
-    function atobUnicode(str) {
-        return decodeURIComponent(
-            Array.prototype.map.call(atob(str), function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join('')
-        );
-    }
-
     /* Fin de la nouvelle fonctionnalité de discussion générale */
 
     // Existing JavaScript related to components, reviews, theme selector, etc.
@@ -2831,7 +2779,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: [409.90, 448.66, 519],
             image: "",
             brand: "AMD",
-            url: ["https://example.com/cpu1", "https://example.com/cpu2", "https://example.com/cpu3"]
+            url: ["https://www.amazon.nl/dp/B0BTZB7F88?_encoding=UTF8&ref_=as_li_ss_tl&psc=1", "https://www.amazon.se/dp/B0BTZB7F88?_encoding=UTF8&ref_=as_li_ss_tl&psc=1", "https://www.amazon.fr/AMD-Ryzen-7800X3D-Technologie-Architecture/dp/B0BTZB7F88/ref=pd_ci_mcx_mh_mcx_views_0_title?pd_rd_w=RjTRC&content-id=amzn1.sym.cbacdd79-a2a7-4dad-8c44-4a36464a6b2a%3Aamzn1.symc.ca948091-a64d-450e-86d7-c161ca33337b&pf_rd_p=cbacdd79-a2a7-4dad-8c44-4a36464a6b2a&pf_rd_r=D2R8NR03NTQDFMH26PYM&pd_rd_wg=i7dsF&pd_rd_r=7dc90c1e-a500-4d64-95aa-15290a6f0c67&pd_rd_i=B0BTZB7F88"]
         },
         { 
             name: "Inter-Tech C-703 Vision", 
@@ -2839,7 +2787,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: [85.61], 
             image: "", 
             brand: "", 
-            url: ['https://example.com/motherboard1'] 
+            url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
         },
         ],
         motherboard: [
@@ -2849,7 +2797,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 price: [85.61], 
                 image: "", 
                 brand: "", 
-                url: ['https://example.com/motherboard1'] 
+                url: ['https://www.reichelt.com/fr/fr/shop/produit/vision_inter-tech_atx_c-703-376315'] 
             },
         ],
         ram: [
@@ -3022,7 +2970,7 @@ function updateComponentList() {
                 </div>
                 <button class="review-button" onclick="window.openReviewModal('${componentName}')"><i class="fas fa-star"></i> Mettre une note</button>
             </div>
-            <a href="#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
+            <a href="https://example.com#reviews" class="view-reviews" onclick="window.viewReviews('${componentName}')"><i class="fas fa-eye"></i> Voir les avis</a>
         `;
         componentList.appendChild(card);
     });
@@ -3812,9 +3760,6 @@ if (reviewModalElement) {
     reviewModalElement.querySelector('.close-modal').addEventListener('click', closeReviewModal);
     reviewModalElement.querySelector('.review-form').addEventListener('submit', submitReview);
 }
-
-window.openReviewModal = openReviewModal;
-});
     </script>
     <style>
 #budget-chart,
@@ -3886,7 +3831,7 @@ window.openReviewModal = openReviewModal;
 .summary-3d-view,
 .summary-actions,
 .financing-calculator {
-display: none;
+    display: none;
 }
 </style>
 
@@ -4024,8 +3969,8 @@ display: none;
     <div class="discussion-modal-content">
         <p>Vous devez créer un compte pour accéder à cet espace.</p>
         <div class="modal-buttons">
-            <a href="#inscription">Inscription</a>
-            <a href="#connexion">Connexion</a>
+            <a href="https://example.com#inscription">Inscription</a>
+            <a href="https://example.com#connexion">Connexion</a>
         </div>
     </div>
 </div>
