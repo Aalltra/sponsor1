@@ -2456,7 +2456,7 @@
                     body: JSON.stringify({
                         message: 'Ajout d\'un nouveau compte',
                         content: btoaUnicode(JSON.stringify(accounts, null, 2)),
-                        sha: sha || undefined
+                        sha: sha
                     })
                 });
 
@@ -2499,8 +2499,8 @@
                     throw new Error('Échec de la récupération des comptes.');
                 }
 
-                const accountData = await accountResponse.json();
-                const accountText = atobUnicode(accountData.content);
+                const accountsData = await accountResponse.json();
+                const accountText = atobUnicode(accountsData.content);
                 const accounts = JSON.parse(accountText);
                 let found = false;
                 let userAccount = null;
@@ -3599,10 +3599,9 @@
     // Function to load discussions from discussion.txt
     async function loadDiscussion() {
         try {
-            const token = decodeToken(encodedGithubToken);
             const response = await fetch('https://api.github.com/repos/Aalltra/sponsor1/contents/discussion.txt', {
                 headers: {
-                    'Authorization': `token ${token}`,
+                    'Authorization': `token ${decodeToken(encodedGithubToken)}`,
                     'Accept': 'application/vnd.github.v3.raw'
                 }
             });
@@ -3614,10 +3613,10 @@
                 } else {
                     throw new Error('Échec de la récupération des discussions.');
                 }
-            } else {
-                const discussionText = await response.text();
-                window.discussions = JSON.parse(discussionText);
             }
+
+            const discussionText = await response.text();
+            window.discussions = JSON.parse(discussionText);
             displayDiscussions();
         } catch (error) {
             console.error(error);
@@ -3652,7 +3651,6 @@
 
             window.discussions = emptyDiscussions;
         } catch (error) {
-            console.error(error);
             throw error;
         }
     }
@@ -3747,30 +3745,11 @@
             });
 
             if (!getResponse.ok) {
-                if (getResponse.status === 404) {
-                    // If discussion.txt does not exist, create it
-                    await createEmptyDiscussionFile();
-                    // Retry fetching the sha after creation
-                    const retryGetResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-
-                    if (!retryGetResponse.ok) {
-                        throw new Error('Échec de la récupération des informations du fichier discussion.txt après création.');
-                    }
-
-                    const retryGetData = await retryGetResponse.json();
-                    var sha = retryGetData.sha;
-                } else {
-                    throw new Error('Échec de la récupération des informations du fichier discussion.txt.');
-                }
-            } else {
-                const getData = await getResponse.json();
-                var sha = getData.sha;
+                throw new Error('Échec de la récupération des informations du fichier discussion.txt.');
             }
+
+            const getData = await getResponse.json();
+            const sha = getData.sha;
 
             // Update the file with new discussions
             const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
@@ -3813,7 +3792,33 @@
     .financing-calculator {
     display: none;
     }
+
+    /* Styles for Discussion Feature */
+    .discussion-window {
+        width: 350px;
+    }
+
+    .discussion-modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .discussion-modal-content a {
+        margin: 10px;
+        display: inline-block;
+        color: #1e88e5;
+        text-decoration: none;
+    }
+
+    .discussion-modal-content a:hover {
+        text-decoration: underline;
+    }
     </style>
+    <script>
+    // Ensure that the "sha" is handled correctly by initializing discussions if not present
+    </script>
 </head>
 <body>
 <header>
@@ -3830,14 +3835,14 @@
 <nav>
 <div class="container">
 <ul class="nav-tabs">
-<li><a href="https://aalltra.github.io/sponsor1/#cpu"><i class="fas fa-microchip"></i>CPU</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#motherboard"><i class="fas fa-server"></i>Carte mère</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#ram"><i class="fas fa-memory"></i>RAM</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#gpu"><i class="fas fa-tv"></i>GPU</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#storage"><i class="fas fa-hdd"></i>Stockage</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#psu"><i class="fas fa-plug"></i>Alimentation</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#case"><i class="fas fa-desktop"></i>Boîtier</a></li>
-<li><a href="https://aalltra.github.io/sponsor1/#cooling"><i class="fas fa-fan"></i>Refroidissement</a></li>
+<li><a href="#cpu"><i class="fas fa-microchip"></i>CPU</a></li>
+<li><a href="#motherboard"><i class="fas fa-server"></i>Carte mère</a></li>
+<li><a href="#ram"><i class="fas fa-memory"></i>RAM</a></li>
+<li><a href="#gpu"><i class="fas fa-tv"></i>GPU</a></li>
+<li><a href="#storage"><i class="fas fa-hdd"></i>Stockage</a></li>
+<li><a href="#psu"><i class="fas fa-plug"></i>Alimentation</a></li>
+<li><a href="#case"><i class="fas fa-desktop"></i>Boîtier</a></li>
+<li><a href="#cooling"><i class="fas fa-fan"></i>Refroidissement</a></li>
 </ul>
 </div>
 </nav>
