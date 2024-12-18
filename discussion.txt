@@ -2,13 +2,13 @@
   "Message 1": {
     "username": "QMD France",
     "logo": "QMD%20France_1733345179768.jpg",
-    "message": "Salut",
+    "message": "Test1",
     "reply": "None"
   },
   "Message 2": {
     "username": "QMD France",
     "logo": "QMD%20France_1733345179768.jpg",
-    "message": "Bonsoir !",
+    "message": "test2",
     "reply": "None"
   }
 }
