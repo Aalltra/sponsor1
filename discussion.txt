@@ -4,5 +4,11 @@
     "logo": "QMD%20France_1733345179768.jpg",
     "message": "Salut",
     "reply": "None"
+  },
+  "Message 2": {
+    "username": "QMD France",
+    "logo": "QMD%20France_1733345179768.jpg",
+    "message": "Bonsoir !",
+    "reply": "None"
   }
 }
