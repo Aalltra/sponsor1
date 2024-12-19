@@ -6,5 +6,13 @@
     "logo": "QMD France_1733345179768.jpg",
     "ip": "37.67.199.77",
     "coche": "True"
+  },
+  "Account 2": {
+    "email": "iptest@gmail.com",
+    "password": "iptest",
+    "username": "iptest",
+    "logo": "iptest_1734635175572.PNG",
+    "ip": "88.180.121.89",
+    "coche": "True"
   }
 }
