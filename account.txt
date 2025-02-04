@@ -6,29 +6,5 @@
     "logo": "QMD France_1733345179768.jpg",
     "ip": "37.67.199.77",
     "coche": "True"
-  },
-  "Account 2": {
-    "email": "iptest@gmail.com",
-    "password": "iptest",
-    "username": "iptest",
-    "logo": "iptest_1734635175572.PNG",
-    "ip": "88.180.121.89",
-    "coche": "True"
-  },
-  "Account 3": {
-    "email": "abouy655@gmail.com",
-    "password": "a",
-    "username": "a",
-    "logo": "a_1736778518111.png",
-    "ip": "195.98.251.161",
-    "coche": "True"
-  },
-  "Account 4": {
-    "email": "abouy655@gmail.com",
-    "password": "a",
-    "username": "a",
-    "logo": "a_1736778519615.png",
-    "ip": "195.98.251.161",
-    "coche": "True"
   }
 }
