@@ -2452,6 +2452,145 @@
             margin-bottom: 20px;
             color: var(--text-color, #e0e0e0);
         }
+
+        .message-selector {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color, #1e88e5);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .message-selector:hover {
+            background-color: var(--accent-color, #00e5ff);
+        }
+
+        .message-selector svg {
+            width: 25px;
+            height: 25px;
+            fill: #fff;
+        }
+
+        .discussion-window {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: var(--primary-color, #0a1929);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            flex-direction: column;
+            max-height: 500px;
+            overflow: hidden;
+        }
+
+        .discussion-header {
+            background-color: var(--secondary-color, #1e88e5);
+            color: #fff;
+            padding: 10px 15px;
+            border-bottom: 1px solid #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .discussion-header h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .discussion-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .discussion-messages {
+            padding: 10px 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+            max-height: 350px; /* Adjust max-height as needed */
+        }
+
+        .discussion-message {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .discussion-message:last-child {
+            margin-bottom: 0;
+        }
+
+        .discussion-message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .discussion-message-content {
+            background-color: #444;
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px 10px;
+            width: calc(100% - 40px); /* Adjust width based on logo size and padding */
+        }
+
+        .discussion-message-content .username {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .discussion-message-content .message-text {
+            font-size: 0.9rem;
+            word-wrap: break-word; /* Ensures long words are broken and wrapped */
+        }
+
+
+        .discussion-input {
+            padding: 10px 15px;
+            border-top: 1px solid #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .discussion-input input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            background-color: var(--background-color, #0d1117);
+            color: var(--text-color, #e0e0e0);
+        }
+
+        .discussion-input button {
+            background-color: var(--accent-color, #00e5ff);
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .discussion-input button:hover {
+            background-color: darken(var(--accent-color, #00e5ff), 10%);
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
