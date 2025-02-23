@@ -44,14 +44,14 @@
         --button-gradient: linear-gradient(135deg, #1e88e5, #00e5ff);
         --button-gradient-hover: linear-gradient(135deg, #00e5ff, #1e88e5);
       }
-      
+
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         scroll-behavior: smooth;
       }
-      
+
       body {
         font-family: var(--font-family-primary);
         background-color: var(--background-color);
@@ -61,7 +61,7 @@
         overflow-x: hidden;
         position: relative;
       }
-      
+
       body::before {
         content: "";
         position: fixed;
@@ -73,19 +73,19 @@
         z-index: -2;
         animation: backgroundShift 60s linear infinite;
       }
-      
+
       @keyframes backgroundShift {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
-      
+
       a {
         color: var(--accent-color);
         text-decoration: none;
         transition: color var(--transition-speed), transform var(--transition-speed);
         position: relative;
       }
-      
+
       a::after {
         content: '';
         position: absolute;
@@ -96,24 +96,24 @@
         bottom: -3px;
         transition: width var(--transition-speed), left var(--transition-speed);
       }
-      
+
       a:hover::after,
       a.active::after {
         width: 100%;
         left: 0;
       }
-      
+
       a:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .container {
         max-width: var(--max-width);
         margin: 0 auto;
         padding: 0 20px;
       }
-      
+
       header {
         background: var(--header-gradient);
         border-bottom: 2px solid var(--accent-color);
@@ -129,7 +129,7 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       @keyframes fadeInDown {
         from {
           opacity: 0;
@@ -140,7 +140,7 @@
           transform: translateY(0);
         }
       }
-      
+
       .header-content {
         display: flex;
         align-items: center;
@@ -149,7 +149,7 @@
         gap: 1rem;
         width: 100%;
       }
-      
+
       h1 {
         font-family: var(--font-family-secondary);
         font-weight: 700;
@@ -161,12 +161,12 @@
         align-items: center;
         gap: 0.5rem;
       }
-      
+
       h1:hover {
         text-shadow: 2px 2px 15px rgba(0, 229, 255, 1);
         transform: scale(1.02);
       }
-      
+
       .header-icon {
         font-size: 2.5rem;
         color: var(--accent-color);
@@ -175,13 +175,13 @@
         cursor: pointer;
         animation: float 3s ease-in-out infinite;
       }
-      
+
       .header-icon:hover {
         color: var(--secondary-color);
         text-shadow: 2px 2px 15px rgba(0, 229, 255, 1);
         transform: rotate(10deg);
       }
-      
+
       @keyframes float {
         0% {
           transform: translateY(0px);
@@ -193,7 +193,7 @@
           transform: translateY(0px);
         }
       }
-      
+
       .progress-bar {
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -205,7 +205,7 @@
         position: relative;
         width: 100%;
       }
-      
+
       .progress {
         height: 100%;
         background: var(--gradient-secondary);
@@ -214,13 +214,13 @@
         transition: width var(--transition-speed) ease-in-out, box-shadow var(--transition-speed);
         width: 0%;
       }
-      
+
       @keyframes pulse {
         0% { box-shadow: 0 0 10px var(--accent-color); }
         50% { box-shadow: 0 0 30px var(--accent-color); }
         100% { box-shadow: 0 0 10px var(--accent-color); }
       }
-      
+
       nav {
         background-color: var(--sidebar-bg);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -232,7 +232,7 @@
         overflow: hidden;
         transition: border-radius var(--transition-speed), box-shadow var(--transition-speed);
       }
-      
+
       @keyframes slideInLeft {
         from {
           opacity: 0;
@@ -243,7 +243,7 @@
           transform: translateX(0);
         }
       }
-      
+
       .nav-tabs {
         display: flex;
         list-style-type: none;
@@ -252,13 +252,13 @@
         overflow-x: auto;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
-      
+
       .nav-tabs li {
         flex: 1;
         text-align: center;
         transition: background var(--transition-speed);
       }
-      
+
       .nav-tabs a {
         display: flex;
         flex-direction: column;
@@ -275,7 +275,7 @@
         border-radius: var(--border-radius);
         animation: float 3s ease-in-out infinite;
       }
-      
+
       .nav-tabs a:hover,
       .nav-tabs a.active {
         background: var(--nav-active-bg);
@@ -284,12 +284,12 @@
         color: white;
         transform: scale(1.05);
       }
-      
+
       .nav-tabs a:hover::after,
       .nav-tabs a.active::after {
         width: 100%;
       }
-      
+
       .nav-tabs a::after {
         content: '';
         position: absolute;
@@ -301,19 +301,19 @@
         transition: 0.3s;
         transform: translateX(-50%);
       }
-      
+
       .nav-tabs a i {
         font-size: 1.8rem;
         margin-bottom: 0.5rem;
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .nav-tabs a:hover i,
       .nav-tabs a.active i {
         color: var(--secondary-color);
         transform: rotate(10deg);
       }
-      
+
       main {
         display: flex;
         padding: 3rem 0;
@@ -321,18 +321,18 @@
         gap: 2rem;
         flex-wrap: wrap;
       }
-      
+
       @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
       }
-      
+
       .component-list {
         flex: 3;
         margin-right: 2rem;
         transition: margin var(--transition-speed);
       }
-      
+
       .filters {
         background: rgba(30, 41, 59, 0.85);
         padding: 2rem;
@@ -343,13 +343,13 @@
         backdrop-filter: blur(5px);
         border: 2px solid var(--accent-color);
       }
-      
+
       .filters:hover {
         background-color: rgba(30, 41, 59, 0.95);
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
         transform: translateY(-5px);
       }
-      
+
       .search-bar {
         width: 100%;
         padding: 0.85rem 1.2rem;
@@ -364,25 +364,25 @@
         transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         outline: none;
       }
-      
+
       .search-bar::placeholder {
         color: var(--text-color);
         opacity: 0.7;
       }
-      
+
       .search-bar:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
         transform: scale(1.02);
       }
-      
+
       .filter-options, .sort-options {
         display: flex;
         gap: 1.5rem;
         margin-bottom: 1.5rem;
         flex-wrap: wrap;
       }
-      
+
       .filter-options select, .sort-options select {
         padding: 0.6rem 1.2rem;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -395,20 +395,20 @@
         transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         outline: none;
       }
-      
+
       .filter-options select:focus, .sort-options select:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
         transform: scale(1.02);
       }
-      
+
       .components-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 2.5rem;
         transition: grid-template-columns var(--transition-speed), gap var(--transition-speed);
       }
-      
+
       .component-card {
         background: var(--card-bg);
         border: 1px solid rgba(0, 229, 255, 0.3);
@@ -425,7 +425,7 @@
         cursor: pointer;
         animation: float 6s ease-in-out infinite;
       }
-      
+
       .component-card::before {
         content: '';
         position: absolute;
@@ -439,11 +439,11 @@
         z-index: 0;
         transform: rotate(45deg);
       }
-      
+
       .component-card:hover::before {
         opacity: 0.1;
       }
-      
+
       .component-card img {
         width: 100%;
         height: 220px;
@@ -455,12 +455,12 @@
         z-index: 1;
         background: #fff;
       }
-      
+
       .component-card:hover img {
         transform: scale(1.05);
         filter: brightness(1.1);
       }
-      
+
       .component-card h3 {
         font-family: var(--font-family-secondary);
         font-weight: 700;
@@ -471,12 +471,12 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .component-card:hover h3 {
         color: var(--secondary-color);
         transform: translateY(-3px);
       }
-      
+
       .component-card ul {
         list-style-type: none;
         padding: 0;
@@ -484,7 +484,7 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .component-card li {
         display: flex;
         align-items: center;
@@ -493,23 +493,23 @@
         color: var(--text-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .component-card li:hover {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .component-card li i {
         margin-right: 0.5rem;
         color: var(--secondary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .component-card li:hover i {
         color: var(--accent-color);
         transform: rotate(10deg);
       }
-      
+
       .component-card .price {
         font-family: var(--font-family-secondary);
         font-weight: 700;
@@ -520,12 +520,12 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .component-card:hover .price {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .component-card .buttons {
         display: flex;
         justify-content: space-between;
@@ -534,7 +534,7 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .component-card button {
         flex: 1;
         background: var(--button-gradient);
@@ -553,7 +553,7 @@
         overflow: hidden;
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .component-card button::before {
         content: '';
         position: absolute;
@@ -565,17 +565,17 @@
         transition: left 0.5s;
         z-index: 0;
       }
-      
+
       .component-card button:hover::before {
         left: 100%;
       }
-      
+
       .component-card button:hover {
         box-shadow: 0 4px 20px var(--shadow-color);
         transform: translateY(-3px);
         background: var(--button-gradient-hover);
       }
-      
+
       .configuration-summary {
         flex: 1;
         padding: 2rem;
@@ -593,13 +593,13 @@
         transition: background var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         animation: fadeIn 1s ease-out;
       }
-      
+
       .configuration-summary:hover {
         background: linear-gradient(145deg, rgba(26, 35, 50, 0.98), rgba(17, 25, 40, 0.98));
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
         transform: translateY(-5px);
       }
-      
+
       .configuration-summary h2 {
         font-family: var(--font-family-secondary);
         font-weight: 700;
@@ -609,18 +609,18 @@
         text-align: center;
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .configuration-summary h2:hover {
         color: var(--secondary-color);
         transform: scale(1.02);
       }
-      
+
       .selected-components {
         list-style-type: none;
         padding: 0;
         margin: 0 0 2rem 0;
       }
-      
+
       .selected-components li {
         display: flex;
         justify-content: space-between;
@@ -632,43 +632,43 @@
         transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
         position: relative;
       }
-      
+
       .selected-components li:hover {
         background: rgba(0, 229, 255, 0.1);
         transform: translateX(5px);
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .selected-components li span {
         display: flex;
         align-items: center;
         font-size: 1.1rem;
         transition: transform var(--transition-speed);
       }
-      
+
       .selected-components li span i {
         margin-right: 0.6rem;
         color: var(--secondary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .selected-components li span:hover i {
         color: var(--accent-color);
         transform: rotate(15deg);
       }
-      
+
       .selected-components li .price {
         font-size: 1.3rem;
         font-weight: 700;
         color: var(--accent-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .selected-components li .price:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .selected-components li a {
         display: inline-block;
         padding: 0.3rem 0.6rem;
@@ -682,18 +682,18 @@
         visibility: hidden;
         pointer-events: none;
       }
-      
+
       .selected-components li:hover a {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
       }
-      
+
       .selected-components li a:hover {
         background: var(--accent-color);
         transform: translateY(-2px);
       }
-      
+
       .total-price {
         font-family: var(--font-family-secondary);
         font-weight: 700;
@@ -705,12 +705,12 @@
         text-align: center;
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .total-price:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .summary-buttons {
         display: flex;
         flex-direction: column;
@@ -719,7 +719,7 @@
         transition: transform var(--transition-speed);
         animation: fadeIn 1s ease-out;
       }
-      
+
       .summary-buttons button {
         padding: 0.85rem 1rem;
         border: none;
@@ -737,27 +737,27 @@
         background: var(--button-gradient);
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .summary-buttons button:first-child {
         background: var(--button-gradient);
         transition: background var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .summary-buttons button:first-child:hover {
         background: var(--button-gradient-hover);
         transform: translateY(-3px);
       }
-      
+
       .summary-buttons button:last-child {
         background: var(--button-gradient);
         transition: background var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .summary-buttons button:last-child:hover {
         background: var(--button-gradient-hover);
         transform: translateY(-3px);
       }
-      
+
       #budget-chart {
         width: 100%;
         height: 250px;
@@ -769,12 +769,12 @@
         display: none;
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       #budget-chart:hover {
         background: rgba(0, 0, 0, 0.1);
         transform: scale(1.02);
       }
-      
+
       .performance-widget {
         background: rgba(255, 255, 255, 0.1);
         border-radius: var(--border-radius);
@@ -784,25 +784,25 @@
         display: none;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
       }
-      
+
       .performance-widget:hover {
         background: rgba(255, 255, 255, 0.15);
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
         transform: translateY(-5px);
       }
-      
+
       .performance-widget h3 {
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
         color: var(--secondary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .performance-widget h3:hover {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .performance-score {
         font-size: 3rem;
         font-weight: 700;
@@ -812,53 +812,53 @@
         transition: color var(--transition-speed), transform var(--transition-speed);
         text-shadow: 2px 2px 10px rgba(0, 229, 255, 0.5);
       }
-      
+
       .performance-score:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .performance-categories {
         display: flex;
         justify-content: space-between;
         margin-bottom: 1.5rem;
         transition: flex-direction var(--transition-speed), gap var(--transition-speed);
       }
-      
+
       .performance-category {
         text-align: center;
         flex: 1;
         transition: transform var(--transition-speed), color var(--transition-speed);
         cursor: pointer;
       }
-      
+
       .performance-category:hover {
         transform: scale(1.05);
       }
-      
+
       .performance-category i {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
         color: var(--secondary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .performance-category:hover i {
         color: var(--accent-color);
         transform: rotate(10deg);
       }
-      
+
       .performance-category p {
         font-size: 1.1rem;
         color: var(--text-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .performance-category p:hover {
         color: var(--accent-color);
         transform: translateY(-2px);
       }
-      
+
       .game-fps {
         display: flex;
         justify-content: space-between;
@@ -866,7 +866,7 @@
         margin-top: 1.5rem;
         transition: flex-direction var(--transition-speed), gap var(--transition-speed);
       }
-      
+
       .game-fps div {
         display: flex;
         align-items: center;
@@ -877,13 +877,13 @@
         transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
         position: relative;
       }
-      
+
       .game-fps div:hover {
         background: rgba(0, 229, 255, 0.2);
         transform: translateY(-3px);
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.3);
       }
-      
+
       .game-fps img {
         width: 32px;
         height: 32px;
@@ -893,22 +893,22 @@
         padding: 0.2rem;
         transition: transform var(--transition-speed);
       }
-      
+
       .game-fps img:hover {
         transform: rotate(15deg);
       }
-      
+
       .game-fps span {
         font-weight: 600;
         color: var(--accent-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .game-fps span:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .summary-3d-view {
         width: 100%;
         height: 350px;
@@ -924,13 +924,13 @@
         display: none;
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .summary-3d-view:hover {
         background: rgba(0, 0, 0, 0.1);
         transform: scale(1.02);
         box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
       }
-      
+
       .summary-actions {
         display: flex;
         gap: 1.5rem;
@@ -939,7 +939,7 @@
         transition: flex-direction var(--transition-speed), gap var(--transition-speed);
         display: none;
       }
-      
+
       .summary-actions button {
         flex: 1;
         padding: 0.85rem 1rem;
@@ -958,37 +958,37 @@
         background: var(--button-gradient);
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .summary-actions button:nth-child(1) {
         background-color: var(--info-color);
         transition: background-color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .summary-actions button:nth-child(1):hover {
         background-color: var(--secondary-color);
         transform: translateY(-3px);
       }
-      
+
       .summary-actions button:nth-child(2) {
         background-color: var(--danger-color);
         transition: background-color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .summary-actions button:nth-child(2):hover {
         background-color: #ff6b6b;
         transform: translateY(-3px);
       }
-      
+
       .summary-actions button:nth-child(3) {
         background-color: var(--success-color);
         transition: background-color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .summary-actions button:nth-child(3):hover {
         background-color: #28a745;
         transform: translateY(-3px);
       }
-      
+
       .financing-calculator {
         background: rgba(255, 255, 255, 0.1);
         border-radius: var(--border-radius);
@@ -998,25 +998,25 @@
         display: none;
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .financing-calculator:hover {
         background: rgba(0, 0, 0, 0.1);
         box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
         transform: scale(1.02);
       }
-      
+
       .financing-calculator h3 {
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
         color: var(--secondary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .financing-calculator h3:hover {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .financing-calculator input {
         width: 100%;
         padding: 0.8rem 1.2rem;
@@ -1029,17 +1029,17 @@
         transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         outline: none;
       }
-      
+
       .financing-calculator input::placeholder {
         color: rgba(224, 224, 224, 0.7);
       }
-      
+
       .financing-calculator input:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
         transform: scale(1.02);
       }
-      
+
       .financing-calculator button {
         width: 100%;
         padding: 0.85rem 1rem;
@@ -1056,12 +1056,12 @@
         justify-content: center;
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .financing-calculator button:hover {
         background: #c0392b;
         transform: translateY(-3px);
       }
-      
+
       .monthly-payment {
         font-size: 1.6rem;
         font-weight: 700;
@@ -1071,29 +1071,29 @@
         transition: color var(--transition-speed), transform var(--transition-speed);
         text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
       }
-      
+
       .monthly-payment:hover {
         color: var(--secondary-color);
         transform: scale(1.05);
       }
-      
+
       .recommendation-section {
         background: var(--card-bg);
         border-radius: var(--border-radius);
         padding: 2rem;
         margin-top: 2.5rem;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         transition: background var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         transition-delay: 0.2s;
         animation: fadeIn 1s ease-out;
       }
-      
+
       .recommendation-section:hover {
         background: rgba(30, 41, 59, 0.9);
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
         transform: translateY(-5px);
       }
-      
+
       .recommendation-section h3 {
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
@@ -1101,12 +1101,12 @@
         text-align: center;
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .recommendation-section h3:hover {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .recommendation-cards {
         display: flex;
         gap: 1.5rem;
@@ -1114,7 +1114,7 @@
         padding-bottom: 1.5rem;
         transition: gap var(--transition-speed);
       }
-      
+
       .recommendation-card {
         background: var(--sidebar-bg);
         border-radius: var(--border-radius);
@@ -1128,7 +1128,7 @@
         background: rgba(26, 35, 50, 0.95);
         animation: float 4s ease-in-out infinite;
       }
-      
+
       .recommendation-card::before {
         content: '';
         position: absolute;
@@ -1142,17 +1142,17 @@
         z-index: 0;
         transform: rotate(45deg);
       }
-      
+
       .recommendation-card:hover::before {
         opacity: 0.1;
       }
-      
+
       .recommendation-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 10px 25px rgba(0, 229, 255, 0.3);
         background: rgba(26, 35, 50, 0.98);
       }
-      
+
       .recommendation-badge {
         position: absolute;
         top: -10px;
@@ -1167,12 +1167,12 @@
         transition: background var(--transition-speed), transform var(--transition-speed);
         cursor: default;
       }
-      
+
       .recommendation-card:hover .recommendation-badge {
         background: var(--secondary-color);
         transform: rotate(10deg);
       }
-      
+
       .recommendation-card img {
         width: 100%;
         height: 120px;
@@ -1184,12 +1184,12 @@
         z-index: 1;
         background: #fff;
       }
-      
+
       .recommendation-card:hover img {
         transform: scale(1.05);
         filter: brightness(1.1);
       }
-      
+
       .recommendation-card h4 {
         font-size: 1.2rem;
         margin-bottom: 0.5rem;
@@ -1198,12 +1198,12 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .recommendation-card:hover h4 {
         color: var(--accent-color);
         transform: translateY(-2px);
       }
-      
+
       .recommendation-card p {
         font-size: 1rem;
         color: var(--text-color);
@@ -1211,12 +1211,12 @@
         z-index: 1;
         position: relative;
       }
-      
+
       .recommendation-card:hover p {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .theme-selector {
         position: fixed;
         bottom: 30px;
@@ -1234,24 +1234,24 @@
         transition: background-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         animation: float 5s ease-in-out infinite;
       }
-      
+
       .theme-selector:hover {
         background: var(--accent-color);
         box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
         transform: rotate(20deg);
       }
-      
+
       .theme-selector i {
         font-size: 28px;
         color: var(--primary-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .theme-selector:hover i {
         color: white;
         transform: scale(1.1);
       }
-      
+
       .theme-options {
         position: absolute;
         bottom: 80px;
@@ -1266,13 +1266,13 @@
         transition: opacity var(--transition-speed), transform var(--transition-speed);
         z-index: 1001;
       }
-      
+
       .theme-options.show {
         display: flex;
         opacity: 1;
         transform: translateY(0);
       }
-      
+
       .theme-option {
         display: flex;
         align-items: center;
@@ -1282,12 +1282,12 @@
         padding: 0.5rem 1rem;
         border-radius: 0.75rem;
       }
-      
+
       .theme-option:hover {
         background: rgba(0, 229, 255, 0.2);
         transform: scale(1.02);
       }
-      
+
       .theme-color {
         width: 24px;
         height: 24px;
@@ -1296,22 +1296,22 @@
         border: 2px solid white;
         transition: transform var(--transition-speed);
       }
-      
+
       .theme-option:hover .theme-color {
         transform: rotate(20deg);
       }
-      
+
       .theme-option span {
         font-size: 1rem;
         color: var(--text-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .theme-option:hover span {
         color: white;
         transform: translateX(2px);
       }
-      
+
       .custom-theme-inputs {
         display: flex;
         flex-direction: column;
@@ -1319,7 +1319,7 @@
         transition: transform var(--transition-speed);
         margin-top: 1rem;
       }
-      
+
       .custom-theme-inputs input[type="color"] {
         width: 100%;
         height: 40px;
@@ -1328,45 +1328,45 @@
         cursor: pointer;
         transition: transform var(--transition-speed), box-shadow var(--transition-speed);
       }
-      
+
       .custom-theme-inputs input[type="color"]:hover {
         transform: scale(1.05);
         box-shadow: 0 0 10px var(--accent-color);
       }
-      
+
       @media (max-width: 1024px) {
         main {
           flex-direction: column;
         }
-      
+
         .component-list {
           margin-right: 0;
         }
-      
+
         .configuration-summary {
           position: static;
           max-height: none;
           margin-top: 2rem;
         }
-      
+
         .components-grid {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
           gap: 2rem;
         }
-      
+
         .component-card {
           padding: 1.5rem;
         }
-      
+
         .header-content {
           flex-direction: column;
           align-items: flex-start;
         }
-      
+
         .nav-tabs {
           justify-content: space-around;
         }
-      
+
         .performance-widget,
         #budget-chart,
         .summary-3d-view,
@@ -1375,7 +1375,7 @@
           display: block;
         }
       }
-      
+
       @media (max-width: 768px) {
         .theme-selector {
           bottom: 20px;
@@ -1383,128 +1383,128 @@
           width: 50px;
           height: 50px;
         }
-      
+
         .theme-selector i {
           font-size: 24px;
         }
-      
+
         .theme-options {
           bottom: 70px;
           right: 0;
           padding: 1rem;
           gap: 0.5rem;
         }
-      
+
         .theme-option {
           padding: 0.4rem 0.8rem;
         }
-      
+
         .custom-theme-inputs input[type="color"] {
           height: 35px;
         }
-      
+
         .components-grid {
           grid-template-columns: 1fr;
         }
-      
+
         .performance-categories {
           flex-direction: column;
           gap: 1rem;
         }
-      
+
         .game-fps {
           flex-direction: column;
           gap: 1rem;
         }
-      
+
         .summary-actions {
           flex-direction: column;
         }
-      
+
         .summary-actions button {
           width: 100%;
         }
       }
-      
+
       @media (max-width: 480px) {
         h1 {
           font-size: 2rem;
         }
-      
+
         .header-icon {
           font-size: 2rem;
         }
-      
+
         .nav-tabs a i {
           font-size: 1.5rem;
         }
-      
+
         .component-card h3 {
           font-size: 1.3rem;
         }
-      
+
         .component-card ul li {
           font-size: 0.9rem;
         }
-      
+
         .component-card .price {
           font-size: 1.3rem;
         }
-      
+
         .performance-score {
           font-size: 2.5rem;
         }
-      
+
         .performance-widget h3 {
           font-size: 1.3rem;
         }
-      
+
         .monthly-payment {
           font-size: 1.3rem;
         }
-      
+
         .recommendation-section h3 {
           font-size: 1.6rem;
         }
-      
+
         .theme-options {
           padding: 0.8rem;
           gap: 0.3rem;
         }
-      
+
         .theme-option {
           padding: 0.3rem 0.6rem;
         }
-      
+
         .custom-theme-inputs input[type="color"] {
           height: 30px;
         }
-      
+
         .components-grid {
           grid-template-columns: 1fr;
           gap: 1.5rem;
         }
       }
-      
+
       ::-webkit-scrollbar {
         width: 8px;
       }
-      
+
       ::-webkit-scrollbar-track {
         background: var(--background-color);
         border-radius: var(--border-radius);
       }
-      
+
       ::-webkit-scrollbar-thumb {
         background: var(--accent-color);
         border-radius: var(--border-radius);
         transition: background var(--transition-speed);
       }
-      
+
       ::-webkit-scrollbar-thumb:hover {
         background: var(--secondary-color);
       }
-      
+
       #comparisonModal .modal-content {
         max-height: 90vh;
         overflow-y: auto;
@@ -1514,7 +1514,7 @@
         color: var(--primary-color);
         border: 1px solid var(--secondary-color);
       }
-      
+
       @keyframes zoomIn {
         from {
           opacity: 0;
@@ -1525,39 +1525,39 @@
           transform: scale(1);
         }
       }
-      
+
       .summary-buttons button i {
         margin-right: 0.5rem;
         transition: transform var(--transition-speed);
       }
-      
+
       .summary-buttons button:hover i {
         transform: rotate(20deg);
       }
-      
+
       .theme-option[data-theme="custom"] {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
       }
-      
+
       @media (max-width: 768px) {
         body {
           font-size: 0.9rem;
         }
       }
-      
+
       @media (max-width: 480px) {
         body {
           font-size: 0.8rem;
         }
       }
-      
+
       .search-bar, .filter-options select, .sort-options select, .financing-calculator input {
         font-size: 1rem;
         aria-label: inherit;
       }
-      
+
       @keyframes ripple {
         from {
           transform: scale(0.5);
@@ -1568,7 +1568,7 @@
           opacity: 0;
         }
       }
-      
+
       .ripple-effect {
         position: absolute;
         border-radius: 50%;
@@ -1576,7 +1576,7 @@
         animation: ripple 0.6s linear;
         pointer-events: none;
       }
-      
+
       .custom-modal {
         display: flex;
         position: fixed;
@@ -1590,7 +1590,7 @@
         justify-content: center;
         animation: fadeIn 0.3s ease-out;
       }
-      
+
       .custom-modal-content {
         background: var(--modal-bg);
         padding: 30px;
@@ -1602,7 +1602,7 @@
         color: var(--primary-color);
         border: 1px solid var(--secondary-color);
       }
-      
+
       .custom-modal-content h3 {
         color: var(--primary-color);
         margin-bottom: 20px;
@@ -1610,21 +1610,21 @@
         font-family: var(--font-family-secondary);
         animation: pulseGlow 2s infinite;
       }
-      
+
       .link-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 15px;
       }
-      
+
       .link-container span {
         color: var(--primary-color);
         font-size: 1.1rem;
         font-family: var(--font-family-secondary);
         margin-right: 20px;
       }
-      
+
       .open-button {
         background-color: var(--secondary-color);
         color: var(--light-color);
@@ -1636,12 +1636,12 @@
         transition: background-color var(--transition-speed), transform var(--transition-speed);
         font-family: var(--font-family-secondary);
       }
-      
+
       .open-button:hover {
         background-color: var(--accent-color);
         transform: scale(1.05);
       }
-      
+
       .close-button {
         position: absolute;
         top: 15px;
@@ -1654,11 +1654,11 @@
         transition: color var(--transition-speed), transform var(--transition-speed);
         font-family: var(--font-family-secondary);
       }
-      
+
       .close-button:hover {
         transform: rotate(90deg);
       }
-      
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -1667,7 +1667,7 @@
           opacity: 1;
         }
       }
-      
+
       @keyframes slideIn {
         from {
           transform: translateY(-50px);
@@ -1676,11 +1676,11 @@
           transform: translateY(0);
         }
       }
-      
+
       .custom-modal-content {
         border: 1px solid var(--secondary-color);
       }
-      
+
       @keyframes pulseGlow {
         0% {
           box-shadow: 0 0 5px var(--accent-color);
@@ -1692,7 +1692,7 @@
           box-shadow: 0 0 5px var(--accent-color);
         }
       }
-      
+
       .user-comments {
         background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(17, 25, 40, 0.9));
         border-radius: var(--border-radius);
@@ -1702,7 +1702,7 @@
         transition: background var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         animation: fadeIn 1s ease-out;
       }
-      
+
       .user-comments h3 {
         font-family: var(--font-family-secondary);
         color: var(--accent-color);
@@ -1710,12 +1710,12 @@
         text-align: center;
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .user-comments h3:hover {
         color: var(--secondary-color);
         transform: scale(1.02);
       }
-      
+
       .user-comments .comment {
         background: rgba(30, 41, 59, 0.8);
         border-radius: var(--border-radius);
@@ -1724,23 +1724,23 @@
         position: relative;
         transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
       }
-      
+
       .user-comments .comment:hover {
         background: rgba(0, 229, 255, 0.1);
         transform: translateY(-5px);
         box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
       }
-      
+
       .user-comments .comment p {
         color: var(--text-color);
         transition: color var(--transition-speed), transform var(--transition-speed);
       }
-      
+
       .user-comments .comment p:hover {
         color: var(--accent-color);
         transform: scale(1.02);
       }
-      
+
       .badge-new {
         position: absolute;
         top: 10px;
@@ -1754,45 +1754,45 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         animation: float 3s ease-in-out infinite;
       }
-      
+
       button.icon-button {
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-      
+
       button.icon-button i {
         font-size: 1.2rem;
         transition: transform var(--transition-speed);
       }
-      
+
       button.icon-button:hover i {
         transform: rotate(20deg);
       }
-      
+
       .rating {
         display: flex;
         align-items: center;
         margin-top: 10px;
       }
-      
+
       .stars {
         display: flex;
         align-items: center;
         margin-right: 10px;
       }
-      
+
       .stars svg {
         width: 20px;
         height: 20px;
         fill: #ccc;
         transition: fill 0.2s;
       }
-      
+
       .stars .filled {
         fill: #FFD700;
       }
-      
+
       .review-button, .view-reviews {
         background-color: var(--secondary-color);
         color: var(--text-color);
@@ -1803,11 +1803,11 @@
         transition: filter 0.3s ease;
         font-size: 0.9rem;
       }
-      
+
       .review-button:hover, .view-reviews:hover {
         filter: brightness(90%);
       }
-      
+
       .modal {
         display: none;
         position: fixed;
@@ -1820,7 +1820,7 @@
         background: rgba(0,0,0,0.5);
         padding-top: 60px;
       }
-      
+
       .modal-content {
         background-color: var(--primary-color);
         margin: 5% auto;
@@ -1831,7 +1831,7 @@
         border-radius: 10px;
         color: var(--text-color);
       }
-      
+
       .close-modal {
         color: var(--text-color);
         float: right;
@@ -1839,14 +1839,14 @@
         font-weight: bold;
         cursor: pointer;
       }
-      
+
       .close-modal:hover,
       .close-modal:focus {
         color: #bbb;
         text-decoration: none;
         cursor: pointer;
       }
-      
+
       .review-form textarea {
         width: 100%;
         height: 100px;
@@ -1858,7 +1858,7 @@
         background-color: var(--secondary-color);
         color: var(--text-color);
       }
-      
+
       .review-form input[type="number"] {
         width: 60px;
         padding: 5px;
@@ -1868,7 +1868,7 @@
         background-color: var(--secondary-color);
         color: var(--text-color);
       }
-      
+
       .reviews-section {
         padding: 20px;
         background-color: var(--primary-color);
@@ -1879,46 +1879,46 @@
         transition: background var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
         animation: fadeIn 1s ease-out;
       }
-      
+
       .review {
         border-bottom: 1px solid var(--accent-color);
         padding: 10px 0;
       }
-      
+
       .review:last-child {
         border-bottom: none;
       }
-      
+
       .review-stars svg {
         width: 16px;
         height: 16px;
         fill: #FFD700;
       }
-      
+
       .review-text {
         margin-top: 5px;
       }
-      
+
       .comparison-table th, .comparison-table td {
         padding: 10px;
         border: 1px solid var(--accent-color);
         text-align: center;
         color: var(--text-color);
       }
-      
+
       .comparison-table th {
         background: var(--primary-color);
         color: var(--accent-color);
       }
-      
+
       .comparison-table tr:nth-child(even) {
         background: rgba(255, 255, 255, 0.05);
       }
-      
+
       .performance-chart {
         margin-top: 20px;
       }
-      
+
       button {
         border: none;
         outline: none;
@@ -1931,17 +1931,17 @@
         transition: filter 0.3s ease;
         animation: glow 1.5s infinite;
       }
-      
+
       button:hover {
         filter: brightness(90%);
       }
-      
+
       #save-button, #import-button, #share-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
       }
-      
+
       @keyframes glow {
         0% {
           box-shadow: 0 0 5px var(--accent-color);
@@ -1953,12 +1953,12 @@
           box-shadow: 0 0 5px var(--accent-color);
         }
       }
-      
+
       .auth-buttons {
         display: flex;
         gap: 10px;
       }
-      
+
       .auth-buttons a {
         padding: 10px 20px;
         background-color: var(--secondary-color, #1e88e5);
@@ -1967,11 +1967,11 @@
         border-radius: 5px;
         transition: background-color 0.3s ease;
       }
-      
+
       .auth-buttons a:hover {
         background-color: var(--accent-color, #00e5ff);
       }
-      
+
       .auth-section {
         display: none;
         padding: 20px;
@@ -1982,26 +1982,26 @@
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       }
-      
+
       .auth-section.active {
         display: block;
       }
-      
+
       .auth-section h2 {
         text-align: center;
         margin-bottom: 20px;
       }
-      
+
       .auth-section form {
         display: flex;
         flex-direction: column;
       }
-      
+
       .auth-section label {
         margin-bottom: 5px;
         font-weight: 600;
       }
-      
+
       .auth-section input[type="email"],
       .auth-section input[type="password"],
       .auth-section input[type="text"],
@@ -2011,11 +2011,11 @@
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-      
+
       .auth-section input[type="checkbox"] {
         margin-right: 10px;
       }
-      
+
       .auth-section button {
         padding: 10px;
         background-color: var(--secondary-color, #1e88e5);
@@ -2025,41 +2025,41 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
-      
+
       .auth-section button:hover {
         background-color: var(--accent-color, #00e5ff);
       }
-      
+
       .error-message {
         color: #ff6b6b;
         margin-bottom: 15px;
         text-align: center;
       }
-      
+
       .user-info {
         display: none;
         align-items: center;
         gap: 10px;
       }
-      
+
       .user-info img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
       }
-      
+
       .user-info span {
         font-weight: 600;
       }
-      
+
       @media (max-width: 768px) {
         .auth-buttons {
           flex-direction: column;
           align-items: center;
         }
       }
-      
+
       #budget-chart,
       .performance-widget,
       .summary-3d-view,
@@ -2067,7 +2067,7 @@
       .financing-calculator {
         display: none;
       }
-      
+
       .message-selector {
         position: fixed;
         bottom: 80px;
@@ -2084,18 +2084,18 @@
         transition: background-color 0.3s ease, transform 0.3s ease;
         z-index: 1000;
       }
-      
+
       .message-selector:hover {
         background-color: var(--accent-color, #00e5ff);
         transform: scale(1.1);
       }
-      
+
       .message-selector svg {
         width: 24px;
         height: 24px;
         fill: #fff;
       }
-      
+
       .discussion-window {
         position: fixed;
         bottom: 140px;
@@ -2111,7 +2111,7 @@
         z-index: 1001;
         animation: fadeIn 0.3s ease;
       }
-      
+
       .discussion-header {
         background-color: var(--secondary-color, #1e88e5);
         color: #fff;
@@ -2122,37 +2122,37 @@
         justify-content: space-between;
         align-items: center;
       }
-      
+
       .discussion-header h3 {
         margin: 0;
         font-size: 1rem;
       }
-      
+
       .discussion-close {
         cursor: pointer;
         font-size: 1.2rem;
       }
-      
+
       .discussion-messages {
         flex: 1;
         padding: 10px;
         overflow-y: auto;
         background-color: #f9f9f9;
       }
-      
+
       .discussion-input {
         display: flex;
         padding: 10px;
         border-top: 1px solid #ccc;
       }
-      
+
       .discussion-input input {
         flex: 1;
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-      
+
       .discussion-input button {
         margin-left: 5px;
         padding: 5px 10px;
@@ -2163,35 +2163,35 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
-      
+
       .discussion-input button:hover {
         background-color: var(--accent-color, #00e5ff);
       }
-      
+
       .discussion-message {
         display: flex;
         margin-bottom: 10px;
       }
-      
+
       .discussion-message img {
         width: 30px;
         height: 30px;
         border-radius: 50%;
         margin-right: 10px;
       }
-      
+
       .discussion-message-content {
         background-color: #e0e0e0;
         padding: 8px;
         border-radius: 5px;
         max-width: 200px;
       }
-      
+
       .discussion-message-content .username {
         font-weight: bold;
         margin-bottom: 5px;
       }
-      
+
       .discussion-modal {
         display: none;
         position: fixed;
@@ -2204,7 +2204,7 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       .discussion-modal-content {
         background: #fff;
         padding: 20px;
@@ -2213,15 +2213,15 @@
         text-align: center;
         animation: slideDown 0.3s ease;
       }
-      
+
       .discussion-modal-content h2 {
         margin-bottom: 15px;
       }
-      
+
       .discussion-modal-content p {
         margin-bottom: 20px;
       }
-      
+
       .discussion-modal-content a {
         display: inline-block;
         margin: 5px;
@@ -2232,19 +2232,298 @@
         border-radius: 5px;
         transition: background-color 0.3s ease;
       }
-      
+
       .discussion-modal-content a:hover {
         background-color: var(--accent-color, #00e5ff);
       }
-      
+
       @keyframes slideDown {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
       }
-      
+
       .theme-selector {
         z-index: 1000;
       }
+
+      /* Ajout de styles pour le forum d'aide */
+      .message-selector-container {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .message-selector-button {
+        width: 50px;
+        height: 50px;
+        background-color: var(--secondary-color, #1e88e5);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .message-selector-button:hover {
+        background-color: var(--accent-color, #00e5ff);
+        transform: scale(1.1);
+      }
+
+      .message-selector-button svg {
+        width: 24px;
+        height: 24px;
+        fill: #fff;
+      }
+
+      .message-options {
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        display: none;
+        flex-direction: column;
+        padding: 0.5rem;
+      }
+
+      .message-options.show {
+        display: flex;
+      }
+
+      .message-option-button {
+        padding: 0.7rem 1rem;
+        text-align: left;
+        color: var(--text-color);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: var(--border-radius);
+        font-family: var(--font-family-secondary);
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .message-option-button:hover {
+        background-color: var(--nav-hover-bg);
+        color: white;
+      }
+
+      #forum-aide-page {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--background-color);
+        z-index: 1003;
+        padding: 2rem;
+        overflow-y: auto;
+      }
+
+      #forum-aide-page.show {
+        display: block;
+      }
+
+      .forum-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+      }
+
+      .forum-page-button {
+        padding: 0.85rem 1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: var(--font-family-secondary);
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all var(--transition-speed) ease, transform var(--transition-speed);
+        text-transform: uppercase;
+        color: var(--text-color);
+        background: var(--card-bg);
+        box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
+      }
+
+      .forum-page-button.active, .forum-page-button:hover {
+        background: var(--nav-active-bg);
+        color: white;
+        box-shadow: var(--nav-active-shadow);
+        transform: scale(1.05);
+      }
+
+      .forum-section {
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        margin-bottom: 2rem;
+      }
+
+      .forum-section h3 {
+        font-family: var(--font-family-secondary);
+        color: var(--accent-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .forum-textarea {
+        width: 100%;
+        padding: 0.85rem 1.2rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background: var(--sidebar-bg);
+        color: var(--text-color);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
+        outline: none;
+        height: 150px;
+        resize: vertical;
+      }
+
+      .forum-textarea::placeholder {
+        color: var(--text-color);
+        opacity: 0.7;
+      }
+
+      .forum-button {
+        padding: 0.85rem 1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: var(--font-family-secondary);
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all var(--transition-speed) ease, transform var(--transition-speed);
+        text-transform: uppercase;
+        color: white;
+        background: var(--button-gradient);
+        box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
+      }
+
+      .forum-button:hover {
+        box-shadow: 0 4px 20px var(--shadow-color);
+        transform: translateY(-3px);
+        background: var(--button-gradient-hover);
+      }
+
+      .forum-question-display {
+        background: var(--sidebar-bg);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .forum-question-logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .forum-question-content {
+        flex-grow: 1;
+      }
+
+      .forum-question-username {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--accent-color);
+      }
+
+      .forum-answer-area {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .forum-answer-textarea {
+        flex-grow: 1;
+        padding: 0.7rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background: var(--card-bg);
+        color: var(--text-color);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+        transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
+        outline: none;
+        height: 80px;
+        resize: vertical;
+      }
+
+      .forum-answer-textarea::placeholder {
+        color: var(--text-color);
+        opacity: 0.7;
+      }
+
+      .forum-answer-button {
+        padding: 0.7rem 1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: var(--font-family-secondary);
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all var(--transition-speed) ease, transform var(--transition-speed);
+        text-transform: uppercase;
+        color: white;
+        background: var(--button-gradient);
+        box-shadow: 0 4px 10px rgba(0, 229, 255, 0.2);
+      }
+
+      .forum-answer-button:hover {
+        box-shadow: 0 4px 20px var(--shadow-color);
+        transform: translateY(-3px);
+        background: var(--button-gradient-hover);
+      }
+
+      .forum-response-display {
+        background: var(--sidebar-bg);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .forum-response-logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .forum-response-content {
+        flex-grow: 1;
+      }
+
+      .forum-response-username {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--secondary-color);
+      }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -3736,6 +4015,409 @@
               discussionWindow.style.display = 'none';
           }
   
+          const messageSelectorContainer = document.createElement('div');
+          messageSelectorContainer.className = 'message-selector-container';
+          document.body.appendChild(messageSelectorContainer);
+
+          const messageSelectorButton = document.createElement('div');
+          messageSelectorButton.className = 'message-selector-button';
+          messageSelectorButton.innerHTML = `
+              <svg viewBox="0 0 24 24">
+                  <path d="M20 2H4C2.897 2 2 2.897 2 4V18L6 14H20C21.103 14 22 13.103 22 12V4C22 2.897 21.103 2 20 2Z"></path>
+              </svg>
+          `;
+          messageSelectorContainer.appendChild(messageSelectorButton);
+
+          const messageOptions = document.createElement('div');
+          messageOptions.className = 'message-options';
+          messageOptions.innerHTML = `
+              <button class="message-option-button" id="discussion-option-button"><i class="fas fa-comments"></i> Discussion</button>
+              <button class="message-option-button" id="forum-aide-option-button"><i class="fas fa-question-circle"></i> Forum d'aide</button>
+          `;
+          messageSelectorContainer.appendChild(messageOptions);
+
+          messageSelectorButton.addEventListener('click', () => {
+              if (!isUserLoggedIn()) {
+                  discussionModal.style.display = 'flex'; // Reusing existing modal for login prompt
+                  messageOptions.classList.remove('show'); // Close options if open
+              } else {
+                  messageOptions.classList.toggle('show');
+                  discussionWindow.style.display = 'none'; // Ensure discussion window is closed
+                  forumAidePage.style.display = 'none'; // Ensure forum page is closed
+              }
+          });
+
+          document.getElementById('discussion-option-button').addEventListener('click', () => {
+              loadDiscussion();
+              discussionWindow.style.display = 'flex';
+              forumAidePage.style.display = 'none';
+              messageOptions.classList.remove('show');
+          });
+
+          document.getElementById('forum-aide-option-button').addEventListener('click', () => {
+              forumAidePage.classList.add('show');
+              discussionWindow.style.display = 'none';
+              messageOptions.classList.remove('show');
+              loadForumQuestions(); // Load forum questions when forum page is opened
+              showAskQuestionSection(); // Default to "Poser ma question"
+          });
+
+          const forumAidePage = document.createElement('div');
+          forumAidePage.id = 'forum-aide-page';
+          forumAidePage.innerHTML = `
+              <div class="container">
+                  <button class="close-button" id="forum-aide-close-button" style="position:absolute; top: 20px; right: 20px;">✖</button>
+                  <div class="forum-buttons">
+                      <button class="forum-page-button active" id="ask-question-button">Poser ma question</button>
+                      <button class="forum-page-button" id="answer-question-button">Répondre à une question</button>
+                  </div>
+
+                  <div id="ask-question-section" class="forum-section">
+                      <h3>Poser une question</h3>
+                      <textarea id="question-textarea" class="forum-textarea" placeholder="Écrivez votre question ici..."></textarea>
+                      <button class="forum-button" id="submit-question-button">Poser ma question</button>
+                      <button class="forum-button" id="view-my-responses-button">Voir mes réponses</button>
+                  </div>
+
+                  <div id="answer-question-section" class="forum-section" style="display: none;">
+                      <h3>Répondre à une question</h3>
+                      <div id="question-to-answer-display">
+                          <!-- Question to answer will be displayed here -->
+                      </div>
+                      <button class="forum-button" id="next-question-button">Question suivante</button>
+                  </div>
+
+                  <div id="view-my-responses-section" class="forum-section" style="display: none;">
+                      <h3>Mes réponses</h3>
+                      <div id="my-responses-display">
+                          <!-- User's responses will be displayed here -->
+                      </div>
+                  </div>
+              </div>
+          `;
+          document.body.appendChild(forumAidePage);
+
+          forumAidePage.querySelector('#forum-aide-close-button').addEventListener('click', () => {
+              forumAidePage.classList.remove('show');
+          });
+
+          document.getElementById('ask-question-button').addEventListener('click', showAskQuestionSection);
+          document.getElementById('answer-question-button').addEventListener('click', showAnswerQuestionSection);
+          document.getElementById('view-my-responses-button').addEventListener('click', showViewMyResponsesSection);
+
+          function showAskQuestionSection() {
+              document.getElementById('ask-question-section').style.display = 'block';
+              document.getElementById('answer-question-section').style.display = 'none';
+              document.getElementById('view-my-responses-section').style.display = 'none';
+              document.getElementById('ask-question-button').classList.add('active');
+              document.getElementById('answer-question-button').classList.remove('active');
+          }
+
+          function showAnswerQuestionSection() {
+              document.getElementById('ask-question-section').style.display = 'none';
+              document.getElementById('answer-question-section').style.display = 'block';
+              document.getElementById('view-my-responses-section').style.display = 'none';
+              document.getElementById('answer-question-button').classList.add('active');
+              document.getElementById('ask-question-button').classList.remove('active');
+              loadNextQuestionToAnswer(); // Load question when switching to "Répondre à une question"
+          }
+
+          function showViewMyResponsesSection() {
+              document.getElementById('ask-question-section').style.display = 'none';
+              document.getElementById('answer-question-section').style.display = 'none';
+              document.getElementById('view-my-responses-section').style.display = 'block';
+              document.getElementById('ask-question-button').classList.remove('active');
+              document.getElementById('answer-question-button').classList.remove('active');
+              loadMyResponses(); // Load user's responses when switching to "Voir mes réponses"
+          }
+
+          document.getElementById('submit-question-button').addEventListener('click', submitQuestion);
+          document.getElementById('next-question-button').addEventListener('click', loadNextQuestionToAnswer);
+
+          async function submitQuestion() {
+              const questionContent = document.getElementById('question-textarea').value.trim();
+              if (!questionContent) {
+                  alert('Veuillez écrire votre question.');
+                  return;
+              }
+
+              const username = document.getElementById('user-username').textContent;
+              const userLogo = document.getElementById('user-logo').src.split('/').pop();
+              const now = new Date();
+              const date = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+              const hour = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+              const newQuestion = {
+                  "question_username": username,
+                  "question_logo": userLogo,
+                  "question_content": questionContent,
+                  "reponse_username": "None",
+                  "reponse_logo": "None",
+                  "reponse_content": "None",
+                  "date": date,
+                  "hour": hour
+              };
+
+              try {
+                  await updateForumFile(newQuestion);
+                  document.getElementById('question-textarea').value = '';
+                  alert('Question posée avec succès!');
+              } catch (error) {
+                  console.error(error);
+                  alert('Erreur lors de la soumission de la question.');
+              }
+          }
+
+          async function updateForumFile(newQuestion) {
+              const token = decodeToken(encodedGithubToken);
+              const username = 'Aalltra';
+              const repo = 'sponsor1';
+              const path = 'forum.txt';
+
+              try {
+                  const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3+json'
+                      }
+                  });
+
+                  let forumData = {"Forum 1": {}};
+                  let sha = '';
+                  if (getResponse.ok) {
+                      const getData = await getResponse.json();
+                      sha = getData.sha;
+                      const content = atobUnicode(getData.content);
+                      if(content) {
+                          forumData = JSON.parse(content);
+                      }
+                  }
+
+                  const nextQuestionKey = `Forum ${Object.keys(forumData).length + 1}`;
+                  forumData[nextQuestionKey] = newQuestion;
+
+                  const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      method: 'PUT',
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3+json'
+                      },
+                      body: JSON.stringify({
+                          message: 'Ajout d\'une nouvelle question au forum',
+                          content: btoaUnicode(JSON.stringify(forumData, null, 2)),
+                          sha: sha
+                      })
+                  });
+
+                  if (!updateResponse.ok) {
+                      const errorData = await updateResponse.json();
+                      throw new Error(`Échec de la mise à jour du fichier forum.txt: ${errorData.message}`);
+                  }
+              } catch (error) {
+                  throw error;
+              }
+          }
+
+          async function loadForumQuestions() {
+              const token = decodeToken(encodedGithubToken);
+              const username = 'Aalltra';
+              const repo = 'sponsor1';
+              const path = 'forum.txt';
+
+              try {
+                  const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3.raw'
+                      }
+                  });
+
+                  if (!response.ok) {
+                      if (response.status === 404) {
+                          await createEmptyForumFile();
+                          window.forumQuestions = {};
+                      } else {
+                          throw new Error('Échec de la récupération des questions du forum.');
+                      }
+                  } else {
+                      const forumText = await response.text();
+                      window.forumQuestions = JSON.parse(forumText);
+                  }
+              } catch (error) {
+                  console.error(error);
+                  alert(error.message);
+                  window.forumQuestions = {}; // Initialize even on error to avoid further issues
+              }
+          }
+
+          async function createEmptyForumFile() {
+              const token = decodeToken(encodedGithubToken);
+              const username = 'Aalltra';
+              const repo = 'sponsor1';
+              const path = 'forum.txt';
+              const emptyForum = {};
+
+              try {
+                  const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      method: 'PUT',
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3+json'
+                      },
+                      body: JSON.stringify({
+                          message: 'Création du fichier forum.txt',
+                          content: btoaUnicode(JSON.stringify(emptyForum, null, 2))
+                      })
+                  });
+
+                  if (!response.ok) {
+                      throw new Error('Échec de la création du fichier forum.txt.');
+                  }
+              } catch (error) {
+                  throw error;
+              }
+          }
+
+          async function loadNextQuestionToAnswer() {
+              await loadForumQuestions();
+              const questionDisplay = document.getElementById('question-to-answer-display');
+              questionDisplay.innerHTML = '';
+
+              let oldestQuestionKey = null;
+              let oldestQuestionData = null;
+              let oldestDate = null;
+
+              for (const [questionKey, questionData] of Object.entries(window.forumQuestions)) {
+                  if (questionData.reponse_username === "None") {
+                      const questionDate = new Date(`${questionData.date.split('/').reverse().join('-')}T${questionData.hour}:00`);
+                      if (!oldestDate || questionDate < oldestDate) {
+                          oldestDate = questionDate;
+                          oldestQuestionKey = questionKey;
+                          oldestQuestionData = questionData;
+                      }
+                  }
+              }
+
+              if (oldestQuestionData) {
+                  const questionDiv = document.createElement('div');
+                  questionDiv.className = 'forum-question-display';
+                  questionDiv.innerHTML = `
+                      <img src="logo/${oldestQuestionData.question_logo}" alt="Logo de ${oldestQuestionData.question_username}" class="forum-question-logo">
+                      <div class="forum-question-content">
+                          <div class="forum-question-username">${oldestQuestionData.question_username}</div>
+                          <p>${oldestQuestionData.question_content}</p>
+                          <div class="forum-answer-area">
+                              <textarea id="answer-textarea" class="forum-answer-textarea" placeholder="Votre réponse..."></textarea>
+                              <button class="forum-answer-button" data-question-key="${oldestQuestionKey}" id="submit-answer-button">Envoyer</button>
+                          </div>
+                      </div>
+                  `;
+                  questionDisplay.appendChild(questionDiv);
+                  questionDisplay.querySelector('#submit-answer-button').addEventListener('click', submitAnswer);
+              } else {
+                  questionDisplay.innerHTML = '<p>Plus aucune question à répondre pour le moment.</p>';
+              }
+          }
+
+          async function submitAnswer(event) {
+              const answerButton = event.target;
+              const questionKey = answerButton.dataset.questionKey;
+              const answerContent = document.getElementById('answer-textarea').value.trim();
+              if (!answerContent) {
+                  alert('Veuillez écrire votre réponse.');
+                  return;
+              }
+
+              const username = document.getElementById('user-username').textContent;
+              const userLogo = document.getElementById('user-logo').src.split('/').pop();
+
+              window.forumQuestions[questionKey].reponse_username = username;
+              window.forumQuestions[questionKey].reponse_logo = userLogo;
+              window.forumQuestions[questionKey].reponse_content = answerContent;
+
+              try {
+                  await updateForumFileContent();
+                  loadNextQuestionToAnswer(); // Load next question after answering
+                  alert('Réponse envoyée avec succès!');
+              } catch (error) {
+                  console.error(error);
+                  alert('Erreur lors de l\'envoi de la réponse.');
+              }
+          }
+
+          async function updateForumFileContent() {
+              const token = decodeToken(encodedGithubToken);
+              const username = 'Aalltra';
+              const repo = 'sponsor1';
+              const path = 'forum.txt';
+
+              try {
+                  const getResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3+json'
+                      }
+                  });
+
+                  if (!getResponse.ok) {
+                      throw new Error('Échec de la récupération des informations du fichier forum.txt.');
+                  }
+
+                  const getData = await getResponse.json();
+                  const sha = getData.sha;
+
+                  const updateResponse = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`, {
+                      method: 'PUT',
+                      headers: {
+                          'Authorization': `token ${token}`,
+                          'Accept': 'application/vnd.github.v3+json'
+                      },
+                      body: JSON.stringify({
+                          message: 'Mise à jour d\'une réponse au forum',
+                          content: btoaUnicode(JSON.stringify(window.forumQuestions, null, 2)),
+                          sha: sha
+                      })
+                  });
+
+                  if (!updateResponse.ok) {
+                      const errorData = await updateResponse.json();
+                      throw new Error(`Échec de la mise à jour du fichier forum.txt: ${errorData.message}`);
+                  }
+              } catch (error) {
+                  throw error;
+              }
+          }
+
+          async function loadMyResponses() {
+              await loadForumQuestions();
+              const responsesDisplay = document.getElementById('my-responses-display');
+              responsesDisplay.innerHTML = '';
+              const currentUsername = document.getElementById('user-username').textContent;
+
+              let hasResponses = false;
+              for (const [questionKey, questionData] of Object.entries(window.forumQuestions)) {
+                  if (questionData.question_username === currentUsername && questionData.reponse_username !== "None") {
+                      hasResponses = true;
+                      const responseDiv = document.createElement('div');
+                      responseDiv.className = 'forum-response-display';
+                      responseDiv.innerHTML = `
+                          <img src="logo/${questionData.reponse_logo}" alt="Logo de ${questionData.reponse_username}" class="forum-response-logo">
+                          <div class="forum-response-content">
+                              <div class="forum-response-username">Réponse de ${questionData.reponse_username}</div>
+                              <p>Question: ${questionData.question_content}</p>
+                              <p>Réponse: ${questionData.reponse_content}</p>
+                          </div>
+                      `;
+                      responsesDisplay.appendChild(responseDiv);
+                  }
+              }
+
+              if (!hasResponses) {
+                  responsesDisplay.innerHTML = '<p>Vous n\'avez pas encore reçu de réponses.</p>';
+              }
+          }
+
+
       });
     </script>
     <style>
@@ -3746,28 +4428,30 @@
       .financing-calculator {
         display: none;
       }
-  
+
       .discussion-window {
           width: 350px;
       }
-  
+
       .discussion-modal-content {
           background: #fff;
           padding: 20px;
           border-radius: 8px;
           text-align: center;
       }
-  
+
       .discussion-modal-content a {
           margin: 10px;
           display: inline-block;
           color: #1e88e5;
           text-decoration: none;
       }
-  
+
       .discussion-modal-content a:hover {
           text-decoration: underline;
       }
+       /* New CSS elements for forum d'aide are listed below: */
+      /* message-selector-container, message-selector-button, message-options, message-option-button, forum-aide-page, forum-buttons, forum-page-button, forum-section, forum-textarea, forum-button, forum-question-display, forum-question-logo, forum-question-content, forum-question-username, forum-answer-area, forum-answer-textarea, forum-answer-button, forum-response-display, forum-response-logo, forum-response-content, forum-response-username */
     </style>
     <script>
     </script>
@@ -3783,7 +4467,7 @@
         </div>
       </div>
     </header>
-  
+
     <nav>
       <div class="container">
         <ul class="nav-tabs">
@@ -3798,7 +4482,7 @@
         </ul>
       </div>
     </nav>
-  
+
     <main>
       <div class="component-list">
         <div class="filters">
@@ -3825,7 +4509,7 @@
         <div class="components-grid">
         </div>
       </div>
-  
+
       <style>
         #budget-chart,
         .performance-widget,
@@ -3835,7 +4519,7 @@
           display: none;
         }
       </style>
-  
+
       <div class="configuration-summary">
         <h2>Résumé de la configuration</h2>
         <ul class="selected-components">
@@ -3902,15 +4586,15 @@
           </div>
         </div>
       </div>
-  
+
       <div class="reviews-section" id="reviews">
       </div>
     </main>
-  
+
     <div class="theme-selector">
       <i class="fas fa-palette"></i>
     </div>
-  
+
     <div class="theme-options">
       <div class="theme-option" data-theme="default">
         <div class="theme-color" style="background-color: #1e3a5f;"></div>
@@ -3930,12 +4614,12 @@
         <input type="color" id="accent-color" value="#e74c3c" title="Couleur d'accent">
       </div>
     </div>
-  
+
     <div id="comparisonModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
       <div class="modal-content" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:2rem; border-radius:1rem; width:90%; max-width:800px;">
       </div>
     </div>
-  
+
     <div id="reviewModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1001;">
       <div class="modal-content" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:2rem; border-radius:1rem; width:90%; max-width:500px;">
         <span class="close-modal" style="position:absolute; top:10px; right:20px; font-size:2rem; cursor:pointer;">&times;</span>
@@ -3949,7 +4633,7 @@
         </form>
       </div>
     </div>
-  
+
     <div class="discussion-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1002; align-items: center; justify-content: center;">
         <div class="discussion-modal-content">
             <h2>Accès Restrict</h2>
@@ -3958,6 +4642,6 @@
             <a href="https://aalltra.github.io/sponsor1/#connexion">Connexion</a>
         </div>
     </div>
-  
+
   </body>
 </html>
